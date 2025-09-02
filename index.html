@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2025 by anonymous (http://jsbin.com/gitidixamo/4/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>FoxFilms – Najlepsze filmy online</title>
+  <meta name="description" content="FoxFilms to kolekcja najlepszych filmów online. Oglądaj szybko, bez reklam i w doskonałej jakości po polsku.">
+<style id="jsbin-css">
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #1a1a1a;
+}
+
+.search-container {
+  max-width: 320px;
+  margin: 150px auto 10px;
+  position: relative;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 6px 14px rgba(64, 64, 64, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-container.dark {
+  background-color: white;
+  box-shadow: 0 0 20px 6px rgba(255, 255, 255, 0.4);
+}
+
+/* NOWY kontener kontrolujący szerokość inputa */
+.input-wrapper {
+  width: 85%; /* tu ustaw szerokość paska wyszukiwania */
+  margin: 0 auto;
+}
+
+/* input rozciąga się na cały input-wrapper */
+.input-wrapper input[type="search"] {
+  width: 100%;
+  padding: 5px 20px 5px 13px;
+  font-size: 16px;
+  border: none;
+  background-color: white;
+  color: #000000;
+  border-radius: 12px;
+  box-sizing: border-box;
+  outline: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-container.dark .input-wrapper input[type="search"] {
+  background-color: white;
+  color: black;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-ms-clear,
+input[type="search"]::-ms-reveal {
+  display: none;
+}
+
+.toggle-btn {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 2;
+  user-select: none;
+  color: #1a73e8;
+  transition: color 0.2s ease;
+  padding: 0 7px 5px;
+  opacity: 95%;
+  background-color: #262626;
+  border-radius: 50%;
+  box-shadow: 0 6 14px rgba(0, 0, 0, 0.3)
+
+.toggle-btn:hover {
+  padding: 0 8px 6px;
+  background-color: #2e2e2e;
+  border-radius: 50%;
+}}
+
+
+.search-container.dark .toggle-btn {
+  color: #1a73e8;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  display: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+
+
+.search-container.dark .clear-btn {
+  background-color: #ddd;
+  color: #222;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
+}
+
+.results {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  max-height: 180px;
+  overflow-y: auto;
+  border-radius: 0 0 12px 12px;
+  z-index: 1;
+}
+
+body:not(.dark-mode) .results {
+  background-color: #2e2e2e;
+  color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .results {
+  background-color: #2e2e2e;
+  color: black;
+  border: 1px solid #333;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.result-item {
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+body.dark-mode .result-item {
+  border-bottom: 1px solid #444;
+  color: white;
+}
+
+.result-item:hover {
+  background-color: #1a73e8;
+  color: white;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.config-line {
+  width: 165px;
+  height: 3mm;
+  background-color: #2e2e2e;
+  margin: 16px auto 0;
+  border-radius: 1mm;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .config-line {
+  background-color: #2e2e2e;
+}
+
+/* --- STYLE TEKSTÓW FOXFILM --- */
+.FoxFilm-text {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 40px;
+  color: #1a1a1a;
+}
+
+.FoxFilm-akapit1-text,
+.FoxFilm-akapit2-text {
+  text-align: center;
+  font-size: 12px;
+  margin: 5px auto;
+  max-width: 90%;
+  color: #1a1a1a;
+}
+
+.FoxFilm-akapit3-text {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 50px;
+  color: #1a1a1a;
+}
+
+/* --- DOPASOWANIE DO TELEFONU --- */
+@media (max-width: 768px) {
+  .search-container {
+    margin: 80px auto 10px;
+    width: 92%;
+  }
+
+  .input-wrapper {
+    width: 95%; /* na telefonie szerzej */
+  }
+
+  .input-wrapper input[type="search"] {
+    font-size: 18px;
+    padding: 12px 40px 12px 36px;
+  }
+
+  .toggle-btn, .clear-btn {
+    font-size: 20px;
+  }
+
+  .FoxFilm-text {
+    font-size: 20px;
+    margin-top: 20px;
+    color: black;
+  }
+
+  .FoxFilm-akapit1-text,
+  .FoxFilm-akapit2-text {
+    font-size: 11px;
+    max-width: 95%;
+  }
+
+  .FoxFilm-akapit3-text {
+    font-size: 9px;
+  }
+}
+
+/* Styl koła ripple */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(26, 26, 26, 0.15);
+  transform: scale(0);
+  animation: ripple-effect 0.6s linear;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@keyframes ripple-effect {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+  <div class="search-container" id="searchContainer">
+    <div class="toggle-btn" id="toggleBtn" title="Tryb incognito">⽎</div>
+    <div class="input-wrapper">
+      <input type="search" id="input" placeholder="Wpisz, aby wyszukać..." autocomplete="off" />
+    </div>
+    <div class="clear-btn" id="clearBtn" title="Wyczyść">x</div>
+    <div id="results" class="results" hidden></div>
+  </div>
+
+  <div class="config-line" id="configToggle" title="Zmień kategorię"></div>
+
+  <div class="FoxFilm-text"># FoxFilms</div>
+  <div class="FoxFilm-akapit1-text">Wszystkie filmy, z podanych linków nie są naszą własnością!</div>
+  <div class="FoxFilm-akapit2-text">Wszyscy użytkownicy biorą odpowiedzialność za siebie poprzez oglądanie filmów, z nie certyfikowanych stron. Samo oglądanie, może nie być legalne!</div>
+  <div class="FoxFilm-akapit3-text">Copyright © 08 08 2025 FoxFilms search bar</div>
+
+  <script src="script.js"></script>
+
+<button id="randomBtn" title="losowy film" style="
+  position: fixed;
+  bottom: 10px;
+  left: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);
+  font-weight: 900;
+  z-index: 9999;
+">⟳</button>
+<script id="jsbin-javascript">
+const rawConfigLines1 = [
+    "(Spiderman universum)[https://vider.info/vid/+fx5nxvx]",
+    "(Spiderman poprzez universum)[https://vider.info/vid/+fe8ce5s]",
+    "(Spiderman homecoming)[https://vider.info/vid/+fncxx8e-]",
+    "(Spiderman daleko od domu)[https://vider.info/vid/+fsenc18]",
+    "(Spiderman bez drogi do domu)[https://vider.info/vid/+fscxs5c]",
+    "(Iron man)[https://vider.info/vid/+fec188e]",
+    "(Iron man 3)[https://vider.info/vid/+fe1cssv]",
+    "(Infinity war)[https://cda-hd.cc/31471/avengers-wojna-bez-granic-avengers-infinity-war-2018-online/]",
+    "(Avengers end game)[https://cda-hd.cc/38450/avengers-koniec-gry-avengers-endgame-2019-online/]",
+    "(Angry birds)[https://vider.info/vid/+fe11exm]",
+    "(Angry birds 2)[https://vider.info/vid/+fe118mx]",
+    "(Spongebob plankton film)[https://netfree.cc/mobile/home]",
+    "(Spongebob sandy w akcji)[https://netfree.cc/mobile/home]",
+    "(Spongebob film)[https://vider.love/vid/+fevn8nv]",
+    "(Spongebob na suchym lądzie)[https://vider.info/vid/+fem5xx5]",
+    "(List do M)[https://videa.hu/videok/film-animacio/listy.do.m.2011.pl.720p.bdrip.xvid.ac3-elite1.avi-komedia-lengyel-mikoaj-QMOQZ4TtUUOYOQFj]",
+    "(List do M 2)[https://videa.hu/l/mlt/dt6ggL3isiTSCcPr?po=0&pl=0]",
+    "(List do M 3)[https://videa.hu/l/mlt/SDBdC5wd3ZwsJnrO?po=1&pl=0]",
+    "(List do M 4)[https://videa.hu/l/mlt/cDOvcJN7IWUj7e9N?po=2&pl=0]",
+    "(List do M 5)[https://pl.vider-info.pl/ca%C5%82y-film/61303-Listy-do-M-5-HDRip-online.html]",
+    "(Wall-e)[http://vider.info/vid/+fsx5185]",
+    "(Sonik szybki jak błyskawica)[https://vider.info/vid/+fs5558s]",
+    "(Sonik szybki jak błyskawica 2)[https://vider.info/vid/+fs5cvmc]",
+    "(Sonik szybki jak błyskawica 3)[https://vider.info/vid/+fec5888]",
+    "(Super mario bros film)[https://vider.love/vid/+fec58mx]",
+    "(Jumanji)[https://vider.info/vid/+fnvcssv]",
+    "(Jumanji następny poziom)[https://vider.info/vid/+fee5nen]",
+    "(Twisters)[https://vider.info/vid/+fe8vmvx]",
+    "(Kaskader)[https://vider.info/vid/+fe8x85n]",
+    "(Searching)[https://www.cda.pl]",
+    "(Mulan)[https://vider.info/vid/+femevcc]",
+    "(Między nami misiami)[https://www.cda.pl/video/61688631c]",
+    "(Noc w muzeum)[https://vider.info/vid/+fn11se8]",
+    "(Noc w muzeum 2)[https://vider.info/vid/+fs18smm]",
+    "(Noc w muzeum 3)[https://www.cda.pl/video/1189799697]",
+    "(Pinokio)[https://vider.info/vid/+fe1x8cc]",
+    "(Jak zostałem superbochaterem)[https://vider.info/vid/+fsexve8]",
+    "(Łut szczęścia)[https://vider.love/vid/+fscvn88]",
+    "(Małpi król)[https://vider.info/vid/+fes5ev8]",
+    "(Naprzód)[https://vider.info/vid/+fenxmsn]",
+    "(Lego przygoda)[https://vider.info/vid/+f8s1me]",
+    "(Lego przygoda 2)[https://vider.info/vid/+fxxxns8]",
+    "(Kraina cudów)[https://vider.info/vid/+fe15881]",
+    "(Dzieciak który został Królem)[https://ebd.cda.pl/620x368/1286857444]",
+    "(Krzysiu gdzie jesteś)[https://vider.info/vid/+fsx1ce1]",
+    "(Smerfy poszukiwacze zaginionej wioski)[https://vider.info/vid/+fem8x81]",
+    "(Smerfy)[https://vider.info/vid/+fenme1e]",
+    "(Godzilla i kong)[http://vider.info/vid/+fee5vx1]",
+    "(Avatar istota wody)[http://vider.info/vid/+fe15551]",
+    "(Pan wilk i spółka)[https://vider.info/vid/+fscmve1]",
+    "(O psie który jeździł koleją)[https://vider.info/vid/+feemncm]",
+    "(Super pies i turbo kot)[https://vider.info/vid/+fsn8xxs]",
+    "(Był sobie pies)[https://vider.info/vid/+fe8esvx]",
+    "(Był sobie pies 2)[https://vider.info/vid/+fe1xes8]",
+    "(Mufasa Król lew)[https://vider.info/vid/+fe1cx58]",
+    "(Ferdinand)[https://vider.info/vid/+fes1n11]",
+    "(Flow)[http://vider.info/vid/+fe1x1em]",
+    "(Piotruś królik)[https://vider.info/vid/+fx1v5mv]",
+    "(Piotruś królik 2 na gigancie)[https://vider.info/vid/+femxe8c]",
+    "(Coco)[https://vider.info/vid/+fem8nns]",
+    "(Wyspa psów)[https://vider.info/vid/+fesx1v5]",
+    "(Człowiek kontra pszczoła)[https://vider.info/dir/+dv5m8mv]",
+    "(Zróbmy sobie wnuka)[https://vider.info/vid/+fx18nv5]",
+    "(Wkręceni)[https://www.dailymotion.com/video/x8x0vwu]",
+    "(Wkręceni 2)[https://vider.info/vid/+fe8cn55]",
+    "(Poznaj naszą rodzinkę)[https://resetoff.pl/vid/dwqz]",
+    "(Poznaj naszych rodziców)[https://vider.info/vid/+fscxnec]",
+    "(What just happend)[https://youtu.be/4Jp4BPti0Y0?feature=shared]",
+    "(Pół żartem pół serio)[https://www.cda.pl/video/872046952]",
+    "(Hotel transylwania)[https://vider.info/vid/+fxnmcvs]",
+    "(Hotel transylwania 2)[https://vider.info/vid/+fxnmcve]",
+    "(Hotel transylwania 3)[https://vider.info/vid/+fs8m588]",
+    "(Handlarze)[https://youtu.be/2ikyrav4wd4?feature=shared]",
+    "(Świąteczna zamiana)[https://youtu.be/CspHcQEJT8M?feature=shared]",
+    "(Asy bez kasy)[https://youtu.be/Xz2DnNVKqsg?feature=shared]",
+    "(Jak pokonać kaca)[https://youtu.be/coU4SXcKg7k?feature=shared]",
+    "(Kogel mogel)[https://youtu.be/DSLvLY8yTMw?feature=shared]",
+    "(Hrabia Monte Cristo)[https://vider.info/vid/+fnv8xmm]",
+    "(Opowieści z Narnii Lew czarownica i stara szafa)[https://vider.info/vid/+fenc1xc]",
+    "(Opowieści z Narnii Książę Kaspian)[https://vider.info/vid/+fesmxx8]",
+    "(Opowieści z Narnii Podróż wędrowca do świtu)[https://vider.info/vid/+fex5enc]",
+    "(W pustyni i w puszczy)[https://youtu.be/_EDEGGX3MA8?feature=shared]",
+    "(Hobbit Niezwykła podróż)[https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://vider.info/vid/%2Bfe8ne1&ved=2ahUKEwj3pYmI7v6KAxV1SvEDHds9MEgQwqsBegQIFBAE&usg=AOvVaw1Sd9t5ZqGjHaRn5qtjgN1k]",
+    "(Hobbit Pustkowie Smauga)[https://vider.info/vid/+fen8sm5]",
+    "(Hobbit Bitwa pięciu armii)[https://vider.info/vid/+fxnnn5n]",
+    "(In shadow)[https://youtu.be/j800SVeiS5I?feature=shared]",
+    "(I pe goat 2)[https://youtu.be/65xLByzT1l0?feature=shared]",
+    "(Ultimatum)[https://www.cda.pl/video/2182619122]",
+    "(Kraina lodu)[https://vider.info/vid/+fev1mms]",
+    "(Minionki)[https://vider.info/vid/+fn58xxc]",
+    "(Gry dru i minionki)[https://vider.info/vid/+fx58scm]",
+    "(Minionki wejście gru)[https://vider.info/vid/+fe8xcec]",
+    "(Minionki pod przykrywką)[https://vider.info/vid/+fe8xc1n]"
+];
+
+const rawConfigLines2 = [
+    "(Serial Kiepscy)[https://www.swiatwedlugkiepskich.pl/]",
+    "(Świat według Kiepskich)[https://www.swiatwedlugkiepskich.pl/]",
+    "(Świat według Bundych)[https://vider.info/dir/+dxxecx]",
+    "(Włatcy móch)[http://www.vidlii.com/playlist?p=XcjgX8x6S0M]",
+    "(Rodzinka.pl)[https://vod.tvp.pl/seriale,18/rodzinkapl-odcinki,274700]",
+    "(Biuro the office)[https://vider.info/dir/+dnnvnnv5]",
+    "(Pora na przygodę)[https://youtu.be/Rsa4x79MjQM?feature=shared]",
+    "(Przyjaciele)[https://vider.info/dir/+dv1]",
+    "(Sąsiedzi Pat i Mat)[https://www.cda.pl/Sz-Wito/folder/47153148]",
+    "(Ranczo)[https://vider.info/dir/+dne1cccv]",
+    "(Niebezpieczny oddział)[https://vider.info/dir/+dnnx8vve]",
+    "(Grzmotomocni)[https://vider.info/dir/+dnsns8m5]",
+    "(Teoria wielkiego podrywu)[https://vider.info/dir/+dnecx]",
+    "(Różowe lata)[https://vider.info/dir/+dxc1m8]",
+    "(8 prostch zasad)[https://vider.info/dir/+dnv15x]"
+];
+
+let usingAlt = false;
+
+function parseLines(lines) {
+  return lines.map(line => {
+    const match = line.match(/^\((.+?)\)\[(https?:\/\/.+?)\]$/);
+    return match ? { label: match[1], url: match[2] } : null;
+  }).filter(Boolean);
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+let config = {
+  options: parseLines(rawConfigLines1),
+  maxResults: 7,
+  caseSensitive: false
+};
+
+const input = document.getElementById("input");
+const results = document.getElementById("results");
+const clearBtn = document.getElementById("clearBtn");
+const searchContainer = document.getElementById("searchContainer");
+const toggleBtn = document.getElementById("toggleBtn");
+const configToggle = document.getElementById("configToggle");
+
+function filterOptions(query) {
+  if (!query) return [];
+  const search = config.caseSensitive ? query : query.toLowerCase();
+  return config.options.filter(({ label }) =>
+    (config.caseSensitive ? label : label.toLowerCase()).includes(search)
+  ).slice(0, config.maxResults);
+}
+
+function renderResults(list) {
+  results.innerHTML = "";
+  if (list.length === 0) {
+    results.hidden = true;
+    return;
+  }
+  list.forEach(({ label, url }) => {
+    const el = document.createElement("div");
+    el.className = "result-item";
+    el.textContent = label;
+    el.title = url;
+    el.addEventListener("click", () => window.open(url, "_blank"));
+    results.appendChild(el);
+  });
+  results.hidden = false;
+}
+
+function updateClearButton() {
+  clearBtn.style.display = input.value.trim() ? "block" : "none";
+}
+
+input.addEventListener("input", e => {
+  const val = e.target.value.trim();
+  updateClearButton();
+  if (val === "") {
+    results.hidden = true;
+    return;
+  }
+  const matches = filterOptions(val);
+  const shuffled = shuffleArray(matches);
+renderResults(shuffled);
+});
+
+clearBtn.addEventListener("click", () => {
+  input.value = "";
+  input.focus();
+  results.hidden = true;
+  clearBtn.style.display = "none";
+});
+
+document.addEventListener("click", e => {
+  if (!e.target.closest(".search-container")) {
+    results.hidden = true;
+  }
+});
+
+// Tryb incognito
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  searchContainer.classList.toggle("dark");
+});
+
+// Przełączanie kategorii
+configToggle.addEventListener("click", () => {
+  usingAlt = !usingAlt;
+  const rawLines = usingAlt ? rawConfigLines2 : rawConfigLines1;
+  config.options = parseLines(rawLines);
+  input.dispatchEvent(new Event("input"));
+});
+
+document.addEventListener('click', function(e) {
+  const ripple = document.createElement('span');
+  ripple.classList.add('ripple');
+
+  // Ustawiamy wielkość koła, np. 100px na 100px
+  const size = 100;
+  ripple.style.width = ripple.style.height = size + 'px';
+
+  // Pozycja koła względem kliknięcia, przesunięta o połowę rozmiaru, żeby był środek w kliknięciu
+  ripple.style.left = (e.pageX - size / 2) + 'px';
+  ripple.style.top = (e.pageY - size / 2) + 'px';
+
+  document.body.appendChild(ripple);
+
+  // Po zakończeniu animacji usuwamy element
+  ripple.addEventListener('animationend', () => {
+    ripple.remove();
+  });
+});
+
+const randomBtn = document.getElementById("randomBtn");
+
+randomBtn.addEventListener("click", () => {
+  // Parsujemy rawConfigLines1 na obiekty
+  const options = parseLines(rawConfigLines1);
+  // Losujemy indeks
+  const randomIndex = Math.floor(Math.random() * options.length);
+  const randomOption = options[randomIndex];
+  // Otwieramy nową kartę z linkiem
+  window.open(randomOption.url, "_blank");
+});
+</script>
+</body>
+  </html>
