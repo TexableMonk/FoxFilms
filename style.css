@@ -234,6 +234,13 @@ body.dark-mode .config-line {
   }
 }
 
+/* Dla komputerów – minimalna szerokość ekranu 1024px */
+@media (min-width: 1024px) {
+  .toggle-btn {
+    font-size: calc(20px - 4mm); /* zmniejszamy o 4mm */
+  }
+}
+
 /* Styl koła ripple */
 .ripple {
   position: absolute;
