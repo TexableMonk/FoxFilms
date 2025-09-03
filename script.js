@@ -241,3 +241,7 @@ randomBtn.addEventListener("click", () => {
   // Otwieramy nową kartę z linkiem
   window.open(randomOption.url, "_blank");
 });
+
+document.getElementById("goBtn").addEventListener("click", () => {
+  window.location.href = "https://twoja-strona.pl"; 
+});
