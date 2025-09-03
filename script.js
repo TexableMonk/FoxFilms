@@ -276,15 +276,12 @@ document.querySelectorAll("#goBtn").forEach(btn => {
 });
 
 
-const inputField = document.getElementById("input");
-const resultsContainer = document.getElementById("results");
-
 inputField.addEventListener("input", () => {
   const val = inputField.value.trim();
   const items = resultsContainer.querySelectorAll(".result-item");
 
   items.forEach(item => {
-    item.classList.remove("pulse-match"); // reset klasy
+    item.classList.remove("pulse-match"); // reset animacji
     void item.offsetWidth; // restart animacji
     if (item.textContent.toLowerCase() === val.toLowerCase() && val !== "") {
       item.classList.add("pulse-match"); // dodajemy animację
