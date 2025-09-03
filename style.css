@@ -142,6 +142,7 @@ body.dark-mode .results {
   color: white;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body.dark-mode .result-item {
@@ -153,6 +154,7 @@ body.dark-mode .result-item {
   background-color: #1a73e8;
   color: white;
   animation: hover-pulse 1s infinite alternate;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 @keyframes hover-pulse {
@@ -163,6 +165,10 @@ body.dark-mode .result-item {
 .result-item:active {
   transform: scale(0.97);
   transition: transform 0.1s ease;
+}
+
+.result-item {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .result-item:last-child {
