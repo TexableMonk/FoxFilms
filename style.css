@@ -172,6 +172,7 @@ body.dark-mode .result-item {
   height: 20px;
   opacity: 0;
   transition: opacity 0.3s ease;
+  margin-left: auto;
 }
 
 .result-item:first-child:hover .match-icon {
