@@ -256,23 +256,23 @@ document.querySelectorAll("#goBtn").forEach(btn => {
   });
 });
 
-const inputWrapper = document.querySelector(".input-wrapper");
+const input = document.querySelector(".input-wrapper input[type='search']");
 let expanded = false;
-const originalPadding = parseInt(getComputedStyle(inputWrapper).paddingTop); // pobieramy padding-top
+const originalPaddingTop = parseInt(getComputedStyle(input).paddingTop);
+const originalPaddingBottom = parseInt(getComputedStyle(input).paddingBottom);
 
-function checkOrientation() {
+function adjustSearchBar() {
   const isLandscape = window.innerWidth > window.innerHeight;
   if (isLandscape && !expanded) {
-    inputWrapper.style.paddingTop = (originalPadding + 10) + "px";
-    inputWrapper.style.paddingBottom = (originalPadding + 10) + "px";
+    input.style.paddingTop = (originalPaddingTop + 10) + "px";
+    input.style.paddingBottom = (originalPaddingBottom + 10) + "px";
     expanded = true;
   } else if (!isLandscape && expanded) {
-    inputWrapper.style.paddingTop = originalPadding + "px";
-    inputWrapper.style.paddingBottom = originalPadding + "px";
+    input.style.paddingTop = originalPaddingTop + "px";
+    input.style.paddingBottom = originalPaddingBottom + "px";
     expanded = false;
   }
 }
 
-// wywołujemy przy każdej zmianie rozmiaru ekranu
-window.addEventListener("resize", checkOrientation);
-checkOrientation(); // też przy pierwszym załadowaniu
+window.addEventListener("resize", adjustSearchBar);
+adjustSearchBar(); // przy pierwszym załadowaniu
