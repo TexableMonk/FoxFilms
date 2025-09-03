@@ -304,11 +304,11 @@ body.dark-mode .config-line {
 
 body:not(.dark-mode) .result-item.pulse-match,
 body.dark-mode .result-item.pulse-match {
-  animation: pulse-bg 1s ease-in-out infinite; /* infinite = ciągle */
+  animation: pulse-bg 1s ease-in-out infinite;
 }
 
 @keyframes pulse-bg {
-  0%   { background-color: #1a73e8; }
-  50%  { background-color: #3a93ff; }
-  100% { background-color: #1a73e8; }
+  0%   { background-color: #1a73e8; }   /* standardowy niebieski */
+  50%  { background-color: #1558b0; }   /* ciemniejszy niebieski */
+  100% { background-color: #1a73e8; }   /* wraca do standardowego */
 }
