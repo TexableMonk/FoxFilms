@@ -9,7 +9,7 @@ body {
 }
 
 body.blur-background {
-  filter: blur(10px);
+  filter: blur(3px);
   transition: filter 0.3s ease;
 }
 
