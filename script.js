@@ -193,7 +193,6 @@ input.addEventListener("input", e => {
     const items = results.querySelectorAll(".result-item");
     items.forEach(item => {
       if (item.textContent === exactMatch.label) {
-        item.style.backgroundColor = "#1a73e8";
         item.style.color = "white";
       } else {
         item.style.backgroundColor = "";
