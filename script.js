@@ -287,29 +287,3 @@ document.querySelectorAll("#goBtn").forEach(btn => {
 
 if (list.length) document.body.classList.add('blur-background');
 else document.body.classList.remove('blur-background');
-
-
-function highlightExactMatch(val) {
-  const items = results.querySelectorAll(".result-item");
-  items.forEach(item => {
-    item.classList.remove("exact-match");
-    const icon = item.querySelector(".match-icon");
-    if (icon) icon.remove();
-    
-    if (item.textContent.toLowerCase() === val.toLowerCase() && val !== "") {
-      item.classList.add("exact-match");
-      const img = document.createElement("img");
-      img.src = "https://cdn.discordapp.com/emojis/925895649629700156.png?size=32";
-      img.className = "match-icon";
-      img.style.width = "16px";
-      img.style.height = "16px";
-      img.style.marginLeft = "6px";
-      item.appendChild(img);
-    }
-  });
-}
-
-input.addEventListener("input", e => {
-  const val = e.target.value.trim();
-  highlightExactMatch(val);
-});
