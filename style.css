@@ -1,41 +1,38 @@
-/* =========================
-   BODY & EFFECTS
-   ========================= */
+/* =====================
+   BODY & OGÓLNE
+===================== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-color: white;
+  transition: background-color 0.3s ease;
 }
 
-body.blur-background #mainContent {
-  filter: blur(10px);
+body.blur-background {
+  filter: blur(3px);
+  transition: filter 0.3s ease;
 }
 
-/* DARK MODE */
 body.dark-mode {
   background-color: #1a1a1a;
 }
 
-/* =========================
-   SEARCH CONTAINER & INPUT
-   ========================= */
-header {
-  position: relative;
-  z-index: 9999; /* zawsze na wierzchu */
-}
-
+/* =====================
+   SEARCH / INPUT
+===================== */
 .search-container {
   max-width: 320px;
-  margin: 80px auto 10px;
+  margin: 150px auto 10px;
   position: relative;
   border-radius: 12px;
   background-color: white;
-  box-shadow: 0 6px 14px rgba(64,64,64,0.3);
+  box-shadow: 0 6px 14px rgba(64, 64, 64, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .search-container.dark {
-  background-color: #fff;
-  box-shadow: 0 0 20px 6px rgba(255,255,255,0.4);
+  background-color: white;
+  box-shadow: 0 0 20px 6px rgba(255, 255, 255, 0.4);
 }
 
 .input-wrapper {
@@ -45,14 +42,31 @@ header {
 
 .input-wrapper input[type="search"] {
   width: 100%;
-  padding: 12px 36px;
+  padding: 12px 36px 12px 36px;
   font-size: 16px;
   border-radius: 12px;
   border: none;
   box-sizing: border-box;
   outline: none;
+  background-color: white;
+  color: #000;
+  transition: background-color 0.3s ease, color 0.3s ease, padding 0.3s ease;
 }
 
+.search-container.dark .input-wrapper input[type="search"] {
+  background-color: white;
+  color: black;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-ms-clear,
+input[type="search"]::-ms-reveal {
+  display: none;
+}
+
+/* =====================
+   TOGGLE / CLEAR BUTTONS
+===================== */
 .toggle-btn {
   position: absolute;
   left: 5px;
@@ -61,6 +75,22 @@ header {
   font-size: 20px;
   cursor: pointer;
   z-index: 2;
+  user-select: none;
+  color: #1a73e8;
+  transition: color 0.2s ease;
+  padding: 0 7px 5px;
+  opacity: 95%;
+  background-color: #262626;
+  border-radius: 50%;
+  box-shadow: 0 6 14px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-btn:hover {
+  padding: 0 8px 6px;
+  background-color: #2e2e2e;
+}
+
+.search-container.dark .toggle-btn {
   color: #1a73e8;
 }
 
@@ -76,14 +106,24 @@ header {
   color: white;
   font-weight: bold;
   font-size: 16px;
+  line-height: 22px;
   text-align: center;
   cursor: pointer;
+  user-select: none;
   display: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
-/* =========================
-   RESULTS LIST
-   ========================= */
+.search-container.dark .clear-btn {
+  background-color: #ddd;
+  color: #222;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
+}
+
+/* =====================
+   RESULTS / LISTA WYNIKÓW
+===================== */
 .results {
   position: absolute;
   top: 45px;
@@ -92,22 +132,35 @@ header {
   max-height: 180px;
   overflow-y: auto;
   border-radius: 0 0 12px 12px;
-  z-index: 9999;
+  z-index: 1;
+}
+
+body:not(.dark-mode) .results {
   background-color: #2e2e2e;
   color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .results {
+  background-color: #2e2e2e;
+  color: black;
+  border: 1px solid #333;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .result-item {
-  padding: 10px 20px;
-  cursor: pointer;
-  border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
   position: relative;
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
   transform: translateY(-10px);
-  transition: opacity 0.3s, transform 0.3s;
 }
 
 .result-item.show {
@@ -115,11 +168,21 @@ header {
   transform: translateY(0);
 }
 
-.result-item:hover {
-  background-color: #1a73e8;
+body.dark-mode .result-item {
+  border-bottom: 1px solid #444;
   color: white;
 }
 
+.result-item:hover {
+  animation: hover-pulse 1s infinite alternate;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+/* emoji / match highlight */
 .result-item .emoji {
   position: absolute;
   right: 10px;
@@ -127,9 +190,25 @@ header {
   transform: translateY(-50%);
 }
 
-/* =========================
-   CONFIG LINE
-   ========================= */
+body:not(.dark-mode) .result-item.pulse-match,
+body.dark-mode .result-item.pulse-match {
+  animation: pulse-bg 1s ease-in-out infinite;
+}
+
+@keyframes pulse-bg {
+  0%   { background-color: #1a73e8; }
+  50%  { background-color: #1558b0; }
+  100% { background-color: #1a73e8; }
+}
+
+@keyframes hover-pulse {
+  0%   { background-color: #1a73e8; }
+  100% { background-color: #1557a2; }
+}
+
+/* =====================
+   CONFIG / KATEGORIE
+===================== */
 .config-line {
   width: 165px;
   height: 3mm;
@@ -137,42 +216,140 @@ header {
   margin: 16px auto 0;
   border-radius: 1mm;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .config-line {
+  background-color: #2e2e2e;
+}
+
+/* =====================
+   BUTTONS – RANDOM / GO
+===================== */
+#randomBtn {
+  position: fixed;
+  bottom: 10px;
+  left: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);
+  font-weight: 900;
   z-index: 9999;
 }
 
-/* =========================
-   FOXFILM TEXTS
-   ========================= */
-#mainContent .FoxFilm-text { text-align: center; font-size: 24px; font-weight: bold; margin-top: 40px; }
-#mainContent .FoxFilm-akapit1-text,
-#mainContent .FoxFilm-akapit2-text { text-align: center; font-size: 12px; margin: 5px auto; max-width: 90%; }
-#mainContent .FoxFilm-akapit3-text { text-align: center; font-size: 10px; margin-top: 50px; }
-
-/* =========================
-   FLOATING BUTTONS
-   ========================= */
-#randomBtn, #goBtn {
+#goBtn {
   position: fixed;
-  z-index: 9999;
   bottom: 10px;
-  border-radius: 50%;
+  right: 15px;
   width: 42px;
   height: 42px;
-  text-align: center;
-  line-height: 42px;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#randomBtn { left: 15px; background: #1a73e8; color: white; }
-#goBtn { right: 15px; background: white; color: black; }
+#goBtn:hover {
+  background-color: #f0f0f0;
+}
 
-/* =========================
+/* =====================
+   TEKSTY FOXFILM
+===================== */
+.FoxFilm-text {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 40px;
+  color: #1a1a1a;
+}
+
+.FoxFilm-akapit1-text,
+.FoxFilm-akapit2-text {
+  text-align: center;
+  font-size: 12px;
+  margin: 5px auto;
+  max-width: 90%;
+  color: #1a1a1a;
+}
+
+.FoxFilm-akapit3-text {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 50px;
+  color: #1a1a1a;
+}
+
+/* =====================
+   MEDIA QUERIES
+===================== */
+@media (max-width: 768px) {
+  .search-container {
+    margin: 80px auto 10px;
+    width: 92%;
+  }
+
+  .input-wrapper {
+    width: 95%;
+  }
+
+  .input-wrapper input[type="search"] {
+    font-size: 18px;
+    padding: 12px 40px 12px 36px;
+  }
+
+  .toggle-btn, .clear-btn {
+    font-size: 20px;
+  }
+
+  .FoxFilm-text {
+    font-size: 20px;
+    margin-top: 20px;
+    color: black;
+  }
+
+  .FoxFilm-akapit1-text,
+  .FoxFilm-akapit2-text {
+    font-size: 11px;
+    max-width: 95%;
+  }
+
+  .FoxFilm-akapit3-text {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .toggle-btn {
+    font-size: calc(20px - 2mm);
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .input-wrapper input[type="search"] {
+    padding: 12px 36px 12px 36px;
+  }
+}
+
+/* =====================
    RIPPLE EFFECT
-   ========================= */
+===================== */
 .ripple {
   position: absolute;
   border-radius: 50%;
-  background-color: rgba(26,26,26,0.15);
+  background-color: rgba(26, 26, 26, 0.15);
   transform: scale(0);
   animation: ripple-effect 0.6s linear;
   pointer-events: none;
@@ -180,5 +357,8 @@ header {
 }
 
 @keyframes ripple-effect {
-  to { transform: scale(2.5); opacity: 0; }
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
