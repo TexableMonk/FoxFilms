@@ -297,6 +297,6 @@ body.dark-mode .config-line {
 /* Landscape – input większy, placeholder w tym samym miejscu */
 @media screen and (orientation: landscape) {
   .input-wrapper input[type="search"] {
-    padding: 16px 36px 16px 36px; /* zwiększamy tylko góra/dół, lewo/prawo pozostają */
+    padding: 12px 36px 12px 36px; /* zwiększamy tylko góra/dół, lewo/prawo pozostają */
   }
 }
