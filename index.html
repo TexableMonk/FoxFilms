@@ -1,36 +1,59 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FoxFilms – Najlepsze filmy online</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+<!DOCTYPE html>  <html lang="pl">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link rel="stylesheet" href="style.css">  
+  <title>FoxFilms – Najlepsze filmy online</title>  
+  <meta name="description" content="FoxFilms to kolekcja najlepszych filmów online. Oglądaj szybko, bez reklam i w doskonałej jakości po polsku.">  
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.ico">  
+  <link rel="icon" href="https://cdn.discordapp.com/emojis/880831924761940028.png?size=32" type="image/png">  
+</head>  
+<body>    <div class="search-container" id="searchContainer">  
+    <div class="toggle-btn" id="toggleBtn" title="Tryb incognito">⽎</div>  
+    <div class="input-wrapper">  
+      <input type="search" id="input" placeholder="Wpisz, aby wyszukać..." autocomplete="off" />  
+    </div>  
+    <div class="clear-btn" id="clearBtn" title="Wyczyść">x</div>  
+    <div id="results" class="results" hidden></div>  
+  </div>    <div class="config-line" id="configToggle" title="Zmień kategorię"></div>    <div class="FoxFilm-text"># FoxFilms</div>  
+  <div class="FoxFilm-akapit1-text">Wszystkie filmy, z podanych linków nie są naszą własnością!</div>  
+  <div class="FoxFilm-akapit2-text">Wszyscy użytkownicy biorą odpowiedzialność za siebie poprzez oglądanie filmów, z nie certyfikowanych stron. Samo oglądanie, może nie być legalne!</div>  
+  <div class="FoxFilm-akapit3-text">Copyright © 08 08 2025 FoxFilms search bar</div>    <script src="script.js"></script>  <button id="randomBtn" title="losowy film" style="  
+position: fixed;  
+bottom: 10px;  
+left: 15px;  
+padding: 8px 14px;  
+border-radius: 8px;  
+background-color: #1a73e8;  
+color: white;  
+border: none;  
+cursor: pointer;  
+box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);  
+font-weight: 900;  
+z-index: 9999;  
+">⟳</button>
 
-<!-- HEADER: Search + toggle + clear + results + config -->
-<header>
-  <div class="search-container" id="searchContainer">
-    <div class="toggle-btn" id="toggleBtn" title="Tryb incognito">⽎</div>
-    <div class="input-wrapper">
-      <input type="search" id="input" placeholder="Wpisz, aby wyszukać..." autocomplete="off" />
-    </div>
-    <div class="clear-btn" id="clearBtn" title="Wyczyść">x</div>
-    <div id="results" class="results" hidden></div>
-  </div>
-
-  <div class="config-line" id="configToggle" title="Zmień kategorię"></div>
-</header>
-
-
-  <div class="FoxFilm-akapit2-text">Wszyscy użytkownicy biorą odpowiedzialność za siebie poprzez oglądanie filmów, z nie certyfikowanych stron. Samo oglądanie, może nie być legalne!</div>
-  <div class="FoxFilm-akapit3-text">Copyright © 08 08 2025 FoxFilms search bar</div>
-</main>
-
-<!-- Przyciski floating -->
-<button id="randomBtn" title="losowy film">⟳</button>
 <a href="https://foxfilms.my.canva.site/foxfilms" id="goBtn" title="➤">➤</a>
 
-<script src="script.js"></script>
-</body>
-</html>
+  <!-- cała treść strony, input, wyniki itp. -->    <script>  
+    // Twój JS tutaj  
+    function renderResults(list) {  
+      results.innerHTML = "";  
+      if (list.length === 0) {  
+        results.hidden = true;  
+        return;  
+      }  
+      list.forEach(({ label, url }) => {  
+        const el = document.createElement("div");  
+        el.className = "result-item";  
+        el.textContent = label;  
+        el.title = url;  
+        el.addEventListener("click", () => window.open(url, "_blank"));  
+        results.appendChild(el);  
+  
+        setTimeout(() => el.classList.add("show"), 50);  
+      });  
+      results.hidden = false;  
+    }  
+  </script>  </body>  
+  </html>
