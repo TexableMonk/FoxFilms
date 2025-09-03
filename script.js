@@ -243,5 +243,5 @@ randomBtn.addEventListener("click", () => {
 });
 
 document.getElementById("goBtn").addEventListener("click", () => {
-  window.location.href = "https://twoja-strona.pl"; 
+  window.location.href = "https://foxfilms.my.canva.site/foxfilms"; 
 });
