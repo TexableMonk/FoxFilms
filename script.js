@@ -286,7 +286,7 @@ inputField.addEventListener("input", () => {
 
   items.forEach(item => {
     item.classList.remove("pulse-match"); // reset klasy
-    void item.offsetWidth; // wymusza restart animacji
+    void item.offsetWidth; // restart animacji
     if (item.textContent.toLowerCase() === val.toLowerCase() && val !== "") {
       item.classList.add("pulse-match"); // dodajemy animację
     }
