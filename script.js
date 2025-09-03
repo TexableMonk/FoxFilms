@@ -179,6 +179,13 @@ function renderResults(list) {
         el.className = "result-item";
         el.title = url;
 
+if (index === 0) {
+  const emojiSpan = document.createElement("span");
+  emojiSpan.textContent = "🔹";
+  el.appendChild(emojiSpan);
+}
+
+
         const textSpan = document.createElement("span");
         textSpan.textContent = label;
         el.appendChild(textSpan);
@@ -292,10 +299,3 @@ document.querySelectorAll("#goBtn").forEach(btn => {
         setTimeout(() => circle.remove(), 600);
     });
 });
-
-if (index === 0) {
-  const emojiSpan = document.createElement("span");
-  emojiSpan.className = "emoji";
-  emojiSpan.textContent = "🔹";
-  el.appendChild(emojiSpan);
-}
