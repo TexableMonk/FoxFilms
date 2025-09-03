@@ -160,6 +160,7 @@ body.dark-mode .result-item {
   color: white;
   animation: hover-pulse 1s infinite alternate;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background-color: #1a73e8;
 }
 
 @keyframes hover-pulse {
