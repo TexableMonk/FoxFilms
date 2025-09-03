@@ -255,3 +255,16 @@ document.querySelectorAll("#goBtn").forEach(btn => {
     setTimeout(() => circle.remove(), 600); // usuwa falę po animacji
   });
 });
+
+const inputWrapper = document.querySelector(".input-wrapper");
+let expanded = false;
+const originalHeight = inputWrapper.offsetHeight; // aktualna wysokość
+
+window.addEventListener("orientationchange", () => {
+  if (!expanded) {
+    inputWrapper.style.height = originalHeight + 10 + "px";
+  } else {
+    inputWrapper.style.height = originalHeight + "px";
+  }
+  expanded = !expanded;
+});
