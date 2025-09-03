@@ -196,17 +196,20 @@ input.addEventListener("input", e => {
   const val = e.target.value.trim();
   updateClearButton();
 
-  // Filtruj opcje
   const matches = val ? filterOptions(val) : [];
   const shuffled = shuffleArray(matches);
   renderResults(shuffled);
-});
+
+  // Dodawanie blur tylko wewnątrz listenera
+  if (!val || matches.length === 0) {
+    document.body.classList.remove("blur-background");
+  } else {
+    document.body.classList.add("blur-background");
+  }
 
   // --- PODŚWIETLANIE dokładnego matcha ---
-  if (val !== "") {
-    const exactMatch = config.options.find(({ label }) =>
-      (config.caseSensitive ? label : label.toLowerCase()) === (config.caseSensitive ? val : val.toLowerCase())
-    );
+  ...
+});
 
     const items = results.querySelectorAll(".result-item");
     items.forEach(item => {
