@@ -200,7 +200,7 @@ input.addEventListener("input", e => {
   const matches = val ? filterOptions(val) : [];
   const shuffled = shuffleArray(matches);
   renderResults(shuffled);
-)};
+};
 
   // --- PODŚWIETLANIE dokładnego matcha ---
   if (val !== "") {
