@@ -163,26 +163,18 @@ body.dark-mode .result-item {
   background-color: #1a73e8;
 }
 
-.result-item {
-  position: relative;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.icon-container {
+.match-icon {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
   opacity: 0;
-  pointer-events: none; /* nie przeszkadza w klikaniu */
   transition: opacity 0.3s ease;
 }
 
-.result-item:hover .icon-container {
+.result-item:first-child:hover .match-icon {
   opacity: 1;
 }
 
