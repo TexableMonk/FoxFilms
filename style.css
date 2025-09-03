@@ -302,8 +302,9 @@ body.dark-mode .config-line {
 }
 
 
-body:not(.dark-mode) .result-item.pulse-match {
-  animation: pulse-bg 0.6s ease-in-out 2;
+body:not(.dark-mode) .result-item.pulse-match,
+body.dark-mode .result-item.pulse-match {
+  animation: pulse-bg 1s ease-in-out infinite; /* infinite = ciągle */
 }
 
 @keyframes pulse-bg {
