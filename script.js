@@ -242,6 +242,7 @@ randomBtn.addEventListener("click", () => {
   window.open(randomOption.url, "_blank");
 });
 
+// przycisk przenoszący do innej strony
 document.getElementById("goBtn").addEventListener("click", () => {
-  window.location.href = "https://foxfilms.my.canva.site/foxfilms"; 
+  window.location.href = "https://example.com"; // <-- tu wstaw swoją stronę
 });
