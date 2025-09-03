@@ -154,42 +154,34 @@ function renderResults(list) {
   results.innerHTML = "";
   if (list.length === 0) {
     results.hidden = true;
-    document.body.classList.remove("blur-background");
+    document.body.classList.remove('blur-background'); // usuń blur
     return;
   }
 
   list.forEach(({ label, url }, index) => {
     const el = document.createElement("div");
     el.className = "result-item";
+    el.textContent = label;
     el.title = url;
+    el.style.display = "flex";
+    el.style.alignItems = "center";
+    el.addEventListener("click", () => window.open(url, "_blank"));
 
-    // 🔹 zamiast textContent → tworzę <span> na tekst
-    const span = document.createElement("span");
-    span.textContent = label;
-    el.appendChild(span);
-
-    // 🔹 ikona tylko dla pierwszego elementu
     if (index === 0) {
-      const img = document.createElement("img");
-      img.src = "https://cdn.discordapp.com/emojis/925895649629700156.png?size=32";
-      img.alt = "ikona";
-      img.className = "match-icon";
-      img.style.width = "20px";
-      img.style.height = "20px";
-      img.style.marginLeft = "auto"; // spycha obrazek na prawo
-      el.appendChild(img);
-
-      // dla lepszego wyglądu
-      el.style.display = "flex";
-      el.style.alignItems = "center";
+      const span = document.createElement("span");
+      span.textContent = " 🔹";
+      span.style.marginLeft = "auto";
+      el.appendChild(span);
     }
 
-    el.addEventListener("click", () => window.open(url, "_blank"));
     results.appendChild(el);
+    setTimeout(() => el.classList.add("show"), 50);
   });
 
   results.hidden = false;
-  document.body.classList.add("blur-background");
+
+  // Dodaj blur po pojawieniu się wyników
+  document.body.classList.add('blur-background');
 }
 
 function updateClearButton() {
