@@ -154,34 +154,35 @@ function renderResults(list) {
   results.innerHTML = "";
   if (list.length === 0) {
     results.hidden = true;
-    document.body.classList.remove('blur-background'); // usuń blur
     return;
   }
 
   list.forEach(({ label, url }, index) => {
     const el = document.createElement("div");
     el.className = "result-item";
-    el.textContent = label;
     el.title = url;
-    el.style.display = "flex";
-    el.style.alignItems = "center";
-    el.addEventListener("click", () => window.open(url, "_blank"));
 
+    // Tworzymy tekst i emoji
+    const textNode = document.createElement("span");
+    textNode.textContent = label;
+
+    el.appendChild(textNode);
+
+    // Dodajemy emoji 🔹 tylko do pierwszego wyniku
     if (index === 0) {
-      const span = document.createElement("span");
-      span.textContent = " 🔹";
-      span.style.marginLeft = "auto";
-      el.appendChild(span);
+      const emoji = document.createElement("span");
+      emoji.textContent = " 🔹";
+      emoji.style.marginLeft = "auto"; // opcjonalnie przesunięcie
+      el.appendChild(emoji);
     }
 
+    // Event kliknięcia
+    el.addEventListener("click", () => window.open(url, "_blank"));
+
     results.appendChild(el);
-    setTimeout(() => el.classList.add("show"), 50);
   });
 
   results.hidden = false;
-
-  // Dodaj blur po pojawieniu się wyników
-  document.body.classList.add('blur-background');
 }
 
 function updateClearButton() {
