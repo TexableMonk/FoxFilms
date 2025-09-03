@@ -181,6 +181,14 @@ body.dark-mode .result-item {
   opacity: 1;
 }
 
+.result-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* tekst po lewej, emoji obok */
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
 @keyframes hover-pulse {
   0%   { background-color: #1a73e8; }
   100% { background-color: #1557a2; }
