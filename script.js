@@ -258,13 +258,21 @@ document.querySelectorAll("#goBtn").forEach(btn => {
 
 const inputWrapper = document.querySelector(".input-wrapper");
 let expanded = false;
-const originalHeight = inputWrapper.offsetHeight; // aktualna wysokość
+const originalPadding = parseInt(getComputedStyle(inputWrapper).paddingTop); // pobieramy padding-top
 
-window.addEventListener("orientationchange", () => {
-  if (!expanded) {
-    inputWrapper.style.height = originalHeight + 120 + "px";
-  } else {
-    inputWrapper.style.height = originalHeight + "px";
+function checkOrientation() {
+  const isLandscape = window.innerWidth > window.innerHeight;
+  if (isLandscape && !expanded) {
+    inputWrapper.style.paddingTop = (originalPadding + 10) + "px";
+    inputWrapper.style.paddingBottom = (originalPadding + 10) + "px";
+    expanded = true;
+  } else if (!isLandscape && expanded) {
+    inputWrapper.style.paddingTop = originalPadding + "px";
+    inputWrapper.style.paddingBottom = originalPadding + "px";
+    expanded = false;
   }
-  expanded = !expanded;
-});
+}
+
+// wywołujemy przy każdej zmianie rozmiaru ekranu
+window.addEventListener("resize", checkOrientation);
+checkOrientation(); // też przy pierwszym załadowaniu
