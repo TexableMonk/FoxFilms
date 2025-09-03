@@ -277,7 +277,6 @@ document.querySelectorAll("#goBtn").forEach(btn => {
 });
 
 
-// Pulsujący exact match
 const inputField = document.getElementById("input");
 const resultsContainer = document.getElementById("results");
 
@@ -286,7 +285,8 @@ inputField.addEventListener("input", () => {
   const items = resultsContainer.querySelectorAll(".result-item");
 
   items.forEach(item => {
-    item.classList.remove("pulse-match"); // usuwamy starą animację
+    item.classList.remove("pulse-match"); // reset klasy
+    void item.offsetWidth; // wymusza restart animacji
     if (item.textContent.toLowerCase() === val.toLowerCase() && val !== "") {
       item.classList.add("pulse-match"); // dodajemy animację
     }
