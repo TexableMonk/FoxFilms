@@ -200,16 +200,7 @@ input.addEventListener("input", e => {
   const matches = val ? filterOptions(val) : [];
   const shuffled = shuffleArray(matches);
   renderResults(shuffled);
-
-  // Dodawanie/ściąganie blur
-  if (!val || matches.length === 0) {
-    document.body.classList.remove("blur-background");
-  } else {
-    document.body.classList.add("blur-background");
-  }
-
-  // --- PODŚWIETLANIE dokładnego matcha ---
-});
+}
 
   // --- PODŚWIETLANIE dokładnego matcha ---
   if (val !== "") {
