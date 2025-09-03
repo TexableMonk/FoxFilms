@@ -276,9 +276,9 @@ document.querySelectorAll("#goBtn").forEach(btn => {
 });
 
 
-inputField.addEventListener("input", () => {
-  const val = inputField.value.trim();
-  const items = resultsContainer.querySelectorAll(".result-item");
+input.addEventListener("input", () => {
+  const val = input.value.trim();
+  const items = results.querySelectorAll(".result-item"); // <- tutaj używamy results
 
   items.forEach(item => {
     item.classList.remove("pulse-match"); // reset animacji
