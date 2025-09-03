@@ -209,7 +209,6 @@ input.addEventListener("input", e => {
   }
 
   // --- PODŚWIETLANIE dokładnego matcha ---
-  ...
 });
 
   // --- PODŚWIETLANIE dokładnego matcha ---
