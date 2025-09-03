@@ -297,7 +297,7 @@ body.dark-mode .config-line {
 /* Gdy telefon w poziomie (landscape) */
 @media screen and (orientation: landscape) {
   .input-wrapper input[type="search"] {
-    padding-top: 22px; /* zwiększamy o 10px */
-    padding-bottom: 22px; /* zwiększamy o 10px */
+    padding-top: 14px; /* zwiększamy o 10px */
+    padding-bottom: 14px; /* zwiększamy o 10px */
   }
 }
