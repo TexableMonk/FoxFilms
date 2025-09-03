@@ -241,3 +241,8 @@ randomBtn.addEventListener("click", () => {
   // Otwieramy nową kartę z linkiem
   window.open(randomOption.url, "_blank");
 });
+
+// przycisk przenoszący do innej strony
+document.getElementById("goBtn").addEventListener("click", () => {
+  window.location.href = "https://foxfilms.my.canva.site/foxfilms"; // <-- tu wstaw swoją stronę
+});
