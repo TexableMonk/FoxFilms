@@ -181,6 +181,14 @@ body.dark-mode .result-item {
   border-bottom: none;
 }
 
+.result-item {
+  display: flex;
+  align-items: center;
+}
+.match-icon {
+  display: inline-block;
+}
+
 .config-line {
   width: 165px;
   height: 3mm;
