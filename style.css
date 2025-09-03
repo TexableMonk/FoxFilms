@@ -75,13 +75,14 @@ input[type="search"]::-ms-reveal {
   opacity: 95%;
   background-color: #262626;
   border-radius: 50%;
-  box-shadow: 0 6 14px rgba(0, 0, 0);
+  box-shadow: 0 6 14px rgba(0, 0, 0, 0.5);
+}
 
 .toggle-btn:hover {
   padding: 0 8px 6px;
   background-color: #2e2e2e;
   border-radius: 50%;
-}}
+}
 
 
 .search-container.dark .toggle-btn {
