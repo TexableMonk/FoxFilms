@@ -262,7 +262,7 @@ const originalHeight = inputWrapper.offsetHeight; // aktualna wysokość
 
 window.addEventListener("orientationchange", () => {
   if (!expanded) {
-    inputWrapper.style.height = originalHeight + 50 + "px";
+    inputWrapper.style.height = originalHeight + 120 + "px";
   } else {
     inputWrapper.style.height = originalHeight + "px";
   }
