@@ -174,13 +174,33 @@ function updateClearButton() {
 input.addEventListener("input", e => {
   const val = e.target.value.trim();
   updateClearButton();
+
   if (val === "") {
     results.hidden = true;
     return;
   }
+
   const matches = filterOptions(val);
   const shuffled = shuffleArray(matches);
-renderResults(shuffled);
+  renderResults(shuffled);
+
+  // --- DODAJEMY PODŚWIETLENIE DOKŁADNEGO MATCHA ---
+  const exactMatch = config.options.find(({ label }) =>
+    (config.caseSensitive ? label : label.toLowerCase()) === (config.caseSensitive ? val : val.toLowerCase())
+  );
+
+  if (exactMatch) {
+    const items = results.querySelectorAll(".result-item");
+    items.forEach(item => {
+      if (item.textContent === exactMatch.label) {
+        item.style.backgroundColor = "#1a73e8";
+        item.style.color = "white";
+      } else {
+        item.style.backgroundColor = "";
+        item.style.color = "";
+      }
+    });
+  }
 });
 
 clearBtn.addEventListener("click", () => {
