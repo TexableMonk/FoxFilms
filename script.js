@@ -175,30 +175,39 @@ input.addEventListener("input", e => {
   const val = e.target.value.trim();
   updateClearButton();
 
-  if (val === "") {
-    results.hidden = true;
-    return;
-  }
-
-  const matches = filterOptions(val);
+  // Filtruj opcje
+  const matches = val ? filterOptions(val) : [];
   const shuffled = shuffleArray(matches);
   renderResults(shuffled);
 
-  // --- DODAJEMY PODŚWIETLENIE DOKŁADNEGO MATCHA ---
-  const exactMatch = config.options.find(({ label }) =>
-    (config.caseSensitive ? label : label.toLowerCase()) === (config.caseSensitive ? val : val.toLowerCase())
-  );
+  // --- PODŚWIETLANIE dokładnego matcha ---
+  if (val !== "") {
+    const exactMatch = config.options.find(({ label }) =>
+      (config.caseSensitive ? label : label.toLowerCase()) === (config.caseSensitive ? val : val.toLowerCase())
+    );
 
-  if (exactMatch) {
     const items = results.querySelectorAll(".result-item");
     items.forEach(item => {
-      if (item.textContent === exactMatch.label) {
-        item.style.color = "white";
-      } else {
-        item.style.backgroundColor = "";
-        item.style.color = "";
+      // reset animacji
+      item.classList.remove("pulse-match"); 
+      item.style.backgroundColor = "";
+      item.style.color = "";
+
+      // jeśli exact match
+      if (exactMatch && item.textContent === exactMatch.label) {
+        // dodaj klasę pulsującą
+        item.classList.add("pulse-match");
+
+        // kolor dla trybu light/dark
+        if (document.body.classList.contains("dark-mode")) {
+          item.style.color = "white"; // dark-mode
+        } else {
+          item.style.color = "white"; // light-mode
+        }
       }
     });
+  } else {
+    results.hidden = true;
   }
 });
 
@@ -275,16 +284,3 @@ document.querySelectorAll("#goBtn").forEach(btn => {
   });
 });
 
-
-input.addEventListener("input", () => {
-  const val = input.value.trim();
-  const items = results.querySelectorAll(".result-item"); // <- tutaj używamy results
-
-  items.forEach(item => {
-    item.classList.remove("pulse-match"); // reset animacji
-    void item.offsetWidth; // restart animacji
-    if (item.textContent.toLowerCase() === val.toLowerCase() && val !== "") {
-      item.classList.add("pulse-match"); // dodajemy animację
-    }
-  });
-});
