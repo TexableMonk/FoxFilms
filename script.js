@@ -154,6 +154,8 @@ function renderResults(list) {
   results.innerHTML = "";
   if (list.length === 0) {
     results.hidden = true;
+
+document.body.classList.remove('blur-background');
     return;
   }
 
@@ -298,7 +300,3 @@ document.querySelectorAll("#goBtn").forEach(btn => {
     setTimeout(() => circle.remove(), 600); // usuwa falę po animacji
   });
 });
-
-
-if (list.length) document.body.classList.add('blur-background');
-else document.body.classList.remove('blur-background');
