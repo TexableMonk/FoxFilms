@@ -276,3 +276,24 @@ document.querySelectorAll("#goBtn").forEach(btn => {
   });
 });
 
+
+// Exact match highlight z animacją
+const inputField = document.getElementById("input");
+const resultsContainer = document.getElementById("results");
+
+inputField.addEventListener("input", () => {
+  const val = inputField.value.trim();
+  const items = resultsContainer.querySelectorAll(".result-item");
+
+  items.forEach(item => {
+    if (item.textContent.toLowerCase() === val.toLowerCase() && val !== "") {
+      item.style.transition = "background-color 0.3s ease";
+      item.style.backgroundColor = "#1a73e8";
+      item.style.color = "white";
+    } else {
+      item.style.transition = "background-color 0.3s ease";
+      item.style.backgroundColor = "";
+      item.style.color = "";
+    }
+  });
+});
