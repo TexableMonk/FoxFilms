@@ -256,29 +256,3 @@ document.querySelectorAll("#goBtn").forEach(btn => {
   });
 });
 
-const input = document.querySelector(".input-wrapper input[type='search']");
-let expanded = false;
-
-// Pobieramy aktualny padding inputa
-const originalPaddingTop = parseInt(getComputedStyle(input).paddingTop);
-const originalPaddingBottom = parseInt(getComputedStyle(input).paddingBottom);
-
-function adjustSearchBar() {
-  const isLandscape = window.innerWidth > window.innerHeight;
-
-  if (isLandscape && !expanded) {
-    input.style.paddingTop = (originalPaddingTop + 10) + "px";
-    input.style.paddingBottom = (originalPaddingBottom + 10) + "px";
-    expanded = true;
-  } else if (!isLandscape && expanded) {
-    input.style.paddingTop = originalPaddingTop + "px";
-    input.style.paddingBottom = originalPaddingBottom + "px";
-    expanded = false;
-  }
-}
-
-// Wywołujemy przy zmianie rozmiaru ekranu
-window.addEventListener("resize", adjustSearchBar);
-
-// Od razu sprawdzamy przy ładowaniu strony
-adjustSearchBar();
