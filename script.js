@@ -1,4 +1,6 @@
-const rawConfigLines1 = [
+document.addEventListener("DOMContentLoaded", () => {
+
+  const rawConfigLines1 = [
     "(Spiderman universum)[https://vider.info/vid/+fx5nxvx]",
     "(Spiderman poprzez universum)[https://vider.info/vid/+fe8ce5s]",
     "(Spiderman homecoming)[https://vider.info/vid/+fncxx8e-]",
@@ -92,9 +94,9 @@ const rawConfigLines1 = [
     "(Gry dru i minionki)[https://vider.info/vid/+fx58scm]",
     "(Minionki wejście gru)[https://vider.info/vid/+fe8xcec]",
     "(Minionki pod przykrywką)[https://vider.info/vid/+fe8xc1n]"
-];
+  ];
 
-const rawConfigLines2 = [
+  const rawConfigLines2 = [
     "(Serial Kiepscy)[https://www.swiatwedlugkiepskich.pl/]",
     "(Świat według Kiepskich)[https://www.swiatwedlugkiepskich.pl/]",
     "(Świat według Bundych)[https://vider.info/dir/+dxxecx]",
@@ -110,188 +112,157 @@ const rawConfigLines2 = [
     "(Teoria wielkiego podrywu)[https://vider.info/dir/+dnecx]",
     "(Różowe lata)[https://vider.info/dir/+dxc1m8]",
     "(8 prostch zasad)[https://vider.info/dir/+dnv15x]"
-];
+  ];
 
-let usingAlt = false;
+  let usingAlt = false;
 
-function parseLines(lines) {
-  return lines.map(line => {
-    const match = line.match(/^\((.+?)\)\[(https?:\/\/.+?)\]$/);
-    return match ? { label: match[1], url: match[2] } : null;
-  }).filter(Boolean);
-}
+  const input = document.getElementById("input");
+  const results = document.getElementById("results");
+  const clearBtn = document.getElementById("clearBtn");
+  const searchContainer = document.getElementById("searchContainer");
+  const toggleBtn = document.getElementById("toggleBtn");
+  const configToggle = document.getElementById("configToggle");
+  const randomBtn = document.getElementById("randomBtn");
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
+  let config = {
+    options: parseLines(rawConfigLines1),
+    maxResults: 7,
+    caseSensitive: false
+  };
 
-let config = {
-  options: parseLines(rawConfigLines1),
-  maxResults: 7,
-  caseSensitive: false
-};
-
-const input = document.getElementById("input");
-const results = document.getElementById("results");
-const clearBtn = document.getElementById("clearBtn");
-const searchContainer = document.getElementById("searchContainer");
-const toggleBtn = document.getElementById("toggleBtn");
-const configToggle = document.getElementById("configToggle");
-
-function filterOptions(query) {
-  if (!query) return [];
-  const search = config.caseSensitive ? query : query.toLowerCase();
-  return config.options.filter(({ label }) =>
-    (config.caseSensitive ? label : label.toLowerCase()).includes(search)
-  ).slice(0, config.maxResults);
-}
-
-function renderResults(list) {
-  results.innerHTML = ""; // czyścimy poprzednie wyniki
-
-  // Jeśli lista jest pusta – ukrywamy wyniki i usuwamy blur
-  if (list.length === 0) {
-    results.hidden = true;
-    document.body.classList.remove("blur-background");
-    return;
+  function parseLines(lines) {
+    return lines.map(line => {
+      const match = line.match(/^(.+?)(https?:\/\/.+?)$/);
+      return match ? { label: match[1], url: match[2] } : null;
+    }).filter(Boolean);
   }
 
-  list.forEach(({ label, url }, index) => {
-    const el = document.createElement("div");
-    el.className = "result-item";
-    el.title = url;
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
-    // Tworzymy span z tekstem
-    const textSpan = document.createElement("span");
-    textSpan.textContent = label;
-    el.appendChild(textSpan);
+  function filterOptions(query) {
+    if (!query) return [];
+    const search = config.caseSensitive ? query : query.toLowerCase();
+    return config.options.filter(({ label }) =>
+      (config.caseSensitive ? label : label.toLowerCase()).includes(search)
+    ).slice(0, config.maxResults);
+  }
 
-    // Dodajemy emoji 🔹 tylko do pierwszego wyniku
-    if (index === 0) {
-      const emojiSpan = document.createElement("span");
-      emojiSpan.textContent = " 🔹";
-      emojiSpan.style.marginLeft = "8px"; // odstęp
-      el.appendChild(emojiSpan);
+  function renderResults(list) {
+    results.innerHTML = "";
+
+    if (list.length === 0) {
+      results.hidden = true;
+      document.body.classList.remove("blur-background");
+      return;
     }
 
-    // Kliknięcie otwiera link
-    el.addEventListener("click", () => window.open(url, "_blank"));
+    list.forEach(({ label, url }, index) => {
+      const el = document.createElement("div");
+      el.className = "result-item";
+      el.title = url;
 
-    results.appendChild(el);
-  });
+      const textSpan = document.createElement("span");
+      textSpan.textContent = label;
+      el.appendChild(textSpan);
 
-  results.hidden = false;
-  document.body.classList.add("blur-background"); // dodajemy blur do tła
-}
+      if (index === 0) {
+        const emojiSpan = document.createElement("span");
+        emojiSpan.textContent = " 🔹";
+        emojiSpan.style.marginLeft = "8px";
+        el.appendChild(emojiSpan);
+      }
 
-function updateClearButton() {
-  clearBtn.style.display = input.value.trim() ? "block" : "none";
-}
+      el.addEventListener("click", () => window.open(url, "_blank"));
+      results.appendChild(el);
+    });
 
-input.addEventListener("input", e => {
-  const val = e.target.value.trim();
-  updateClearButton();
-
-  const matches = val ? filterOptions(val) : [];
-  const shuffled = shuffleArray(matches);
-  renderResults(shuffled);
-
-  // Blur
-  if (!val || matches.length === 0) {
-    document.body.classList.remove("blur-background");
-  } else {
+    results.hidden = false;
     document.body.classList.add("blur-background");
   }
 
-  // --- Highlight exact match ---
-  const exactMatch = matches.find(m => m.label === val);
-  const items = results.querySelectorAll(".result-item");
-  items.forEach(item => {
-    item.classList.remove("pulse-match"); 
-    item.style.backgroundColor = "";
-    item.style.color = "";
+  function updateClearButton() {
+    clearBtn.style.display = input.value.trim() ? "block" : "none";
+  }
 
-    if (exactMatch && item.textContent === exactMatch.label) {
-      item.classList.add("pulse-match");
-      item.style.color = document.body.classList.contains("dark-mode") ? "white" : "white";
+  input.addEventListener("input", e => {
+    const val = e.target.value.trim();
+    updateClearButton();
+
+    const matches = val ? filterOptions(val) : [];
+    const shuffled = shuffleArray(matches);
+    renderResults(shuffled);
+
+    if (!val || matches.length === 0) {
+      document.body.classList.remove("blur-background");
+    } else {
+      document.body.classList.add("blur-background");
+    }
+
+    const exactMatch = matches.find(m => m.label === val);
+    const items = results.querySelectorAll(".result-item");
+    items.forEach(item => {
+      item.classList.remove("pulse-match");
+      item.style.backgroundColor = "";
+      item.style.color = "";
+
+      if (exactMatch && item.textContent === exactMatch.label) {
+        item.classList.add("pulse-match");
+        item.style.color = "white";
+      }
+    });
+  });
+
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    input.focus();
+    results.hidden = true;
+    clearBtn.style.display = "none";
+  });
+
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".search-container")) {
+      results.hidden = true;
     }
   });
-});
 
-clearBtn.addEventListener("click", () => {
-  input.value = "";
-  input.focus();
-  results.hidden = true;
-  clearBtn.style.display = "none";
-});
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    searchContainer.classList.toggle("dark");
+  });
 
-document.addEventListener("click", e => {
-  if (!e.target.closest(".search-container")) {
-    results.hidden = true;
+  configToggle.addEventListener("click", () => {
+    usingAlt = !usingAlt;
+    const rawLines = usingAlt ? rawConfigLines2 : rawConfigLines1;
+    config.options = parseLines(rawLines);
+    input.dispatchEvent(new Event("input"));
+  });
+
+  if (randomBtn) {
+    randomBtn.addEventListener("click", () => {
+      const options = parseLines(rawConfigLines1);
+      const randomIndex = Math.floor(Math.random() * options.length);
+      const randomOption = options[randomIndex];
+      window.open(randomOption.url, "_blank");
+    });
   }
-});
 
-// Tryb incognito
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-  searchContainer.classList.toggle("dark");
-});
+  document.addEventListener("click", function(e) {
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple');
 
-// Przełączanie kategorii
-configToggle.addEventListener("click", () => {
-  usingAlt = !usingAlt;
-  const rawLines = usingAlt ? rawConfigLines2 : rawConfigLines1;
-  config.options = parseLines(rawLines);
-  input.dispatchEvent(new Event("input"));
-});
+    const size = 100;
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.pageX - size / 2) + 'px';
+    ripple.style.top = (e.pageY - size / 2) + 'px';
+    document.body.appendChild(ripple);
 
-document.addEventListener('click', function(e) {
-  const ripple = document.createElement('span');
-  ripple.classList.add('ripple');
-
-  // Ustawiamy wielkość koła, np. 100px na 100px
-  const size = 100;
-  ripple.style.width = ripple.style.height = size + 'px';
-
-  // Pozycja koła względem kliknięcia, przesunięta o połowę rozmiaru, żeby był środek w kliknięciu
-  ripple.style.left = (e.pageX - size / 2) + 'px';
-  ripple.style.top = (e.pageY - size / 2) + 'px';
-
-  document.body.appendChild(ripple);
-
-  // Po zakończeniu animacji usuwamy element
-  ripple.addEventListener('animationend', () => {
-    ripple.remove();
+    ripple.addEventListener('animationend', () => ripple.remove());
   });
-});
 
-const randomBtn = document.getElementById("randomBtn");
-
-randomBtn.addEventListener("click", () => {
-  // Parsujemy rawConfigLines1 na obiekty
-  const options = parseLines(rawConfigLines1);
-  // Losujemy indeks
-  const randomIndex = Math.floor(Math.random() * options.length);
-  const randomOption = options[randomIndex];
-  // Otwieramy nową kartę z linkiem
-  window.open(randomOption.url, "_blank");
-});
-
-document.querySelectorAll("#goBtn").forEach(btn => {
-  btn.addEventListener("click", function (e) {
-    const circle = document.createElement("span");
-    circle.classList.add("ripple");
-    const rect = this.getBoundingClientRect();
-    circle.style.left = `${e.clientX - rect.left}px`;
-    circle.style.top = `${e.clientY - rect.top}px`;
-
-    this.appendChild(circle);
-
-    setTimeout(() => circle.remove(), 600); // usuwa falę po animacji
-  });
-});
-
+  document.querySelectorAll("#go
