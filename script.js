@@ -151,7 +151,7 @@ function filterOptions(query) {
 }
 
 function renderResults(list) {
-  results.innerHTML = "";
+  results.innerHTML = ""; // czyścimy poprzednie wyniki
   if (list.length === 0) {
     results.hidden = true;
     return;
@@ -162,21 +162,20 @@ function renderResults(list) {
     el.className = "result-item";
     el.title = url;
 
-    // Tworzymy tekst i emoji
-    const textNode = document.createElement("span");
-    textNode.textContent = label;
-
-    el.appendChild(textNode);
+    // Tworzymy span z tekstem
+    const textSpan = document.createElement("span");
+    textSpan.textContent = label;
+    el.appendChild(textSpan);
 
     // Dodajemy emoji 🔹 tylko do pierwszego wyniku
     if (index === 0) {
-      const emoji = document.createElement("span");
-      emoji.textContent = " 🔹";
-      emoji.style.marginLeft = "auto"; // opcjonalnie przesunięcie
-      el.appendChild(emoji);
+      const emojiSpan = document.createElement("span");
+      emojiSpan.textContent = " 🔹";
+      emojiSpan.style.marginLeft = "8px"; // odstęp
+      el.appendChild(emojiSpan);
     }
 
-    // Event kliknięcia
+    // Kliknięcie otwiera link
     el.addEventListener("click", () => window.open(url, "_blank"));
 
     results.appendChild(el);
