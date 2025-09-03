@@ -286,18 +286,17 @@ body.dark-mode .config-line {
 /* Standardowy input */
 .input-wrapper input[type="search"] {
   width: 100%;
-  padding: 12px 20px; /* domyślny padding */
+  padding: 12px 36px 12px 36px; /* górny, prawy, dolny, lewy */
   font-size: 16px;
   border-radius: 12px;
   border: none;
   box-sizing: border-box;
-  transition: padding 0.3s ease; /* animacja dla płynnej zmiany */
+  transition: padding 0.3s ease; /* płynna zmiana */
 }
 
-/* Gdy telefon w poziomie (landscape) */
+/* Landscape – input większy, placeholder w tym samym miejscu */
 @media screen and (orientation: landscape) {
   .input-wrapper input[type="search"] {
-    padding-top: 14px; /* zwiększamy o 10px */
-    padding-bottom: 14px; /* zwiększamy o 10px */
+    padding: 22px 36px 22px 36px; /* zwiększamy tylko góra/dół, lewo/prawo pozostają */
   }
 }
