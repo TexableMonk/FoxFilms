@@ -152,6 +152,12 @@ body.dark-mode .result-item {
 .result-item:hover {
   background-color: #1a73e8;
   color: white;
+  animation: hover-pulse 1s infinite alternate;
+}
+
+@keyframes hover-pulse {
+  0%   { background-color: #1a73e8; }
+  100% { background-color: #1557a2; }
 }
 
 .result-item:last-child {
