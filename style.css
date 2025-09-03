@@ -1,3 +1,6 @@
+/* =====================
+   BODY & OGÓLNE
+===================== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -14,6 +17,9 @@ body.dark-mode {
   background-color: #1a1a1a;
 }
 
+/* =====================
+   SEARCH / INPUT
+===================== */
 .search-container {
   max-width: 320px;
   margin: 150px auto 10px;
@@ -29,24 +35,22 @@ body.dark-mode {
   box-shadow: 0 0 20px 6px rgba(255, 255, 255, 0.4);
 }
 
-/* NOWY kontener kontrolujący szerokość inputa */
 .input-wrapper {
-  width: 85%; /* tu ustaw szerokość paska wyszukiwania */
+  width: 85%;
   margin: 0 auto;
 }
 
-/* input rozciąga się na cały input-wrapper */
 .input-wrapper input[type="search"] {
   width: 100%;
-  padding: 5px 20px 5px 13px;
+  padding: 12px 36px 12px 36px;
   font-size: 16px;
-  border: none;
-  background-color: white;
-  color: #000000;
   border-radius: 12px;
+  border: none;
   box-sizing: border-box;
   outline: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: white;
+  color: #000;
+  transition: background-color 0.3s ease, color 0.3s ease, padding 0.3s ease;
 }
 
 .search-container.dark .input-wrapper input[type="search"] {
@@ -60,6 +64,9 @@ input[type="search"]::-ms-reveal {
   display: none;
 }
 
+/* =====================
+   TOGGLE / CLEAR BUTTONS
+===================== */
 .toggle-btn {
   position: absolute;
   left: 5px;
@@ -81,9 +88,7 @@ input[type="search"]::-ms-reveal {
 .toggle-btn:hover {
   padding: 0 8px 6px;
   background-color: #2e2e2e;
-  border-radius: 50%;
 }
-
 
 .search-container.dark .toggle-btn {
   color: #1a73e8;
@@ -110,14 +115,15 @@ input[type="search"]::-ms-reveal {
   z-index: 2;
 }
 
-
-
 .search-container.dark .clear-btn {
   background-color: #ddd;
   color: #222;
   box-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
 }
 
+/* =====================
+   RESULTS / LISTA WYNIKÓW
+===================== */
 .results {
   position: absolute;
   top: 45px;
@@ -144,11 +150,22 @@ body.dark-mode .results {
 }
 
 .result-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   padding: 10px 20px;
   color: white;
   cursor: pointer;
   border-bottom: 1px solid #ccc;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.result-item.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 body.dark-mode .result-item {
@@ -157,44 +174,31 @@ body.dark-mode .result-item {
 }
 
 .result-item:hover {
-  background-color: #1a73e8;
-  color: white;
   animation: hover-pulse 1s infinite alternate;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  background-color: #1a73e8;
 }
 
-.match-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  margin-left: auto;
-  flex-shrink: 0;
+.result-item:last-child {
+  border-bottom: none;
 }
 
-.result-item:first-child:hover .match-icon {
-  opacity: 1;
-}
-
-.result-item {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* tekst po lewej, emoji obok */
-  padding: 10px 20px;
-  cursor: pointer;
-  position: relative;
-}
-
+/* emoji / match highlight */
 .result-item .emoji {
   position: absolute;
-  right: 10px;  /* albo gdzie chcesz */
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+body:not(.dark-mode) .result-item.pulse-match,
+body.dark-mode .result-item.pulse-match {
+  animation: pulse-bg 1s ease-in-out infinite;
+}
+
+@keyframes pulse-bg {
+  0%   { background-color: #1a73e8; }
+  50%  { background-color: #1558b0; }
+  100% { background-color: #1a73e8; }
 }
 
 @keyframes hover-pulse {
@@ -202,20 +206,9 @@ body.dark-mode .result-item {
   100% { background-color: #1557a2; }
 }
 
-.result-item:active {
-  transform: scale(0.97);
-  transition: transform 0.1s ease;
-}
-
-.result-item {
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.result-item:last-child {
-  border-bottom: none;
-}
-
-
+/* =====================
+   CONFIG / KATEGORIE
+===================== */
 .config-line {
   width: 165px;
   height: 3mm;
@@ -228,6 +221,24 @@ body.dark-mode .result-item {
 
 body.dark-mode .config-line {
   background-color: #2e2e2e;
+}
+
+/* =====================
+   BUTTONS – RANDOM / GO
+===================== */
+#randomBtn {
+  position: fixed;
+  bottom: 10px;
+  left: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);
+  font-weight: 900;
+  z-index: 9999;
 }
 
 #goBtn {
@@ -249,11 +260,14 @@ body.dark-mode .config-line {
   align-items: center;
   justify-content: center;
 }
+
 #goBtn:hover {
   background-color: #f0f0f0;
 }
 
-/* --- STYLE TEKSTÓW FOXFILM --- */
+/* =====================
+   TEKSTY FOXFILM
+===================== */
 .FoxFilm-text {
   text-align: center;
   font-size: 24px;
@@ -278,7 +292,9 @@ body.dark-mode .config-line {
   color: #1a1a1a;
 }
 
-/* --- DOPASOWANIE DO TELEFONU --- */
+/* =====================
+   MEDIA QUERIES
+===================== */
 @media (max-width: 768px) {
   .search-container {
     margin: 80px auto 10px;
@@ -286,7 +302,7 @@ body.dark-mode .config-line {
   }
 
   .input-wrapper {
-    width: 95%; /* na telefonie szerzej */
+    width: 95%;
   }
 
   .input-wrapper input[type="search"] {
@@ -315,14 +331,21 @@ body.dark-mode .config-line {
   }
 }
 
-/* Dla komputerów – minimalna szerokość ekranu 1024px */
 @media (min-width: 1024px) {
   .toggle-btn {
-    font-size: calc(20px - 2mm); /* zmniejszamy o 4mm */
+    font-size: calc(20px - 2mm);
   }
 }
 
-/* Styl koła ripple */
+@media screen and (orientation: landscape) {
+  .input-wrapper input[type="search"] {
+    padding: 12px 36px 12px 36px;
+  }
+}
+
+/* =====================
+   RIPPLE EFFECT
+===================== */
 .ripple {
   position: absolute;
   border-radius: 50%;
@@ -338,46 +361,4 @@ body.dark-mode .config-line {
     transform: scale(2.5);
     opacity: 0;
   }
-}
-
-
-/* Standardowy input */
-.input-wrapper input[type="search"] {
-  width: 100%;
-  padding: 12px 36px 12px 36px; /* górny, prawy, dolny, lewy */
-  font-size: 16px;
-  border-radius: 12px;
-  border: none;
-  box-sizing: border-box;
-  transition: padding 0.3s ease; /* płynna zmiana */
-}
-
-/* Landscape – input większy, placeholder w tym samym miejscu */
-@media screen and (orientation: landscape) {
-  .input-wrapper input[type="search"] {
-    padding: 12px 36px 12px 36px; /* zwiększamy tylko góra/dół, lewo/prawo pozostają */
-  }
-}
-
-
-body:not(.dark-mode) .result-item.pulse-match,
-body.dark-mode .result-item.pulse-match {
-  animation: pulse-bg 1s ease-in-out infinite;
-}
-
-@keyframes pulse-bg {
-  0%   { background-color: #1a73e8; }   /* standardowy niebieski */
-  50%  { background-color: #1558b0; }   /* ciemniejszy niebieski */
-  100% { background-color: #1a73e8; }   /* wraca do standardowego */
-}
-
-.result-item {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.result-item.show {
-  opacity: 1;
-  transform: translateY(0);
 }
