@@ -200,37 +200,28 @@ input.addEventListener("input", e => {
   const shuffled = shuffleArray(matches);
   renderResults(shuffled);
 
-  // Dodawanie blur tylko wewnątrz listenera
+  // Blur
   if (!val || matches.length === 0) {
     document.body.classList.remove("blur-background");
   } else {
     document.body.classList.add("blur-background");
   }
 
-  // --- PODŚWIETLANIE dokładnego matcha ---
-  ...
+  // --- Highlight exact match ---
+  const exactMatch = matches.find(m => m.label === val);
+  const items = results.querySelectorAll(".result-item");
+  items.forEach(item => {
+    item.classList.remove("pulse-match"); 
+    item.style.backgroundColor = "";
+    item.style.color = "";
+
+    if (exactMatch && item.textContent === exactMatch.label) {
+      item.classList.add("pulse-match");
+      item.style.color = document.body.classList.contains("dark-mode") ? "white" : "white";
+    }
+  });
 });
 
-    const items = results.querySelectorAll(".result-item");
-    items.forEach(item => {
-      // reset animacji
-      item.classList.remove("pulse-match"); 
-      item.style.backgroundColor = "";
-      item.style.color = "";
-
-      // jeśli exact match
-      if (exactMatch && item.textContent === exactMatch.label) {
-        // dodaj klasę pulsującą
-        item.classList.add("pulse-match");
-
-        // kolor dla trybu light/dark
-        if (document.body.classList.contains("dark-mode")) {
-          item.style.color = "white"; // dark-mode
-        } else {
-          item.style.color = "white"; // light-mode
-        }
-      }
-    });
   } else {
     results.hidden = true;
 }
