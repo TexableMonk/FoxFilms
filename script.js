@@ -230,8 +230,7 @@ input.addEventListener("input", e => {
     });
   } else {
     results.hidden = true;
-  }
-);
+}
 
 clearBtn.addEventListener("click", () => {
   input.value = "";
