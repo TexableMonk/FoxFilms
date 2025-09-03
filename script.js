@@ -154,34 +154,42 @@ function renderResults(list) {
   results.innerHTML = "";
   if (list.length === 0) {
     results.hidden = true;
-
-document.body.classList.remove('blur-background');
+    document.body.classList.remove("blur-background");
     return;
   }
 
   list.forEach(({ label, url }, index) => {
     const el = document.createElement("div");
     el.className = "result-item";
-    el.textContent = label;
     el.title = url;
-    el.addEventListener("click", () => window.open(url, "_blank"));
 
-    // ikona tylko do pierwszego wyniku
+    // 🔹 zamiast textContent → tworzę <span> na tekst
+    const span = document.createElement("span");
+    span.textContent = label;
+    el.appendChild(span);
+
+    // 🔹 ikona tylko dla pierwszego elementu
     if (index === 0) {
       const img = document.createElement("img");
       img.src = "https://cdn.discordapp.com/emojis/925895649629700156.png?size=32";
+      img.alt = "ikona";
       img.className = "match-icon";
       img.style.width = "20px";
       img.style.height = "20px";
-      img.style.marginLeft = "auto";
+      img.style.marginLeft = "auto"; // spycha obrazek na prawo
+      el.appendChild(img);
+
+      // dla lepszego wyglądu
       el.style.display = "flex";
       el.style.alignItems = "center";
-      el.appendChild(img);
     }
 
+    el.addEventListener("click", () => window.open(url, "_blank"));
     results.appendChild(el);
   });
+
   results.hidden = false;
+  document.body.classList.add("blur-background");
 }
 
 function updateClearButton() {
