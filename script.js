@@ -241,3 +241,17 @@ randomBtn.addEventListener("click", () => {
   // Otwieramy nową kartę z linkiem
   window.open(randomOption.url, "_blank");
 });
+
+document.querySelectorAll("#goBtn").forEach(btn => {
+  btn.addEventListener("click", function (e) {
+    const circle = document.createElement("span");
+    circle.classList.add("ripple");
+    const rect = this.getBoundingClientRect();
+    circle.style.left = `${e.clientX - rect.left}px`;
+    circle.style.top = `${e.clientY - rect.top}px`;
+
+    this.appendChild(circle);
+
+    setTimeout(() => circle.remove(), 600); // usuwa falę po animacji
+  });
+});
