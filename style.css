@@ -163,6 +163,29 @@ body.dark-mode .result-item {
   background-color: #1a73e8;
 }
 
+.result-item {
+  position: relative;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.icon-container {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none; /* nie przeszkadza w klikaniu */
+  transition: opacity 0.3s ease;
+}
+
+.result-item:hover .icon-container {
+  opacity: 1;
+}
+
 @keyframes hover-pulse {
   0%   { background-color: #1a73e8; }
   100% { background-color: #1557a2; }
