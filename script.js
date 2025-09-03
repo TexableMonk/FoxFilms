@@ -292,3 +292,10 @@ document.querySelectorAll("#goBtn").forEach(btn => {
         setTimeout(() => circle.remove(), 600);
     });
 });
+
+if (index === 0) {
+  const emojiSpan = document.createElement("span");
+  emojiSpan.className = "emoji";
+  emojiSpan.textContent = "🔹";
+  el.appendChild(emojiSpan);
+}
