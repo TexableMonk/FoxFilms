@@ -284,3 +284,6 @@ document.querySelectorAll("#goBtn").forEach(btn => {
   });
 });
 
+
+if (list.length) document.body.classList.add('blur-background');
+else document.body.classList.remove('blur-background');
