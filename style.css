@@ -302,8 +302,12 @@ body.dark-mode .config-line {
 }
 
 
-@keyframes pulse-shadow {
-  0% { box-shadow: 0 0 0px rgba(26, 115, 232, 0.7); transform: scale(1); }
-  50% { box-shadow: 0 0 10px 3px rgba(26, 115, 232, 1); transform: scale(1.03); }
-  100% { box-shadow: 0 0 0px rgba(26, 115, 232, 0.7); transform: scale(1); }
+body:not(.dark-mode) .result-item.pulse-match {
+  animation: pulse-bg 0.6s ease-in-out 2;
+}
+
+@keyframes pulse-bg {
+  0%   { background-color: #1a73e8; }
+  50%  { background-color: #3a93ff; }
+  100% { background-color: #1a73e8; }
 }
