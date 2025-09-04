@@ -241,30 +241,6 @@ body.dark-mode .config-line {
   z-index: 9999;
 }
 
-#goBtn {
-  position: fixed;
-  bottom: 10px;
-  right: 15px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background-color: white;
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#goBtn:hover {
-  background-color: #f0f0f0;
-}
-
 /* =====================
    FAB MENU (prawy dół)
 ===================== */
