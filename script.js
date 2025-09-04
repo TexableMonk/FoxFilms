@@ -303,17 +303,16 @@ document.querySelectorAll("#goBtn").forEach(btn => {
 });
 
 // =====================
-// FAB MENU
+// FAQ MENU z dziurą
 // =====================
+
 const fabBtn = document.getElementById("fabBtn");
 const fabLinks = document.getElementById("fabLinks");
 
+let menuOpen = false;
+
 fabBtn.addEventListener("click", () => {
-  if (fabLinks.style.display === "flex") {
-    fabLinks.style.display = "none";
-    fabBtn.textContent = "≡"; // wraca do hamburgera
-  } else {
-    fabLinks.style.display = "flex";
-    fabBtn.textContent = "×"; // zamykanie
-  }
+  menuOpen = !menuOpen;
+  fabBtn.classList.toggle("active", menuOpen);
+  fabLinks.classList.toggle("show", menuOpen);
 });
