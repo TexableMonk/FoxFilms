@@ -242,64 +242,110 @@ body.dark-mode .config-line {
 }
 
 /* =====================
-   FAB MENU (prawy dół)
+   FAQ MENU Z WYCIĘCIEM
 ===================== */
-.fab-menu {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-}
 
 .fab-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background-color: #1a73e8;
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: white;
   color: white;
-  font-size: 24px;
-  font-weight: bold;
+  border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  position: relative;
-  z-index: 2;
-  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(184, 184, 184, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  z-index: 9999; /* zawsze na wierzchu */
 }
 
-.fab-btn:hover {
-  background-color: #1557a2;
+/* paski burgera */
+.fab-btn .bar {
+  width: 24px;
+  height: 3px;
+  background: black;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
-.fab-links {
-  position: absolute;
-  bottom: 70px; /* nad przyciskiem */
-  right: 0;
-  display: none;
+/* animacja burger → X */
+.fab-btn.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.fab-btn.active .bar:nth-child(2) {
+  opacity: 0;
+}
+.fab-btn.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+  .fab-links {
+  position: fixed;
+  bottom: 5px; /* menu pod przyciskiem */
+  right: 10px;
+  background: #2e2e2e;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: flex;
   flex-direction: column;
   gap: 10px;
-  background: rgba(255,255,255,0.9);
-  padding: 12px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  width: 80px;
+  text-align: center;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1; /* pod przyciskiem */
 }
 
+/* menu pokazane */
+.fab-links.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* linki */
 .fab-links a {
-  color: #1a1a1a;
   text-decoration: none;
-  font-weight: 600;
-  padding: 6px 10px;
+  color: black;
+  font-weight: 900;
+  padding: 6px;
   border-radius: 8px;
-  transition: background 0.3s ease;
+  transition: background 0.2s;
+  background-color: #2e2e2e;
 }
 
 .fab-links a:hover {
-  background: #e6e6e6;
+  background: #f0f0f0;
+}
+
+.fab-links button {
+  width: 120px;
+  padding: 12px 0px;
+  background-color: #5a5a5a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: -5px;
+  transform: translateX(-20px);
+}
+
+.fab-links button:hover {
+  background-color: #444;
 }
 
 /* =====================
    TEKSTY FOXFILM
 ===================== */
+
 .FoxFilm-text {
   text-align: center;
   font-size: 24px;
