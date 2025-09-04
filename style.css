@@ -266,6 +266,62 @@ body.dark-mode .config-line {
 }
 
 /* =====================
+   FAB MENU (prawy dół)
+===================== */
+.fab-menu {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.fab-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background-color: #1a73e8;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.fab-btn:hover {
+  background-color: #1557a2;
+}
+
+.fab-links {
+  position: absolute;
+  bottom: 70px; /* nad przyciskiem */
+  right: 0;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255,255,255,0.9);
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.fab-links a {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.fab-links a:hover {
+  background: #e6e6e6;
+}
+
+/* =====================
    TEKSTY FOXFILM
 ===================== */
 .FoxFilm-text {
