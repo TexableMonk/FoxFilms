@@ -114,7 +114,8 @@ const rawConfigLines2 = [
 "(Teoria wielkiego podrywu)[https://vider.info/dir/+dnecx]",
 "(Różowe lata)[https://vider.info/dir/+dxc1m8]",
 "(8 prostch zasad)[https://vider.info/dir/+dnv15x]",
-"(Pingwiny z Madagaskaru)[https://vider.info/dir/+dns1x8sx]"
+"(Pingwiny z Madagaskaru)[https://vider.info/dir/+dns1x8sx]",
+"(Niech żyje król Julian)[https://vider.info/dir/+dnx8nnsv]"
 ];
 
 // =======================
