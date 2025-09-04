@@ -174,6 +174,7 @@ function renderResults(list) {
     if (list.length === 0) {
         results.hidden = true;
         document.body.classList.remove("blur-background");
+el.classList.add("result-item", "show");
         return;
     }
     list.forEach(({ label, url }, index) => {
