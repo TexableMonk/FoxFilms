@@ -177,33 +177,23 @@ function renderResults(list) {
 el.classList.add("result-item", "show");
         return;
     }
-    list.forEach(({ label, url }, index) => {
-        const el = document.createElement("div");
-        el.className = "result-item";
-        el.title = url;
 
-if (index === 0) {
-  const emojiSpan = document.createElement("span");
-  emojiSpan.textContent = "🔹";
-  el.appendChild(emojiSpan);
-}
+list.forEach(({ label, url }, index) => {
+    const el = document.createElement("div");
+    el.className = "result-item";
+    el.title = url;
 
+    const textSpan = document.createElement("span");
+    textSpan.textContent = label;
+    el.appendChild(textSpan);
 
-        const textSpan = document.createElement("span");
-        textSpan.textContent = label;
-        el.appendChild(textSpan);
+    el.addEventListener("click", () => window.open(url, "_blank"));
 
-        if (index === 0) {
-            const emojiSpan = document.createElement("span");
-            emojiSpan.textContent = " 🔹";
-            emojiSpan.style.marginLeft = "8px";
-            el.appendChild(emojiSpan);
-        }
+    results.appendChild(el);
 
-        el.addEventListener("click", () => window.open(url, "_blank"));
-
-        results.appendChild(el);
-    });
+    // efekt slide
+    setTimeout(() => el.classList.add("show"), 50);
+});
     results.hidden = false;
     document.body.classList.add("blur-background");
 }
