@@ -301,3 +301,19 @@ document.querySelectorAll("#goBtn").forEach(btn => {
         setTimeout(() => circle.remove(), 600);
     });
 });
+
+// =====================
+// FAB MENU
+// =====================
+const fabBtn = document.getElementById("fabBtn");
+const fabLinks = document.getElementById("fabLinks");
+
+fabBtn.addEventListener("click", () => {
+  if (fabLinks.style.display === "flex") {
+    fabLinks.style.display = "none";
+    fabBtn.textContent = "≡"; // wraca do hamburgera
+  } else {
+    fabLinks.style.display = "flex";
+    fabBtn.textContent = "×"; // zamykanie
+  }
+});
