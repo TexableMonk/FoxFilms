@@ -307,3 +307,34 @@ fabBtn.addEventListener("click", () => {
   fabBtn.classList.toggle("active", menuOpen);
   fabLinks.classList.toggle("show", menuOpen);
 });
+
+
+
+// =====================
+// Animacje
+// =====================
+
+function vibrateElement(el) {
+  el.classList.add("shake");
+  setTimeout(() => {
+    el.classList.remove("shake");
+  }, 400);
+}
+
+// Random button
+document.getElementById("randomBtn").addEventListener("click", () => {
+  vibrateElement(document.getElementById("randomBtn"));
+});
+
+// Menu button (burger)
+document.querySelector(".fab-btn").addEventListener("click", () => {
+  vibrateElement(document.querySelector(".fab-btn"));
+  vibrateElement(document.querySelector(".fab-links"));
+});
+
+// Każdy link w menu fab
+document.querySelectorAll(".fab-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    vibrateElement(link);
+  });
+});
