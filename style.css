@@ -453,3 +453,49 @@ body.dark-mode .config-line {
     opacity: 0;
   }
 }
+
+
+/* =====================
+   Animacje
+===================== */
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+
+
+
+.fab-links button {
+  transition: transform 0.2s ease;
+  display: inline-block;
+  transform-origin: center;
+  transform: translateX(-20px); /* stałe przesunięcie startowe */
+}
+
+/* hover wywołuje animację wibracji + skali */
+.fab-links button:hover {
+  animation: vibrate-scale 0.8s ease-in-out;
+}
+
+@keyframes vibrate-scale {
+  0%   { transform: translateX(-20px) rotate(0deg) scale(1); }
+  10%  { transform: translateX(-20px) rotate(7deg) scale(1.15); }
+  20%  { transform: translateX(-20px) rotate(-7deg) scale(1.15); }
+  30%  { transform: translateX(-20px) rotate(6deg) scale(1.15); }
+  40%  { transform: translateX(-20px) rotate(-6deg) scale(1.15); }
+  50%  { transform: translateX(-20px) rotate(5deg) scale(1.15); }
+  60%  { transform: translateX(-20px) rotate(-5deg) scale(1.15); }
+  70%  { transform: translateX(-20px) rotate(4deg) scale(1.15); }
+  80%  { transform: translateX(-20px) rotate(-4deg) scale(1.15); }
+  90%  { transform: translateX(-20px) rotate(2deg) scale(1.15); }
+  100% { transform: translateX(-20px) rotate(0deg) scale(1); }
+}
