@@ -515,7 +515,7 @@ body.dark-mode .config-line {
 
 / Nie zawracaj se gitary, co to w ogóle jest:
 
-#cookie-info-box {
+.cookie-info-box {
   position: fixed;
   top: 50%;
   left: 50%;
