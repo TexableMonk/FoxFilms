@@ -361,20 +361,25 @@ document.querySelectorAll(".fab-links a").forEach(link => {
 // Nie zawracaj se gitary, co to w ogóle jest:
 
 document.addEventListener('DOMContentLoaded', () => {
-    const cookieConsent = document.getElementById('cookie-consent');
-    const acceptBtn = document.getElementById('accept-cookies-btn');
+  const welcomeMessage = document.getElementById('welcome-message');
+  const closeBtn = document.getElementById('close-btn');
 
-    if (cookieConsent && 'showModal' in cookieConsent) {
-        const hasAccepted = localStorage.getItem('cookies-accepted');
+  // Sprawdź, czy wiadomość była już zamknięta
+  const hasBeenClosed = localStorage.getItem('welcome-message-closed');
 
-        if (!hasAccepted) {
-            cookieConsent.showModal();
-        }
+  if (hasBeenClosed) {
+    welcomeMessage.style.display = 'none'; // Ukryj, jeśli była już zamknięta
+  } else {
+    welcomeMessage.style.display = 'block'; // Pokaż, jeśli to pierwsza wizyta
+  }
 
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookies-accepted', 'true');
-            cookieConsent.close();
-        });
-    }
+  // Obsługa kliknięcia przycisku "Zamknij"
+  closeBtn.addEventListener('click', () => {
+    // Ukryj wiadomość
+    welcomeMessage.classList.add('hidden');
+
+    // Zapisz stan w pamięci przeglądarki
+    localStorage.setItem('welcome-message-closed', 'true');
+  });
 });
 
