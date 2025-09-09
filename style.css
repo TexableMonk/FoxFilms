@@ -522,7 +522,7 @@ body.dark-mode .config-line {
   transform: translate(-50%, -50%);
   width: 450px;
   height: 450px;
-  background-color: white;
+  background-color: #2e2e2e;
   padding: 40px;
   border-radius: 40px; 
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
