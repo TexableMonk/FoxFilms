@@ -368,14 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasAccepted = localStorage.getItem('cookies-accepted');
 
     if (!hasAccepted) {
-        // Jeśli nie ma zgody, pokaż okienko
-        cookieConsent.classList.add('visible');
+        // Jeśli nie ma zgody, pokaż okienko, usuwając atrybut hidden
+        cookieConsent.hidden = false;
     }
 
     acceptBtn.addEventListener('click', () => {
         // Zapisz zgodę w Local Storage
         localStorage.setItem('cookies-accepted', 'true');
-        // Ukryj okienko, usuwając klasę 'visible'
-        cookieConsent.classList.remove('visible');
+        // Ukryj okienko, dodając atrybut hidden
+        cookieConsent.hidden = true;
     });
 });
