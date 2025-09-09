@@ -520,14 +520,14 @@ body.dark-mode .config-line {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10000;
-  width: 400px;
-  height: 400px; /* Wymuszenie kształtu kwadratu */
+  width: 450px;
+  height: 450px;
   background-color: white;
   padding: 40px;
-  border-radius: 40px; /* Bardzo zaokrąglone rogi */
+  border-radius: 40px; 
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  display: flex; /* Użycie flexbox do centrowania treści */
+  z-index: 10000;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -541,21 +541,30 @@ body.dark-mode .config-line {
   pointer-events: none;
 }
 
-.info-content h2 {
+.info-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h2 {
   color: #1a1a1a;
   margin-top: 0;
   font-size: 2rem;
   font-weight: bold;
 }
 
-.info-content p {
+p {
   color: #555;
   font-size: 1.1rem;
   line-height: 1.5;
   margin-bottom: 25px;
 }
 
-.accept-cookies-btn {
+#accept-cookies-btn {
   background-color: #1a73e8;
   color: white;
   border: none;
@@ -567,7 +576,7 @@ body.dark-mode .config-line {
   transition: background-color 0.3s ease;
 }
 
-.accept-cookies-btn:hover {
+#accept-cookies-btn:hover {
   background-color: #1558b0;
 }
 
