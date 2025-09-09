@@ -364,19 +364,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const infoBox = document.getElementById('cookie-info-box');
   const acceptBtn = document.getElementById('accept-cookies-btn');
 
-  // Sprawdź, czy użytkownik już kliknął przycisk
   const hasAccepted = localStorage.getItem('cookies-accepted');
 
   if (hasAccepted) {
     infoBox.style.display = 'none';
   }
 
-  // Obsługa kliknięcia przycisku
   acceptBtn.addEventListener('click', () => {
-    // Ukryj okienko z animacją
     infoBox.classList.add('hidden');
     
-    // Zapisz stan w pamięci przeglądarki, aby okienko nie pojawiło się ponownie
     localStorage.setItem('cookies-accepted', 'true');
   });
 });
