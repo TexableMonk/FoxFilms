@@ -338,3 +338,42 @@ document.querySelectorAll(".fab-links a").forEach(link => {
     vibrateElement(link);
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nie zawracaj se gitary, co to w ogóle jest:
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cookieConsent = document.getElementById('cookie-consent');
+    const acceptBtn = document.getElementById('accept-cookies-btn');
+
+    // Sprawdź, czy użytkownik już zaakceptował cookies
+    const hasAccepted = localStorage.getItem('cookies-accepted');
+
+    if (!hasAccepted) {
+        cookieConsent.style.display = 'block';
+    }
+
+    acceptBtn.addEventListener('click', () => {
+        // Zapisz zgodę w Local Storage
+        localStorage.setItem('cookies-accepted', 'true');
+        cookieConsent.style.display = 'none';
+    });
+});
