@@ -358,7 +358,7 @@ document.querySelectorAll(".fab-links a").forEach(link => {
 
 
 
-Nie zawracaj se gitary, co to w ogóle jest:
+// Nie zawracaj se gitary, co to w ogóle jest:
 
 document.addEventListener('DOMContentLoaded', () => {
     const cookieConsent = document.getElementById('cookie-consent');
