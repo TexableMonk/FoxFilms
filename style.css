@@ -521,14 +521,18 @@ body.dark-mode .config-line {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000;
-  width: 90%;
-  max-width: 500px; /* Duży kwadrat */
+  width: 400px;
+  height: 400px; /* Wymuszenie kształtu kwadratu */
   background-color: white;
-  padding: 40px; /* Większe wypełnienie */
-  border-radius: 20px; /* Bardzo zaokrąglone rogi */
+  padding: 40px;
+  border-radius: 40px; /* Bardzo zaokrąglone rogi */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex; /* Użycie flexbox do centrowania treści */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  font-family: Arial, sans-serif; /* Prosta czcionka */
+  font-family: Arial, sans-serif;
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
