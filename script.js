@@ -361,19 +361,20 @@ document.querySelectorAll(".fab-links a").forEach(link => {
 // Nie zawracaj se gitary, co to w ogóle jest:
 
 document.addEventListener('DOMContentLoaded', () => {
-  const infoBox = document.getElementById('cookie-info-box');
-  const acceptBtn = document.getElementById('accept-cookies-btn');
+    const infoBox = document.getElementById('cookie-info-box');
+    const acceptBtn = document.getElementById('accept-cookies-btn');
+  
+    const hasAccepted = localStorage.getItem('cookies-accepted');
+  
+    if (hasAccepted) {
+        infoBox.style.display = 'none';
+    } else {
+        infoBox.style.display = 'block';
+    }
 
-  const hasAccepted = localStorage.getItem('cookies-accepted');
-
-  if (hasAccepted) {
-    infoBox.style.display = 'none';
-  }
-
-  acceptBtn.addEventListener('click', () => {
-    infoBox.classList.add('hidden');
-    
-    localStorage.setItem('cookies-accepted', 'true');
-  });
+    acceptBtn.addEventListener('click', () => {
+        infoBox.classList.add('hidden');
+        localStorage.setItem('cookies-accepted', 'true');
+    });
 });
 
