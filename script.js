@@ -364,15 +364,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const cookieConsent = document.getElementById('cookie-consent');
     const acceptBtn = document.getElementById('accept-cookies-btn');
 
-    const hasAccepted = localStorage.getItem('cookies-accepted');
+    if (cookieConsent && 'showModal' in cookieConsent) {
+        const hasAccepted = localStorage.getItem('cookies-accepted');
 
-    if (!hasAccepted) {
-        cookieConsent.classList.add('visible');
+        if (!hasAccepted) {
+            cookieConsent.showModal();
+        }
+
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookies-accepted', 'true');
+            cookieConsent.close();
+        });
     }
-
-    acceptBtn.addEventListener('click', () => {
-        localStorage.setItem('cookies-accepted', 'true');
-        cookieConsent.classList.remove('visible');
-    });
 });
 
