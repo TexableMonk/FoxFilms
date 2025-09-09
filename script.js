@@ -361,25 +361,23 @@ document.querySelectorAll(".fab-links a").forEach(link => {
 // Nie zawracaj se gitary, co to w ogóle jest:
 
 document.addEventListener('DOMContentLoaded', () => {
-  const welcomeMessage = document.getElementById('welcome-message');
-  const closeBtn = document.getElementById('close-btn');
+  const infoBox = document.getElementById('cookie-info-box');
+  const acceptBtn = document.getElementById('accept-cookies-btn');
 
-  // Sprawdź, czy wiadomość była już zamknięta
-  const hasBeenClosed = localStorage.getItem('welcome-message-closed');
+  // Sprawdź, czy użytkownik już kliknął przycisk
+  const hasAccepted = localStorage.getItem('cookies-accepted');
 
-  if (hasBeenClosed) {
-    welcomeMessage.style.display = 'none'; // Ukryj, jeśli była już zamknięta
-  } else {
-    welcomeMessage.style.display = 'block'; // Pokaż, jeśli to pierwsza wizyta
+  if (hasAccepted) {
+    infoBox.style.display = 'none';
   }
 
-  // Obsługa kliknięcia przycisku "Zamknij"
-  closeBtn.addEventListener('click', () => {
-    // Ukryj wiadomość
-    welcomeMessage.classList.add('hidden');
-
-    // Zapisz stan w pamięci przeglądarki
-    localStorage.setItem('welcome-message-closed', 'true');
+  // Obsługa kliknięcia przycisku
+  acceptBtn.addEventListener('click', () => {
+    // Ukryj okienko z animacją
+    infoBox.classList.add('hidden');
+    
+    // Zapisz stan w pamięci przeglądarki, aby okienko nie pojawiło się ponownie
+    localStorage.setItem('cookies-accepted', 'true');
   });
 });
 
