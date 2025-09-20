@@ -363,9 +363,9 @@ document.querySelectorAll(".fab-links a").forEach(link => {
 document.addEventListener('DOMContentLoaded', () => {
     const infoBox = document.getElementById('cookie-info-box');
     const acceptBtn = document.getElementById('accept-cookies-btn');
-  
+
     const hasAccepted = localStorage.getItem('cookies-accepted');
-  
+
     if (hasAccepted) {
         infoBox.style.display = 'none';
     } else {
@@ -377,4 +377,3 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('cookies-accepted', 'true');
     });
 });
-
