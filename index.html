@@ -1,36 +1,110 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <!-- =====================
-       META & HEAD
-  ===================== -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>FoxFilms – Najlepsze filmy online</title>
-  <meta name="description" content="FoxFilms to kolekcja najlepszych filmów online. Oglądaj szybko, bez reklam i w doskonałej jakości po polsku.">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.ico">
-  <link rel="icon" href="https://cdn.discordapp.com/emojis/880831924761940028.png?size=32" type="image/png">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoxFilms – Loading + Strona</title>
+<style>
+/* ===================== */
+/* LOADER SCREEN         */
+/* ===================== */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  overflow: hidden;
+}
 
+/* Loader overlay */
+#loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  z-index: 9999;
+}
+
+#loader .logo {
+  font-size: 50px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 40px;
+  text-shadow: 3px 3px 4px rgba(200,200,200,0.7);
+  animation: pulse 2.5s infinite;
+}
+
+#loader .line {
+  position: relative;
+  width: 55vw;
+  height: 3px;
+  background: #2e2e2e;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#loader .fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #000000 0%, #001144 30%, #00aaff 100%);
+  box-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 40px #00aaff;
+  animation: fillBar 3.9s forwards;
+}
+
+#loader .glow {
+  position: absolute;
+  top: 59.9%;
+  left: -40px;
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(to left, #00aaff, transparent);
+  transform: translateY(-50%);
+  border-radius: 2px;
+  filter: drop-shadow(0 -3px 8px #00aaff)
+          drop-shadow(0 3px 8px #0230c7)
+          drop-shadow(0 0 12px #0230c7);
+  animation: moveGlow 2.6s linear forwards;
+}
+
+@keyframes moveGlow { 0% { left: 20px; } 100% { left: 48vw; } }
+@keyframes fillBar { to { width: 100%; } }
+@keyframes pulse { 0%,100%{ text-shadow: 0 0 10px #00aaff;} 50%{ text-shadow: 0 0 20px #00aaff; } }
+
+/* ===================== */
+/* MAIN CONTENT           */
+/* ===================== */
+#mainContent {
+  display: none;
+  overflow-x: hidden;
+}
+</style>
+</head>
 <body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="logo">⽎</div>
+  <div class="line">
+    <div class="fill"></div>
+  </div>
+  <div class="glow"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
   <!-- =====================
        SEARCH CONTAINER
   ===================== -->
   <div class="search-container" id="searchContainer">
-
-    <!-- TOGGLE BUTTON (TRYB INCOGNITO) -->
     <div class="toggle-btn" id="toggleBtn" title="Tryb incognito">⽎</div>
-
-    <!-- INPUT -->
     <div class="input-wrapper">
       <input type="search" id="input" placeholder="Wpisz, aby wyszukać..." autocomplete="off" />
     </div>
-
-    <!-- CLEAR BUTTON -->
     <div class="clear-btn" id="clearBtn" title="Wyczyść">x</div>
-
-    <!-- RESULTS -->
     <div id="results" class="results" hidden></div>
   </div>
 
@@ -43,100 +117,65 @@
        FOXFILM TEXTS
   ===================== -->
   <div class="FoxFilm-text"># FoxFilms</div>
-  <div class="FoxFilm-akapit1-text">
-    Wszystkie filmy, z podanych linków nie są naszą własnością!
-  </div>
-  <div class="FoxFilm-akapit2-text">
-    Wszyscy użytkownicy biorą odpowiedzialność za siebie poprzez oglądanie filmów, z nie certyfikowanych stron. Samo oglądanie, może nie być legalne!
-  </div>
-  <div class="FoxFilm-akapit3-text">
-    Copyright © 08 08 2025 FoxFilms search bar
-  </div>
+  <div class="FoxFilm-akapit1-text">Wszystkie filmy, z podanych linków nie są naszą własnością!</div>
+  <div class="FoxFilm-akapit2-text">Wszyscy użytkownicy biorą odpowiedzialność za siebie poprzez oglądanie filmów, z nie certyfikowanych stron. Samo oglądanie, może nie być legalne!</div>
+  <div class="FoxFilm-akapit3-text">Copyright © 08 08 2025 FoxFilms search bar</div>
 
   <!-- =====================
        BUTTONS
   ===================== -->
-  <!-- LOSOWY FILM -->
-  <button id="randomBtn" title="losowy film" style="
-    position: fixed;
-    bottom: 10px;
-    left: 15px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(26, 115, 232, 0.6);
-    font-weight: 900;
-    z-index: 9999;
-  ">⟳</button>
+  <button id="randomBtn" title="losowy film">⟳</button>
 
   <!-- =====================
-       FAQ MENU
+       FAQ MENU (HAMBURGER)
   ===================== -->
-
-<div class="fab-menu">
-  <!-- Główny przycisk menu -->
-  <button id="fabBtn" class="fab-btn">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-  </button>
-
-  <!-- Przyciski linków -->
-  <div class="fab-links" id="fabLinks">
-    <button onclick="window.open('https://foxfilms.my.canva.site/foxfilms')">Strona główna</button>
-    <button onclick="window.open('#')">Forum</button>
-    <button onclick="window.open('#')">Discord</button>
-    <button onclick="window.open('https://foxfilm-forum.webnode.page/')">FAQ</button>
+  <div class="fab-menu">
+    <button id="fabBtn" class="fab-btn">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <div class="fab-links" id="fabLinks">
+      <button onclick="window.open('https://foxfilms.my.canva.site/foxfilms')">Strona główna</button>
+      <button onclick="window.open('#')">Forum</button>
+      <button onclick="window.open('#')">Discord</button>
+      <button onclick="window.open('https://foxfilm-forum.webnode.page/')">FAQ</button>
+    </div>
   </div>
+
+  <!-- Tutaj wklejasz resztę HTML, np. cookie box itp. -->
+
 </div>
 
+<script>
+// =====================
+// Loader → main content
+// =====================
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  const main = document.getElementById("mainContent");
 
-  <!-- =====================
-       Privacy Policy
-  ===================== -->
+  setTimeout(() => {
+    loader.style.opacity = 0;
+    loader.style.transition = "opacity 0.5s ease";
+    setTimeout(() => {
+      loader.style.display = "none";
+      main.style.display = "block";
+    }, 500);
+  }, 4000);
+});
 
-<div id="cookie-info-box" class="cookie-info-box">
-  <div class="info-content">
-    <h2>Ta strona używa Plików Cookies</h2>
-    <p>Zgodnie z ustawieniem UE musimy używać cookies, ale oświadczamy, że nie zbieramy waszych danych.</p>
-    <button id="accept-cookies-btn">Rozumiem</button>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-  <!-- =====================
-       JS: RENDER RESULTS
-  ===================== -->
-  <script src="script.js"></script>
-  <script>
-    // Twój JS tutaj
-    function renderResults(list) {
-      results.innerHTML = "";
-      if (list.length === 0) {
-        results.hidden = true;
-        return;
-      }
-      list.forEach(({ label, url }) => {
-        const el = document.createElement("div");
-        el.className = "result-item";
-        el.textContent = label;
-        el.title = url;
-        el.addEventListener("click", () => window.open(url, "_blank"));
-        results.appendChild(el);
-
-        setTimeout(() => el.classList.add("show"), 50);
-      });
-      results.hidden = false;
-    }
-  </script>
+// =====================
+// FAB MENU
+// =====================
+const fabBtn = document.getElementById("fabBtn");
+const fabLinks = document.getElementById("fabLinks");
+let menuOpen = false;
+fabBtn.addEventListener("click", () => {
+  menuOpen = !menuOpen;
+  fabBtn.classList.toggle("active", menuOpen);
+  fabLinks.classList.toggle("show", menuOpen);
+});
+</script>
 </body>
 </html>
