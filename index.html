@@ -150,36 +150,8 @@ body {
 
 </div>
 
-<script>
-// =====================
-// Loader → main content
-// =====================
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  const main = document.getElementById("mainContent");
 
-  setTimeout(() => {
-    loader.style.opacity = 0;
-    loader.style.transition = "opacity 0.5s ease";
-    setTimeout(() => {
-      loader.style.display = "none";
-      main.style.display = "block";
-    }, 500);
-  }, 4000);
-});
-
-// =====================
-// FAB MENU
-// =====================
-const fabBtn = document.getElementById("fabBtn");
-const fabLinks = document.getElementById("fabLinks");
-let menuOpen = false;
-fabBtn.addEventListener("click", () => {
-  menuOpen = !menuOpen;
-  fabBtn.classList.toggle("active", menuOpen);
-  fabLinks.classList.toggle("show", menuOpen);
-});
-</script>
+<script src="/script.js" defer></script>
 
 </body>
 </html>
