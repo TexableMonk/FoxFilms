@@ -2,6 +2,9 @@
 // Konfiguracja linków
 // =======================
 
+document.addEventListener("DOMContentLoaded", () => {
+    // cały Twój kod tutaj
+
 const rawConfigLines1 = [
 "(Spiderman universum)[https://vider.info/vid/+fx5nxvx]",
 "(Spiderman poprzez universum)[https://vider.info/vid/+fe8ce5s]",
@@ -376,4 +379,5 @@ document.addEventListener('DOMContentLoaded', () => {
         infoBox.classList.add('hidden');
         localStorage.setItem('cookies-accepted', 'true');
     });
+});
 });
