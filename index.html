@@ -8,6 +8,8 @@
   style-src 'self' 'unsafe-inline';
   trusted-types myPolicy;
 ">
+el.innerHTML = trustedTypes.myPolicy.createHTML('<strong>bezpieczny HTML</strong>');
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FoxFilms – Loading + Strona</title>
 <link rel="stylesheet" href="style.css?v=1.0">
