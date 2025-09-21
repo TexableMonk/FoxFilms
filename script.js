@@ -25,13 +25,26 @@ function shuffleArray(array) {
 // =======================
 // KONFIGURACJA SEARCH
 // =======================
+// inicjalizacja config.options
 let config = {
-  options: parseLines(rawConfigLines1),
-  maxResults: 7,
-  caseSensitive: false
+    options: parseLines(window.rawConfigLines1), // <- to samo co random
+    maxResults: 7,
+    caseSensitive: false
 };
 
-let usingAlt = false;
+// przy przełączaniu kategorii
+configToggle?.addEventListener("click", () => {
+    usingAlt = !usingAlt;
+    config.options = parseLines(usingAlt ? window.rawConfigLines2 : window.rawConfigLines1);
+    input.dispatchEvent(new Event("input")); // odśwież wyniki
+});
+
+// przy wpisywaniu
+input.addEventListener("input", e => {
+    const val = e.target.value.trim();
+    const matches = filterOptions(val); // korzysta z config.options
+    renderResults(matches);
+});
 
 // =======================
 // TRUSTED TYPES BEZPIECZEŃSTWO
