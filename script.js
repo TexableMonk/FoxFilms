@@ -1,16 +1,16 @@
 // =======================
-// KONFIGURACJA LINKÓW
+// KONFIGURACJA
 // =======================
-const rawConfigLines1 = window.rawConfigLines1 || [];
-const rawConfigLines2 = window.rawConfigLines2 || [];
+
+const rawConfigLines1 = window.rawConfigLines1;
+const rawConfigLines2 = window.rawConfigLines2;
+
+let usingAlt = false;
 
 function parseLines(lines) {
     return lines.map(line => {
-        const splitIndex = line.indexOf(")[");
-        if (splitIndex === -1) return null;
-        const label = line.slice(1, splitIndex);
-        const url = line.slice(splitIndex + 2, -1);
-        return { label, url };
+        const match = line.match(/^\((.+?)\)\[(https?:\/\/[^\]]+)\]$/);
+        return match ? { label: match[1], url: match[2] } : null;
     }).filter(Boolean);
 }
 
@@ -22,52 +22,36 @@ function shuffleArray(array) {
     return array;
 }
 
-// =======================
-// KONFIGURACJA SEARCH
-// =======================
-// inicjalizacja config.options
 let config = {
-    options: parseLines(window.rawConfigLines1), // <- to samo co random
+    options: parseLines(rawConfigLines1),
     maxResults: 7,
     caseSensitive: false
 };
 
-// przy przełączaniu kategorii
-configToggle?.addEventListener("click", () => {
-    usingAlt = !usingAlt;
-    config.options = parseLines(usingAlt ? window.rawConfigLines2 : window.rawConfigLines1);
-    input.dispatchEvent(new Event("input")); // odśwież wyniki
-});
-
-// przy wpisywaniu
-input.addEventListener("input", e => {
-    const val = e.target.value.trim();
-    const matches = filterOptions(val); // korzysta z config.options
-    renderResults(matches);
-});
-
 // =======================
-// TRUSTED TYPES BEZPIECZEŃSTWO
+// BEZPIECZEŃSTWO
 // =======================
+
 if (window.trustedTypes) {
-  window.trustedTypes.createPolicy('myPolicy', {
-    createHTML: input => {
-      if (/script|iframe|object|embed/i.test(input)) {
-        console.warn('Niebezpieczne HTML zablokowane:', input);
-        return '';
-      }
-      return input;
-    },
-    createScript: () => {
-      console.warn('Skrypty inline blokowane przez Trusted Types');
-      return null;
-    }
-  });
+    window.trustedTypes.createPolicy('myPolicy', {
+        createHTML: (input) => {
+            if (/script|iframe|object|embed/i.test(input)) {
+                console.warn('Niebezpieczne HTML zablokowane:', input);
+                return '';
+            }
+            return input;
+        },
+        createScript: (input) => {
+            console.warn('Inline script zablokowany przez Trusted Types');
+            return null;
+        }
+    });
 }
 
 // =======================
-// DOM ELEMENTY
+// DOM
 // =======================
+
 const input = document.getElementById("input");
 const results = document.getElementById("results");
 const clearBtn = document.getElementById("clearBtn");
@@ -79,15 +63,15 @@ const fabBtn = document.getElementById("fabBtn");
 const fabLinks = document.getElementById("fabLinks");
 
 // =======================
-// FILTR I RENDER
+// FILTRACJA
 // =======================
+
 function filterOptions(query) {
     if (!query) return [];
     const search = config.caseSensitive ? query : query.toLowerCase();
-    const filtered = config.options.filter(({ label }) =>
+    return config.options.filter(({ label }) =>
         (config.caseSensitive ? label : label.toLowerCase()).includes(search)
-    );
-    return shuffleArray(filtered).slice(0, config.maxResults);
+    ).slice(0, config.maxResults);
 }
 
 function renderResults(list) {
@@ -124,13 +108,15 @@ function updateClearButton() {
 // =======================
 // EVENTY SEARCH
 // =======================
+
 if (input && results && clearBtn) {
     input.addEventListener("input", e => {
         const val = e.target.value.trim();
         updateClearButton();
 
         const matches = val ? filterOptions(val) : [];
-        renderResults(matches);
+        const shuffled = shuffleArray(matches);
+        renderResults(shuffled);
 
         const exactMatch = matches.find(m => m.label === val);
         const items = results.querySelectorAll(".result-item");
@@ -153,13 +139,13 @@ if (input && results && clearBtn) {
     });
 }
 
-// Kliknięcie poza search bar
-document.addEventListener("click", e => {
-    if (!e.target.closest(".search-container")) {
-        results.hidden = true;
-    }
+// =======================
+// CLICK OUTSIDE + RIPPLE
+// =======================
 
-    // ripple effect
+document.addEventListener("click", e => {
+    if (!e.target.closest(".search-container")) results.hidden = true;
+
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
     const size = 100;
@@ -171,60 +157,57 @@ document.addEventListener("click", e => {
 });
 
 // =======================
-// DARK MODE TOGGLE
+// TOGGLE DARK MODE
 // =======================
-if (toggleBtn && searchContainer) {
-    toggleBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        searchContainer.classList.toggle("dark");
-    });
-}
+
+toggleBtn?.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    searchContainer.classList.toggle("dark");
+});
 
 // =======================
-// ZMIANA KATEGORII
+// PRZEŁĄCZANIE KATEGORII
 // =======================
-if (configToggle) {
-    configToggle.addEventListener("click", () => {
-        usingAlt = !usingAlt;
-        config.options = parseLines(usingAlt ? rawConfigLines2 : rawConfigLines1);
-        input.dispatchEvent(new Event("input"));
-    });
-}
+
+configToggle?.addEventListener("click", () => {
+    usingAlt = !usingAlt;
+    config.options = parseLines(usingAlt ? rawConfigLines2 : rawConfigLines1);
+    input.dispatchEvent(new Event("input"));
+});
 
 // =======================
-// LOSOWY FILM
+// RANDOM BUTTON
 // =======================
-if (randomBtn) {
-    randomBtn.addEventListener("click", () => {
-        const options = parseLines(rawConfigLines1);
-        const randomIndex = Math.floor(Math.random() * options.length);
-        const randomOption = options[randomIndex];
-        window.open(randomOption.url, "_blank");
-        vibrateElement(randomBtn);
-    });
-}
+
+randomBtn?.addEventListener("click", () => {
+    const options = parseLines(rawConfigLines1);
+    const randomIndex = Math.floor(Math.random() * options.length);
+    const randomOption = options[randomIndex];
+    window.open(randomOption.url, "_blank");
+    vibrateElement(randomBtn);
+});
 
 // =======================
 // FAQ MENU
 // =======================
+
 let menuOpen = false;
-if (fabBtn && fabLinks) {
-    fabBtn.addEventListener("click", () => {
-        menuOpen = !menuOpen;
-        fabBtn.classList.toggle("active", menuOpen);
-        fabLinks.classList.toggle("show", menuOpen);
-        vibrateElement(fabBtn);
-        vibrateElement(fabLinks);
-    });
+fabBtn?.addEventListener("click", () => {
+    menuOpen = !menuOpen;
+    fabBtn.classList.toggle("active", menuOpen);
+    fabLinks.classList.toggle("show", menuOpen);
+    vibrateElement(fabBtn);
+    vibrateElement(fabLinks);
+});
 
-    fabLinks.querySelectorAll("button").forEach(link => {
-        link.addEventListener("click", () => vibrateElement(link));
-    });
-}
+fabLinks?.querySelectorAll("button").forEach(link => {
+    link.addEventListener("click", () => vibrateElement(link));
+});
 
 // =======================
-// FUNKCJE POMOCNICZE
+// ANIMACJE
 // =======================
+
 function vibrateElement(el) {
     el.classList.add("shake");
     setTimeout(() => el.classList.remove("shake"), 400);
@@ -233,6 +216,7 @@ function vibrateElement(el) {
 // =======================
 // LOADER → MAIN CONTENT
 // =======================
+
 window.addEventListener("load", () => {
     const loader = document.getElementById("loader");
     const main = document.getElementById("mainContent");
