@@ -4,15 +4,10 @@
 
 if (window.trustedTypes) {
   window.trustedTypes.createPolicy('myPolicy', {
-    createHTML: (input) => {
-      return input;
-    },
-    createScript: (input) => {
-      return input;
-    }
+    createHTML: (input) => input,
+    createScript: (input) => input
   });
 }
-
 
 
 
