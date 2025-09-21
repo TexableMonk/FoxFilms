@@ -1,4 +1,4 @@
-window.rawConfigLines1 = [
+export const rawConfigLines1 = [
   "(Spiderman universum)[https://vider.info/vid/+fx5nxvx]",
 "(Spiderman poprzez universum)[https://vider.info/vid/+fe8ce5s]",
 "(Spiderman homecoming)[https://vider.info/vid/+fncxx8e-]",
@@ -94,7 +94,7 @@ window.rawConfigLines1 = [
 "(Minionki pod przykrywką)[https://vider.info/vid/+fe8xc1n]"
 ];
 
-window.rawConfigLines2 = [
+export const rawConfigLines2 = [
 "(Serial Kiepscy)[https://www.swiatwedlugkiepskich.pl/]",
 "(Świat według Kiepskich)[https://www.swiatwedlugkiepskich.pl/]",
 "(Świat według Bundych)[https://vider.info/dir/+dxxecx]",
