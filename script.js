@@ -156,6 +156,8 @@ const searchContainer = document.getElementById("searchContainer");
 const toggleBtn = document.getElementById("toggleBtn");
 const configToggle = document.getElementById("configToggle");
 const randomBtn = document.getElementById("randomBtn");
+const fabBtn = document.getElementById("fabBtn");
+const fabLinks = document.getElementById("fabLinks");
 
 // =======================
 // Filtry i wyniki
@@ -174,26 +176,25 @@ function renderResults(list) {
     if (list.length === 0) {
         results.hidden = true;
         document.body.classList.remove("blur-background");
-el.classList.add("result-item", "show");
         return;
     }
 
-list.forEach(({ label, url }, index) => {
-    const el = document.createElement("div");
-    el.className = "result-item";
-    el.title = url;
+    list.forEach(({ label, url }) => {
+        const el = document.createElement("div");
+        el.className = "result-item";
+        el.title = url;
 
-    const textSpan = document.createElement("span");
-    textSpan.textContent = label;
-    el.appendChild(textSpan);
+        const textSpan = document.createElement("span");
+        textSpan.textContent = label;
+        el.appendChild(textSpan);
 
-    el.addEventListener("click", () => window.open(url, "_blank"));
+        el.addEventListener("click", () => window.open(url, "_blank"));
 
-    results.appendChild(el);
+        results.appendChild(el);
 
-    // efekt slide
-    setTimeout(() => el.classList.add("show"), 50);
-});
+        setTimeout(() => el.classList.add("show"), 50);
+    });
+
     results.hidden = false;
     document.body.classList.add("blur-background");
 }
@@ -280,130 +281,62 @@ if (randomBtn) {
     });
 }
 
-// Ripple na buttony goBtn
-document.querySelectorAll("#goBtn").forEach(btn => {
-    btn.addEventListener("click", function(e) {
-        const circle = document.createElement("span");
-        circle.classList.add("ripple");
-        const rect = this.getBoundingClientRect();
-        circle.style.left = `${e.clientX - rect.left}px`;
-        circle.style.top = `${e.clientY - rect.top}px`;
-        this.appendChild(circle);
-        setTimeout(() => circle.remove(), 600);
-    });
-});
-
 // =====================
-// FAQ MENU z dziurą
+// FAQ MENU
 // =====================
-
-const fabBtn = document.getElementById("fabBtn");
-const fabLinks = document.getElementById("fabLinks");
 
 let menuOpen = false;
 
-fabBtn.addEventListener("click", () => {
-  menuOpen = !menuOpen;
-  fabBtn.classList.toggle("active", menuOpen);
-  fabLinks.classList.toggle("show", menuOpen);
-});
-
-
+if (fabBtn && fabLinks) {
+    fabBtn.addEventListener("click", () => {
+        menuOpen = !menuOpen;
+        fabBtn.classList.toggle("active", menuOpen);
+        fabLinks.classList.toggle("show", menuOpen);
+    });
+}
 
 // =====================
 // Animacje
 // =====================
 
 function vibrateElement(el) {
-  el.classList.add("shake");
-  setTimeout(() => {
-    el.classList.remove("shake");
-  }, 400);
+    el.classList.add("shake");
+    setTimeout(() => {
+        el.classList.remove("shake");
+    }, 400);
 }
 
-// Random button
-document.getElementById("randomBtn").addEventListener("click", () => {
-  vibrateElement(document.getElementById("randomBtn"));
-});
-
-// Menu button (burger)
-document.querySelector(".fab-btn").addEventListener("click", () => {
-  vibrateElement(document.querySelector(".fab-btn"));
-  vibrateElement(document.querySelector(".fab-links"));
-});
-
-// Każdy link w menu fab
-document.querySelectorAll(".fab-links a").forEach(link => {
-  link.addEventListener("click", () => {
-    vibrateElement(link);
-  });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Nie zawracaj se gitary, co to w ogóle jest:
-
-document.addEventListener('DOMContentLoaded', () => {
-    const infoBox = document.getElementById('cookie-info-box');
-    const acceptBtn = document.getElementById('accept-cookies-btn');
-
-    const hasAccepted = localStorage.getItem('cookies-accepted');
-
-    if (hasAccepted) {
-        infoBox.style.display = 'none';
-    } else {
-        infoBox.style.display = 'block';
-    }
-
-    acceptBtn.addEventListener('click', () => {
-        infoBox.classList.add('hidden');
-        localStorage.setItem('cookies-accepted', 'true');
+if (randomBtn) {
+    randomBtn.addEventListener("click", () => {
+        vibrateElement(randomBtn);
     });
-});
-
+}
+if (fabBtn && fabLinks) {
+    fabBtn.addEventListener("click", () => {
+        vibrateElement(fabBtn);
+        vibrateElement(fabLinks);
+    });
+    fabLinks.querySelectorAll("button").forEach(link => {
+        link.addEventListener("click", () => {
+            vibrateElement(link);
+        });
+    });
+}
 
 // =====================
 // Loader → main content
 // =====================
 window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  const main = document.getElementById("mainContent");
+    const loader = document.getElementById("loader");
+    const main = document.getElementById("mainContent");
+    if (!loader || !main) return;
 
-  setTimeout(() => {
-    loader.style.opacity = 0;
-    loader.style.transition = "opacity 0.5s ease";
     setTimeout(() => {
-      loader.style.display = "none";
-      main.style.display = "block";
-    }, 500);
-  }, 4000);
-});
-
-// =====================
-// FAB MENU
-// =====================
-const fabBtn = document.getElementById("fabBtn");
-const fabLinks = document.getElementById("fabLinks");
-let menuOpen = false;
-fabBtn.addEventListener("click", () => {
-  menuOpen = !menuOpen;
-  fabBtn.classList.toggle("active", menuOpen);
-  fabLinks.classList.toggle("show", menuOpen);
+        loader.style.opacity = 0;
+        loader.style.transition = "opacity 0.5s ease";
+        setTimeout(() => {
+            loader.style.display = "none";
+            main.style.display = "block";
+        }, 500);
+    }, 4000);
 });
