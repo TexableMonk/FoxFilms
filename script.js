@@ -4,8 +4,20 @@
 
 if (window.trustedTypes) {
   window.trustedTypes.createPolicy('myPolicy', {
-    createHTML: (input) => input,
-    createScript: (input) => input
+    // HTML może pochodzić tylko z naszej funkcji renderResults lub zaufanych źródeł
+    createHTML: (input) => {
+      // filtrujemy niebezpieczne tagi/skrypty, np. <script>, <iframe> itd.
+      if (/script|iframe|object|embed/i.test(input)) {
+        console.warn('Niebezpieczne HTML zostało zablokowane:', input);
+        return '';
+      }
+      return input;
+    },
+    // skrypty też można ograniczyć, np. do zdefiniowanych funkcji
+    createScript: (input) => {
+      console.warn('Skrypty inline są blokowane przez Trusted Types');
+      return null; // blokuje wszystkie nieautoryzowane skrypty
+    }
   });
 }
 
