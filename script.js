@@ -2,9 +2,6 @@
 // Konfiguracja linków
 // =======================
 
-document.addEventListener("DOMContentLoaded", () => {
-    // cały Twój kod tutaj
-
 const rawConfigLines1 = [
 "(Spiderman universum)[https://vider.info/vid/+fx5nxvx]",
 "(Spiderman poprzez universum)[https://vider.info/vid/+fe8ce5s]",
@@ -409,5 +406,4 @@ fabBtn.addEventListener("click", () => {
   menuOpen = !menuOpen;
   fabBtn.classList.toggle("active", menuOpen);
   fabLinks.classList.toggle("show", menuOpen);
-});
 });
