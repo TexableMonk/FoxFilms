@@ -42,6 +42,7 @@ body {
   height: 3px;
   background: #2e2e2e;
   border-radius: 3px;
+  oberflow: hidden;
 }
 
 #loader .fill {
@@ -57,7 +58,7 @@ body {
 
 #loader .glow {
   position: absolute;
-  top: 50%;
+  top: calc(50% + 1px);
   left: -40px;
   width: 120px;
   height: 3px;
