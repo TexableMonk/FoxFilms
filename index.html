@@ -55,21 +55,22 @@ body {
   animation: fillBar 3.9s forwards;
 }
 
+
 #loader .glow {
   position: absolute;
-  top: 0;
-  left: -80px; /* start poza paskiem */
-  width: 160px; /* szerszy, żeby glow było bardziej płynne */
-  height: 3px;
-  background: linear-gradient(90deg, rgba(0,170,255,0) 0%, rgba(0,255,255,0.7) 50%, rgba(0,170,255,0) 100%);
+  top: -2px; /* trochę nad paskiem */
+  left: 0;    /* start w widocznym obszarze */
+  width: 120px;
+  height: 7px; /* zwiększona wysokość dla blur */
+  background: linear-gradient(90deg, rgba(0,170,255,0.2) 0%, rgba(0,255,255,0.8) 50%, rgba(0,170,255,0.2) 100%);
   border-radius: 50%;
-  filter: blur(8px); /* mocniejszy blur dla neonowego efektu */
+  filter: blur(8px);
   animation: neonMove 2.5s linear infinite;
 }
 
 @keyframes neonMove {
-  0% { left: -80px; }
-  100% { left: 48vw; } /* kończy nad końcem paska */
+  0% { left: 0; }
+  100% { left: 48vw; }
 }
 
 @keyframes fillBar { to { width: 100%; } }
