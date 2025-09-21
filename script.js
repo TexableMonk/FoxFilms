@@ -31,7 +31,7 @@ let usingAlt = false;
 
 function parseLines(lines) {
     return lines.map(line => {
-        const match = line.match(/^\((.+?)\)\[(https?:\/\/.+?)\]$/);
+        const match = line.match(/^\((.+?)\)\[(https?:\/\/[^\]]+)\]$/);
         return match ? { label: match[1], url: match[2] } : null;
     }).filter(Boolean);
 }
