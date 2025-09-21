@@ -57,20 +57,21 @@ body {
 
 
 #loader .glow {
-position: absolute;
-top: 0;            /* równo z paskiem /
-left: -40px;
-width: 120px;
-height: 3px;       / taka sama jak pasek */
-background: linear-gradient(to left, #00aaff, transparent);
-border-radius: 2px;
-filter: drop-shadow(0 -3px 8px #00aaff)
-drop-shadow(0 3px 8px #0230c7)
-drop-shadow(0 0 12px #0230c7);
-animation: moveGlow 2.6s linear forwards;
+  position: absolute;
+  top: -2px;       /* trochę nad paskiem */
+  left: 0;         /* start w widocznym obszarze */
+  width: 120px;
+  height: 7px;     /* wysokość dla lepszego blur */
+  background: linear-gradient(90deg, rgba(0,34,68,0.3) 0%, rgba(0,170,255,0.9) 50%, rgba(0,34,68,0.3) 100%);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: neonMove 2.5s linear forwards;
 }
 
-@keyframes moveGlow { 0% { left: 20px; } 100% { left: 48vw; } }
+@keyframes neonMove {
+  0% { left: 0; }
+  100% { left: 38vw; } /* końcowa pozycja glow */
+}
 
 @keyframes fillBar { to { width: 100%; } }
 
