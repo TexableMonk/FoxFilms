@@ -4,27 +4,19 @@
 
 if (window.trustedTypes) {
   window.trustedTypes.createPolicy('myPolicy', {
-    // HTML może pochodzić tylko z naszej funkcji renderResults lub zaufanych źródeł
     createHTML: (input) => {
-      // filtrujemy niebezpieczne tagi/skrypty, np. <script>, <iframe> itd.
       if (/script|iframe|object|embed/i.test(input)) {
         console.warn('Niebezpieczne HTML zostało zablokowane:', input);
         return '';
       }
       return input;
     },
-    // skrypty też można ograniczyć, np. do zdefiniowanych funkcji
     createScript: (input) => {
       console.warn('Skrypty inline są blokowane przez Trusted Types');
-      return null; // blokuje wszystkie nieautoryzowane skrypty
+      return null;
     }
   });
 }
-
-
-
-
-
 
 // =======================
 // Konfiguracja linków
@@ -156,7 +148,6 @@ document.addEventListener("click", e => {
         results.hidden = true;
     }
 
-    // Ripple globalny
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
     const size = 100;
@@ -167,7 +158,6 @@ document.addEventListener("click", e => {
     ripple.addEventListener('animationend', () => ripple.remove());
 });
 
-// Tryb incognito
 if (toggleBtn && searchContainer) {
     toggleBtn.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
@@ -254,22 +244,3 @@ window.addEventListener("load", () => {
         }, 500);
     }, 4000);
 });
-
-
-// =====================
-// Loader → main content
-// =====================
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  const main = document.getElementById("mainContent");
-
-  setTimeout(() => {
-    loader.style.opacity = 0;
-    loader.style.transition = "opacity 0.5s ease";
-    setTimeout(() => {
-      loader.style.display = "none";
-      main.style.display = "block";
-    }, 500);
-  }, 4000);
-});
-
