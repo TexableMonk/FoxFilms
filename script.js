@@ -45,7 +45,7 @@ function shuffleArray(array) {
 }
 
 let config = {
-  options: parseLines(window.rawConfigLines1),
+  options: parseLines(window.rawConfigLines1 || []),
   maxResults: 7,
   caseSensitive: false
 };
