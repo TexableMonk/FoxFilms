@@ -1,39 +1,16 @@
 // =======================
-// Konfiguracja linków
+// KONFIGURACJA LINKÓW
 // =======================
-const rawConfigLines1 = window.rawConfigLines1;
-const rawConfigLines2 = window.rawConfigLines2;
-
-
-// =======================
-// Bezpieczeństwo
-// =======================
-if (window.trustedTypes) {
-  window.trustedTypes.createPolicy('myPolicy', {
-    createHTML: (input) => {
-      if (/script|iframe|object|embed/i.test(input)) {
-        console.warn('Niebezpieczne HTML zostało zablokowane:', input);
-        return '';
-      }
-      return input;
-    },
-    createScript: (input) => {
-      console.warn('Skrypty inline są blokowane przez Trusted Types');
-      return null;
-    }
-  });
-}
-
-// =======================
-// Funkcje pomocnicze
-// =======================
-
-let usingAlt = false;
+const rawConfigLines1 = window.rawConfigLines1 || [];
+const rawConfigLines2 = window.rawConfigLines2 || [];
 
 function parseLines(lines) {
     return lines.map(line => {
-        const match = line.match(/^\((.+?)\)\[(https?:\/\/[^\]]+)\]$/);
-        return match ? { label: match[1], url: match[2] } : null;
+        const splitIndex = line.indexOf(")[");
+        if (splitIndex === -1) return null;
+        const label = line.slice(1, splitIndex);
+        const url = line.slice(splitIndex + 2, -1);
+        return { label, url };
     }).filter(Boolean);
 }
 
@@ -45,16 +22,39 @@ function shuffleArray(array) {
     return array;
 }
 
+// =======================
+// KONFIGURACJA SEARCH
+// =======================
 let config = {
-  options: parseLines(window.rawConfigLines1 || []),
+  options: parseLines(rawConfigLines1),
   maxResults: 7,
   caseSensitive: false
 };
 
-// =======================
-// DOM
-// =======================
+let usingAlt = false;
 
+// =======================
+// TRUSTED TYPES BEZPIECZEŃSTWO
+// =======================
+if (window.trustedTypes) {
+  window.trustedTypes.createPolicy('myPolicy', {
+    createHTML: input => {
+      if (/script|iframe|object|embed/i.test(input)) {
+        console.warn('Niebezpieczne HTML zablokowane:', input);
+        return '';
+      }
+      return input;
+    },
+    createScript: () => {
+      console.warn('Skrypty inline blokowane przez Trusted Types');
+      return null;
+    }
+  });
+}
+
+// =======================
+// DOM ELEMENTY
+// =======================
 const input = document.getElementById("input");
 const results = document.getElementById("results");
 const clearBtn = document.getElementById("clearBtn");
@@ -66,15 +66,15 @@ const fabBtn = document.getElementById("fabBtn");
 const fabLinks = document.getElementById("fabLinks");
 
 // =======================
-// Filtry i wyniki
+// FILTR I RENDER
 // =======================
-
 function filterOptions(query) {
     if (!query) return [];
     const search = config.caseSensitive ? query : query.toLowerCase();
-    return config.options.filter(({ label }) =>
+    const filtered = config.options.filter(({ label }) =>
         (config.caseSensitive ? label : label.toLowerCase()).includes(search)
-    ).slice(0, config.maxResults);
+    );
+    return shuffleArray(filtered).slice(0, config.maxResults);
 }
 
 function renderResults(list) {
@@ -95,7 +95,6 @@ function renderResults(list) {
         el.appendChild(textSpan);
 
         el.addEventListener("click", () => window.open(url, "_blank"));
-
         results.appendChild(el);
 
         setTimeout(() => el.classList.add("show"), 50);
@@ -110,17 +109,15 @@ function updateClearButton() {
 }
 
 // =======================
-// Eventy
+// EVENTY SEARCH
 // =======================
-
 if (input && results && clearBtn) {
     input.addEventListener("input", e => {
         const val = e.target.value.trim();
         updateClearButton();
 
         const matches = val ? filterOptions(val) : [];
-        const shuffled = shuffleArray(matches);
-        renderResults(shuffled);
+        renderResults(matches);
 
         const exactMatch = matches.find(m => m.label === val);
         const items = results.querySelectorAll(".result-item");
@@ -143,11 +140,13 @@ if (input && results && clearBtn) {
     });
 }
 
+// Kliknięcie poza search bar
 document.addEventListener("click", e => {
     if (!e.target.closest(".search-container")) {
         results.hidden = true;
     }
 
+    // ripple effect
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
     const size = 100;
@@ -158,6 +157,9 @@ document.addEventListener("click", e => {
     ripple.addEventListener('animationend', () => ripple.remove());
 });
 
+// =======================
+// DARK MODE TOGGLE
+// =======================
 if (toggleBtn && searchContainer) {
     toggleBtn.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
@@ -165,71 +167,59 @@ if (toggleBtn && searchContainer) {
     });
 }
 
-// Przełączanie kategorii
+// =======================
+// ZMIANA KATEGORII
+// =======================
 if (configToggle) {
     configToggle.addEventListener("click", () => {
         usingAlt = !usingAlt;
-        const rawLines = usingAlt ? rawConfigLines2 : rawConfigLines1;
-        config.options = parseLines(rawLines);
+        config.options = parseLines(usingAlt ? rawConfigLines2 : rawConfigLines1);
         input.dispatchEvent(new Event("input"));
     });
 }
 
-// Losowy przycisk
+// =======================
+// LOSOWY FILM
+// =======================
 if (randomBtn) {
     randomBtn.addEventListener("click", () => {
         const options = parseLines(rawConfigLines1);
         const randomIndex = Math.floor(Math.random() * options.length);
         const randomOption = options[randomIndex];
         window.open(randomOption.url, "_blank");
+        vibrateElement(randomBtn);
     });
 }
 
-// =====================
+// =======================
 // FAQ MENU
-// =====================
-
+// =======================
 let menuOpen = false;
-
 if (fabBtn && fabLinks) {
     fabBtn.addEventListener("click", () => {
         menuOpen = !menuOpen;
         fabBtn.classList.toggle("active", menuOpen);
         fabLinks.classList.toggle("show", menuOpen);
-    });
-}
-
-// =====================
-// Animacje
-// =====================
-
-function vibrateElement(el) {
-    el.classList.add("shake");
-    setTimeout(() => {
-        el.classList.remove("shake");
-    }, 400);
-}
-
-if (randomBtn) {
-    randomBtn.addEventListener("click", () => {
-        vibrateElement(randomBtn);
-    });
-}
-if (fabBtn && fabLinks) {
-    fabBtn.addEventListener("click", () => {
         vibrateElement(fabBtn);
         vibrateElement(fabLinks);
     });
+
     fabLinks.querySelectorAll("button").forEach(link => {
-        link.addEventListener("click", () => {
-            vibrateElement(link);
-        });
+        link.addEventListener("click", () => vibrateElement(link));
     });
 }
 
-// =====================
-// Loader → main content
-// =====================
+// =======================
+// FUNKCJE POMOCNICZE
+// =======================
+function vibrateElement(el) {
+    el.classList.add("shake");
+    setTimeout(() => el.classList.remove("shake"), 400);
+}
+
+// =======================
+// LOADER → MAIN CONTENT
+// =======================
 window.addEventListener("load", () => {
     const loader = document.getElementById("loader");
     const main = document.getElementById("mainContent");
