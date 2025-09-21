@@ -357,3 +357,21 @@ window.addEventListener("load", () => {
         }, 500);
     }, 4000);
 });
+
+
+// =====================
+// Loader → main content
+// =====================
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  const main = document.getElementById("mainContent");
+
+  setTimeout(() => {
+    loader.style.opacity = 0;
+    loader.style.transition = "opacity 0.5s ease";
+    setTimeout(() => {
+      loader.style.display = "none";
+      main.style.display = "block";
+    }, 500);
+  }, 4000);
+});
