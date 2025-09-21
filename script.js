@@ -396,3 +396,14 @@ window.addEventListener("load", () => {
   }, 4000);
 });
 
+// =====================
+// FAB MENU
+// =====================
+const fabBtn = document.getElementById("fabBtn");
+const fabLinks = document.getElementById("fabLinks");
+let menuOpen = false;
+fabBtn.addEventListener("click", () => {
+  menuOpen = !menuOpen;
+  fabBtn.classList.toggle("active", menuOpen);
+  fabLinks.classList.toggle("show", menuOpen);
+});
