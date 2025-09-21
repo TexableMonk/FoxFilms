@@ -60,17 +60,16 @@ body {
   position: absolute;
   top: -2px;       /* trochę nad paskiem */
   left: 0;         /* start w widocznym obszarze */
-  width: 120px;
+  width: 200px;
   height: 7px;     /* wysokość dla lepszego blur */
   background: linear-gradient(90deg, rgba(0,34,68,0.3) 0%, rgba(0,170,255,0.9) 50%, rgba(0,34,68,0.3) 100%);
   border-radius: 50%;
-  filter: blur(8px);
   animation: neonMove 2.5s linear forwards;
 }
 
 @keyframes neonMove {
   0% { left: 0; }
-  100% { left: 38vw; } /* końcowa pozycja glow */
+  100% { left: 32vw; } /* końcowa pozycja glow */
 }
 
 @keyframes fillBar { to { width: 100%; } }
