@@ -75,7 +75,9 @@ function filterOptions(query) {
 }
 
 function renderResults(list) {
-    results.innerHTML = "";
+    // usuń wszystkie dzieci bez innerHTML
+    while (results.firstChild) results.removeChild(results.firstChild);
+
     if (list.length === 0) {
         results.hidden = true;
         document.body.classList.remove("blur-background");
@@ -88,10 +90,11 @@ function renderResults(list) {
         el.title = url;
 
         const textSpan = document.createElement("span");
-        textSpan.textContent = label;
+        textSpan.textContent = label; // bez innerHTML
         el.appendChild(textSpan);
 
         el.addEventListener("click", () => window.open(url, "_blank"));
+
         results.appendChild(el);
 
         setTimeout(() => el.classList.add("show"), 50);
