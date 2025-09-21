@@ -387,32 +387,3 @@ window.addEventListener("load", () => {
   }, 4000);
 });
 
-// =====================
-// Screen reader
-// =====================
-toggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    searchContainer.classList.toggle("dark");
-    toggleBtn.setAttribute("aria-pressed", document.body.classList.contains("dark-mode"));
-});
-
-fabBtn.addEventListener("click", () => {
-    menuOpen = !menuOpen;
-    fabBtn.classList.toggle("active", menuOpen);
-    fabLinks.classList.toggle("show", menuOpen);
-    fabBtn.setAttribute("aria-expanded", menuOpen);
-});
-
-window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
-    const main = document.getElementById("mainContent");
-    setTimeout(() => {
-        loader.style.opacity = 0;
-        loader.style.transition = "opacity 0.5s ease";
-        setTimeout(() => {
-            loader.style.display = "none";
-            main.style.display = "block";
-            input.focus(); // <-- focus od razu na wyszukiwanie
-        }, 500);
-    }, 4000);
-});
