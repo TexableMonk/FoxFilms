@@ -95,6 +95,21 @@ export const rawConfigLines1 = [
 ];
 
 export const rawConfigLines2 = [
-  "(Serial Kiepscy)[https://www.swiatwedlugkiepskich.pl/]",
-  "(Świat według Bundych)[https://vider.info/dir/+dxxecx]",
+"(Serial Kiepscy)[https://www.swiatwedlugkiepskich.pl/]",
+"(Świat według Kiepskich)[https://www.swiatwedlugkiepskich.pl/]",
+"(Świat według Bundych)[https://vider.info/dir/+dxxecx]",
+"(Włatcy móch)[http://www.vidlii.com/playlist?p=XcjgX8x6S0M]",
+"(Rodzinka.pl)[https://vod.tvp.pl/seriale,18/rodzinkapl-odcinki,274700]",
+"(Biuro the office)[https://vider.info/dir/+dnnvnnv5]",
+"(Pora na przygodę)[https://youtu.be/Rsa4x79MjQM?feature=shared]",
+"(Przyjaciele)[https://vider.info/dir/+dv1]",
+"(Sąsiedzi Pat i Mat)[https://www.cda.pl/Sz-Wito/folder/47153148]",
+"(Ranczo)[https://vider.info/dir/+dne1cccv]",
+"(Niebezpieczny oddział)[https://vider.info/dir/+dnnx8vve]",
+"(Grzmotomocni)[https://vider.info/dir/+dnsns8m5]",
+"(Teoria wielkiego podrywu)[https://vider.info/dir/+dnecx]",
+"(Różowe lata)[https://vider.info/dir/+dxc1m8]",
+"(8 prostch zasad)[https://vider.info/dir/+dnv15x]",
+"(Pingwiny z Madagaskaru)[https://vider.info/dir/+dns1x8sx]",
+"(Niech żyje król Julian)[https://vider.info/dir/+dnx8nnsv]"
 ];
