@@ -3,6 +3,7 @@
 // =======================
 import { rawConfigLines1, rawConfigLines2 } from './links.js';
 
+
 // =======================
 // Bezpieczeństwo
 // =======================
@@ -44,7 +45,7 @@ function shuffleArray(array) {
 }
 
 let config = {
-    options: parseLines(window.rawConfigLines1),
+    options: parseLines(rawConfigLines1),
     maxResults: 7,
     caseSensitive: false
 };
