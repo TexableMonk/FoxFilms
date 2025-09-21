@@ -58,14 +58,15 @@ body {
 
 #loader .glow {
   position: absolute;
-  top: calc(50% + 1,3px); /* środek paska */
-  transform: translateY(-50%);
+  top: 0;            /* równo z paskiem */
   left: -40px;
   width: 120px;
-  height: 3px; /* równa wysokości paska */
+  height: 3px;       /* taka sama jak pasek */
   background: linear-gradient(to left, #00aaff, transparent);
   border-radius: 2px;
-  filter: drop-shadow(0 0 8px #00aaff) drop-shadow(0 0 12px #0230c7);
+  filter: drop-shadow(0 -3px 8px #00aaff)
+          drop-shadow(0 3px 8px #0230c7)
+          drop-shadow(0 0 12px #0230c7);
   animation: moveGlow 2.6s linear forwards;
 }
 
