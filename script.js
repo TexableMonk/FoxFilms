@@ -1,7 +1,8 @@
 // =======================
 // Konfiguracja linków
 // =======================
-import { rawConfigLines1, rawConfigLines2 } from './links.js';
+const rawConfigLines1 = window.rawConfigLines1;
+const rawConfigLines2 = window.rawConfigLines2;
 
 
 // =======================
