@@ -3,9 +3,13 @@
 // =======================
 
 if (window.trustedTypes) {
-  window.trustedTypes.createPolicy('default', {
-    createHTML: (input) => input, // lub dokładniejsza walidacja
-    createScript: (input) => { throw new Error("Scripts blocked"); }
+  window.trustedTypes.createPolicy('myPolicy', {
+    createHTML: (input) => {
+      return input;
+    },
+    createScript: (input) => {
+      return input;
+    }
   });
 }
 
