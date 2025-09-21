@@ -1,4 +1,21 @@
 // =======================
+// Bezpieczeństwo
+// =======================
+
+if (window.trustedTypes) {
+  window.trustedTypes.createPolicy('default', {
+    createHTML: (input) => input, // lub dokładniejsza walidacja
+    createScript: (input) => { throw new Error("Scripts blocked"); }
+  });
+}
+
+
+
+
+
+
+
+// =======================
 // Konfiguracja linków
 // =======================
 
