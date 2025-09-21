@@ -45,9 +45,9 @@ function shuffleArray(array) {
 }
 
 let config = {
-    options: parseLines(rawConfigLines1),
-    maxResults: 7,
-    caseSensitive: false
+  options: parseLines(window.rawConfigLines1),
+  maxResults: 7,
+  caseSensitive: false
 };
 
 // =======================
