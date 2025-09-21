@@ -1,7 +1,11 @@
 // =======================
+// Konfiguracja linków
+// =======================
+import { rawConfigLines1, rawConfigLines2 } from './links.js';
+
+// =======================
 // Bezpieczeństwo
 // =======================
-
 if (window.trustedTypes) {
   window.trustedTypes.createPolicy('myPolicy', {
     createHTML: (input) => {
@@ -17,12 +21,6 @@ if (window.trustedTypes) {
     }
   });
 }
-
-// =======================
-// Konfiguracja linków
-// =======================
-
-import { rawConfigLines1, rawConfigLines2 } from './links.js';
 
 // =======================
 // Funkcje pomocnicze
