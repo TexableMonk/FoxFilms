@@ -1,13 +1,27 @@
 /* =====================
+   Primary colors
+===================== */
+
+:root {
+  --primary: #1a73e8;
+  --szary: #2e2e2e;
+  --czarny: #1a1a1a;
+  --biały: white;
+}
+
+
+
+
+/* =====================
    BODY & OGÓLNE
 ===================== */
 
 body.dark-mode {
-  background-color: #1a1a1a;
+  background-color: var(--czarny);
 }
 
 body.dark-mode .results {
-  background-color: #2e2e2e;
+  background-color: var(--szary);
   color: white;  /* zamiast black */
   border: 1px solid #333;
 }
