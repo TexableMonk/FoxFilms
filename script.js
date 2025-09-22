@@ -212,66 +212,49 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 // Pole Pomocy
 // =======================
 
-// Konfiguracja tipów
 const tips = [
-  `Tip 1
-Podwójny klik przy animacji ładowania pomija ją.`,
-
-  `Tip 2
-W menu masz szybki dostęp do opcji.`,
-
-  `Tip 3
-Przy polu wyszukiwania masz linię, która zmienia kategorię 
-(Filmy/Seriale).`,
-
-  `Tip 4
-Na dole po lewym rogu znajduje się przycisk, który losuje film. 
-Miłego oglądania...`,
-
-  `Tip 5
-Przy polu wyszukiwania znajduje się przycisk do zmiany między motywem jasnym a ciemnym.`
+  "Tip 1\nPodwójny klik przy animacji ładowania pomija ją.",
+  "Tip 2\nW menu masz szybki dostęp do opcji.",
+  "Tip 3\nPrzy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
+  "Tip 4\nNa dole po lewym rogu znajduje się przycisk, który losuje film.",
+  "Tip 5\nPrzy polu wyszukiwania możesz zmienić motyw (jasny/ciemny)."
 ];
 
 let tipIndex = 0;
-const tipBox = document.createElement("div");
-tipBox.id = "tipBox";
-document.body.appendChild(tipBox);
+const tipBox = document.getElementById("tipBox");
 
-// Wykrycie incognito (prosty hack)
-function detectIncognito(callback) {
-  const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
-  if (!fs) return callback(false); // nie incognito
-  fs(window.TEMPORARY, 100, () => callback(false), () => callback(true));
+function showTip() {
+  if (!tipBox) return;
+  tipBox.textContent = tips[tipIndex];
 }
 
-detectIncognito((isIncognito) => {
-  tipBox.style.boxShadow = isIncognito
-    ? "0 -10px 40px rgba(255,255,255,0.5)"
-    : "0 -10px 40px rgba(0,0,0,0.25)";
+tipBox.addEventListener("click", () => {
+  tipIndex = (tipIndex + 1) % tips.length;
+  showTip();
 });
 
-// Pokazywanie tipa
-function showTip() {
-  if (tipIndex < tips.length) {
-    tipBox.textContent = tips[tipIndex];
-    tipBox.style.display = "block";
+// Funkcja do włączenia panelu
+function openTipsPanel() {
+  tipBox.style.display = "flex";
+  showTip();
+}
+
+// Automatyczne dostosowanie box-shadow przy trybie incognito
+function updateTipShadow() {
+  if (document.body.classList.contains("dark-mode")) {
+    tipBox.style.boxShadow = "0 -10px 40px rgba(255,255,255,0.6)";
   } else {
-    tipBox.style.display = "none";
-    tipIndex = 0; // reset
+    tipBox.style.boxShadow = "0 -10px 40px rgba(128,128,128,0.5)";
   }
 }
 
-// Obsługa kliknięcia w tipBox
-tipBox.addEventListener("click", () => {
-  tipIndex++;
-  showTip();
-});
+// Wywołanie przy zmianie trybu
+const toggleBtn = document.getElementById("toggleBtn");
+toggleBtn?.addEventListener("click", updateTipShadow);
 
-// Kliknięcie w burger `?`
-document.querySelector("#burger-help").addEventListener("click", () => {
-  tipIndex = 0;
-  showTip();
-});
+// Możesz uruchomić panel np. po kliknięciu 5 przycisku w burger menu
+const fabLinks = document.getElementById("fabLinks");
+fabLinks?.querySelectorAll("button")[4]?.addEventListener("click", openTipsPanel);
 
 
 // =======================
