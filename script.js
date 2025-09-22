@@ -244,11 +244,10 @@ function detectIncognito(callback) {
   fs(window.TEMPORARY, 100, () => callback(false), () => callback(true));
 }
 
-// Ustaw box-shadow dynamicznie (incognito vs normal)
 detectIncognito((isIncognito) => {
   tipBox.style.boxShadow = isIncognito
-    ? "0 -6px 30px rgba(255,255,255,0.5)"  // jasny cień
-    : "0 -6px 30px rgba(0,0,0,0.25)";      // ciemny cień
+    ? "0 -10px 40px rgba(255,255,255,0.5)"
+    : "0 -10px 40px rgba(0,0,0,0.25)";
 });
 
 // Pokazywanie tipa
