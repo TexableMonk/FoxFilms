@@ -212,10 +212,6 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 // Pole Pomocy
 // =======================
 
-// =======================
-// TIP PANEL – FAQ MENU
-// =======================
-
 const tips = [
   "Tip 1\nPodwójny klik przy animacji ładowania pomija ją.",
   "Tip 2\nW menu masz szybki dostęp do opcji.",
