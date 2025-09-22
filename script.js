@@ -212,50 +212,56 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 // Pole Pomocy
 // =======================
 
+// =======================
+// PANEL TIPÓW – samodzielny
+// =======================
+
+// Konfiguracja tipów
 const tips = [
-  "Tip 1\nPodwójny klik przy animacji ładowania pomija ją.",
-  "Tip 2\nW menu masz szybki dostęp do opcji.",
-  "Tip 3\nPrzy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
-  "Tip 4\nNa dole po lewym rogu znajduje się przycisk, który losuje film.",
-  "Tip 5\nPrzy polu wyszukiwania możesz zmienić motyw (jasny/ciemny)."
+  "Podwójny klik przy animacji ładowania pomija ją.",
+  "W menu masz szybki dostęp do opcji.",
+  "Przy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
+  "Na dole po lewym rogu znajduje się przycisk, który losuje film.",
+  "Przy polu wyszukiwania możesz zmieniać motyw: jasny/ciemny."
 ];
 
 let tipIndex = 0;
-const tipBox = document.getElementById("tipBox");
 
-function showTip() {
-  if (!tipBox) return;
-  tipBox.textContent = tips[tipIndex];
-}
+// Tworzenie panelu
+const tipPanel = document.createElement("div");
+tipPanel.id = "tipPanel";
+tipPanel.style.position = "fixed";
+tipPanel.style.left = "0";
+tipPanel.style.bottom = "0";
+tipPanel.style.width = "100%";
+tipPanel.style.height = "50%"; // od dołu do połowy strony
+tipPanel.style.background = "linear-gradient(to top, #ffffff 0%, #ffffff 80%)";
+tipPanel.style.boxShadow = "0 -10px 30px rgba(0,0,0,0.3)";
+tipPanel.style.display = "flex";
+tipPanel.style.justifyContent = "center";
+tipPanel.style.alignItems = "center";
+tipPanel.style.textAlign = "center";
+tipPanel.style.fontSize = "1.2rem";
+tipPanel.style.fontWeight = "500";
+tipPanel.style.fontFamily = "Arial, sans-serif";
+tipPanel.style.padding = "20px";
+tipPanel.style.zIndex = "9998"; // nad resztą, ale pod loaderem
+tipPanel.style.cursor = "pointer";
+tipPanel.style.userSelect = "none";
+tipPanel.style.color = "#000";
+tipPanel.style.transition = "background 0.3s, box-shadow 0.3s";
 
-tipBox.addEventListener("click", () => {
+// Wyświetlanie pierwszego tipa
+tipPanel.textContent = tips[tipIndex];
+
+// Kliknięcie – przejście do następnego tipa
+tipPanel.addEventListener("click", () => {
   tipIndex = (tipIndex + 1) % tips.length;
-  showTip();
+  tipPanel.textContent = tips[tipIndex];
 });
 
-// Funkcja do włączenia panelu
-function openTipsPanel() {
-  tipBox.style.display = "flex";
-  showTip();
-}
-
-// Automatyczne dostosowanie box-shadow przy trybie incognito
-function updateTipShadow() {
-  if (document.body.classList.contains("dark-mode")) {
-    tipBox.style.boxShadow = "0 -10px 40px rgba(255,255,255,0.6)";
-  } else {
-    tipBox.style.boxShadow = "0 -10px 40px rgba(128,128,128,0.5)";
-  }
-}
-
-// Wywołanie przy zmianie trybu
-const toggleBtn = document.getElementById("toggleBtn");
-toggleBtn?.addEventListener("click", updateTipShadow);
-
-// Możesz uruchomić panel np. po kliknięciu 5 przycisku w burger menu
-const fabLinks = document.getElementById("fabLinks");
-fabLinks?.querySelectorAll("button")[4]?.addEventListener("click", openTipsPanel);
-
+// Dodanie do body
+document.body.appendChild(tipPanel);
 
 // =======================
 // ANIMACJE
