@@ -376,20 +376,26 @@ body.dark-mode .config-line {
 #tipBox {
   display: none;
   position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 600px;
-  width: 90%;
-  padding: 20px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50%; /* połowa ekranu */
   background: linear-gradient(135deg, #ffffff, #f0f0f0);
-  border-radius: 12px;
+  box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.25);
+  z-index: 9998; /* loader powinien mieć większy, np. 9999 */
+  
+  /* tekst w środku */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-size: 1.1rem;
-  font-weight: 500;
+  padding: 20px;
+  
+  font-size: 1.4rem;     /* większe litery */
+  font-weight: 300;      /* szczuplejsze */
+  line-height: 1.6;      /* lepsza czytelność */
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 9999;
 }
 
 
