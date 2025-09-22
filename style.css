@@ -374,14 +374,6 @@ body.dark-mode .config-line {
        Pole Pomocy
   ===================== -->
 
-/* FAQ Menu */
-#faqMenu {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
 #tipBtn {
   width: 40px;
   height: 40px;
