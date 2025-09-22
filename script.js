@@ -207,6 +207,69 @@ fabLinks?.querySelectorAll("button").forEach(link => {
     link.addEventListener("click", () => vibrateElement(link));
 });
 
+
+// =======================
+// Pole Pomocy
+// =======================
+
+// Konfiguracja tipów
+const tips = [
+  "Tip 1
+Podwójny klik przy animacji ładowania pomija ją.",
+  "Tip 2
+W menumasz szybki dostęp do opcji.",
+  "Tip 3
+Przy polu wyszukiwania masz linię, która zmienia kategorię 
+(Filmy/Seriale)"
+  "Tip 4
+Na dole po lewym rogu znajduje się przycisk, który losuje film. Miłego oglądania..."
+  "Tip 5
+Przy polu wyszukiwania znajduje się przycisk donzmiany między motywem białam, a ciemnym."
+];
+
+let tipIndex = 0;
+const tipBox = document.createElement("div");
+tipBox.id = "tipBox";
+document.body.appendChild(tipBox);
+
+// Wykrycie incognito (prosty hack)
+function detectIncognito(callback) {
+  const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+  if (!fs) return callback(false); // nie incognito
+  fs(window.TEMPORARY, 100, () => callback(false), () => callback(true));
+}
+
+// Styl box-shadows wg trybu
+detectIncognito((isIncognito) => {
+  tipBox.style.boxShadow = isIncognito
+    ? "0 4px 20px rgba(255,255,255,0.6)"
+    : "0 4px 20px rgba(0,0,0,0.2)";
+});
+
+// Pokazywanie tipa
+function showTip() {
+  if (tipIndex < tips.length) {
+    tipBox.textContent = tips[tipIndex];
+    tipBox.style.display = "block";
+  } else {
+    tipBox.style.display = "none";
+    tipIndex = 0; // reset
+  }
+}
+
+// Obsługa kliknięcia w tipBox
+tipBox.addEventListener("click", () => {
+  tipIndex++;
+  showTip();
+});
+
+// Kliknięcie w burger `?`
+document.querySelector("#burger-help").addEventListener("click", () => {
+  tipIndex = 0;
+  showTip();
+});
+
+
 // =======================
 // ANIMACJE
 // =======================
