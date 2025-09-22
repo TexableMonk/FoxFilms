@@ -578,3 +578,18 @@ body.dark-mode .config-line {
 #accept-cookies-btn:hover {
   background-color: #1558b0;
 }
+
+/* =====================
+   Nikt nie wie co to jest?
+===================== */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
