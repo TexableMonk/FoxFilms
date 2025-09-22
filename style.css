@@ -378,26 +378,27 @@ body.dark-mode .config-line {
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 100vw;         /* pełna szerokość */
-  height: 50vh;         /* połowa wysokości */
-  
-  background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+  width: 100vw;        /* pełna szerokość */
+  height: 50vh;        /* połowa wysokości ekranu */
+
+  background: linear-gradient(to top, #ffffff 0%, #f7f7f7 100%);
   z-index: 9998;
   box-shadow: 0 -10px 40px rgba(0,0,0,0.25);
 
-  /* centrowanie treści */
   display: flex;
-  align-items: center;   /* pion */
-  justify-content: center; /* poziom */
+  align-items: center;    /* pionowe wycentrowanie tekstu w panelu */
+  justify-content: center;/* poziome wycentrowanie tekstu */
   text-align: center;
-  
-  /* estetyka tekstu */
-  font-size: 1.6rem;
-  font-weight: 300;
-  line-height: 1.5;
+
+  font-size: 1.8rem;   /* większe litery */
+  font-weight: 300;    /* smuklejsze */
+  line-height: 1.4;
   color: #222;
-  padding: 0 40px;       /* odrobina przestrzeni od boków */
-  cursor: pointer;
+
+  margin: 0;
+  border: none;
+  border-radius: 0;    /* brak pudełka */
+  padding: 0 20px;     /* lekki margines po bokach */
 }
 
 
