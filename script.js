@@ -209,118 +209,67 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 
 
 // =======================
-// Pole Pomocy
+// FAB MENU + PANEL TIP
 // =======================
-
-const tips = [
-  "Tip 1\nPodwójny klik przy animacji ładowania pomija ją.",
-  "Tip 2\nW menu masz szybki dostęp do opcji.",
-  "Tip 3\nPrzy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
-  "Tip 4\nNa dole po lewym rogu znajduje się przycisk, który losuje film. Miłego oglądania...",
-  "Tip 5\nPrzy polu wyszukiwania znajduje się przycisk do zmiany między motywem białym, a ciemnym."
-];
-
-let tipIndex = 0;
-let tipPanel;
-
-// tworzymy panel, ale ukrywamy
-function createTipPanel() {
-  tipPanel = document.createElement("div");
-  tipPanel.id = "tipPanel";
-  tipPanel.style.position = "fixed";
-  tipPanel.style.left = 0;
-  tipPanel.style.bottom = 0;
-  tipPanel.style.width = "100%";
-  tipPanel.style.height = "50vh"; // połowa strony
-  tipPanel.style.display = "flex";
-  tipPanel.style.alignItems = "center"; // pionowo środek pola
-  tipPanel.style.justifyContent = "center"; // poziomo środek pola
-  tipPanel.style.fontSize = "1.2rem";
-  tipPanel.style.fontWeight = "500";
-  tipPanel.style.textAlign = "center";
-  tipPanel.style.padding = "20px";
-  tipPanel.style.zIndex = "9998"; // pod loaderem
-  tipPanel.style.background = "linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0.9))";
-  tipPanel.style.boxShadow = document.body.classList.contains("dark-mode") ? "0 -4px 15px white" : "0 -4px 15px gray";
-  tipPanel.style.cursor = "pointer";
-  tipPanel.style.whiteSpace = "pre-line"; // zachowanie nowych linii
-  tipPanel.style.display = "none";
-  document.body.appendChild(tipPanel);
-
-  tipPanel.addEventListener("click", () => {
-    tipIndex++;
-    if (tipIndex >= tips.length) {
-      hideTipPanel();
-      tipIndex = 0;
-    } else {
-      tipPanel.textContent = tips[tipIndex];
-    }
-  });
-}
-
-// pokaz panel
-function showTipPanel() {
-  if (!tipPanel) createTipPanel();
-  tipPanel.textContent = tips[tipIndex];
-  tipPanel.style.display = "flex";
-}
-
-// ukryj panel
-function hideTipPanel() {
-  if (tipPanel) tipPanel.style.display = "none";
-  tipIndex = 0;
-}
-
-
-// powiązanie z FAQ menu
-const faqButtons = document.querySelectorAll(".fab-links button");
-faqButtons.forEach(btn => {
-  if (btn.textContent.trim() === "?") {
-    btn.addEventListener("click", e => {
-      e.stopPropagation(); // żeby klik nie zamykał od razu
-      tipIndex = 0;
-      showTipPanel();
-    });
-  }
-});
-
-
 const fabBtn = document.getElementById("fabBtn");
 const fabLinks = document.getElementById("fabLinks");
 const tipPanel = document.getElementById("tipPanel");
+const tipText = document.getElementById("tipText");
 const tipBtn = document.getElementById("tipBtn");
 
-// Obsługa kliknięcia w "?"
+// Konfiguracja tipów
+const tips = [
+  "Tip 1: Podwójny klik przy animacji ładowania pomija ją.",
+  "Tip 2: W menu masz szybki dostęp do opcji.",
+  "Tip 3: Przy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
+  "Tip 4: Na dole po lewym rogu znajduje się przycisk, który losuje film. Miłego oglądania!",
+  "Tip 5: Przy polu wyszukiwania znajduje się przycisk do zmiany między motywem białym a ciemnym."
+];
+
+let tipIndex = 0;
+
+// Kliknięcie w "?"
 tipBtn.addEventListener("click", (e) => {
-  e.stopPropagation(); // nie zamyka menu przy kliknięciu ?
-  tipPanel.style.display = "flex"; // pokaż panel
+  e.stopPropagation(); // nie zamyka menu
+  tipPanel.style.display = "flex";
+  tipIndex = 0;
+  tipText.textContent = tips[tipIndex];
+});
+
+// Kliknięcie w panel tip → przejście do następnego tipu
+tipPanel.addEventListener("click", () => {
+  tipIndex++;
+  if (tipIndex >= tips.length) {
+    tipPanel.style.display = "none"; // po ostatnim tipie zamyka
+    tipIndex = 0;
+  } else {
+    tipText.textContent = tips[tipIndex];
+  }
 });
 
 // Kliknięcie w X w FAB menu
 fabBtn.addEventListener("click", (e) => {
   const isActive = fabBtn.classList.contains("active");
-  
+
   if (isActive) {
-    // jeśli aktywne → zamknij menu i panel tip
     fabBtn.classList.remove("active");
     fabLinks.classList.remove("show");
-    tipPanel.style.display = "none";
+    tipPanel.style.display = "none"; // zamyka też panel tip
   } else {
-    // jeśli nieaktywne → otwórz menu
     fabBtn.classList.add("active");
     fabLinks.classList.add("show");
   }
 });
 
-// Kliknięcie poza menu i panel
+// Kliknięcie poza menu i panel → zamyka wszystko
 document.addEventListener("click", (e) => {
   if (!fabLinks.contains(e.target) && !fabBtn.contains(e.target) && !tipPanel.contains(e.target)) {
     fabBtn.classList.remove("active");
     fabLinks.classList.remove("show");
     tipPanel.style.display = "none";
+    tipIndex = 0;
   }
 });
-
 
 // =======================
 // ANIMACJE
