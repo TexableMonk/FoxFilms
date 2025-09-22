@@ -209,53 +209,31 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 
 
 // =======================
-// LOADER
-// =======================
-const loader = document.getElementById("loader");
-const mainContent = document.getElementById("mainContent");
-
-function hideLoader() {
-  loader.style.display = "none";
-  mainContent.style.display = "block";
-}
-
-// opcjonalny podwójny klik do pomijania
-loader.addEventListener("dblclick", hideLoader);
-
-// =======================
-// TOGGLE BUTTON
+// ZMIENNE GLOBALNE
 // =======================
 const toggleBtn = document.getElementById("toggleBtn");
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-});
-
-// =======================
-// SEARCH / CLEAR
-// =======================
 const input = document.getElementById("input");
 const clearBtn = document.getElementById("clearBtn");
-const results = document.getElementById("results");
-
-input.addEventListener("input", () => {
-  clearBtn.style.display = input.value ? "block" : "none";
-});
-
-clearBtn.addEventListener("click", () => {
-  input.value = "";
-  results.hidden = true;
-  clearBtn.style.display = "none";
-});
-
-// =======================
-// FAQ MENU / FAB
-// =======================
 const fabBtn = document.getElementById("fabBtn");
 const fabLinks = document.getElementById("fabLinks");
 const tipPanel = document.getElementById("tipPanel");
 const tipText = document.getElementById("tipText");
 const tipBtn = document.getElementById("tipBtn");
+const loader = document.getElementById("loader");
+const mainContent = document.getElementById("mainContent");
 
+// =======================
+// DARK MODE
+// =======================
+toggleBtn?.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// =======================
+// FAQ MENU + TIP PANEL
+// =======================
+let menuOpen = false;
+let tipIndex = 0;
 let tips = [
   "Tip 1: Podwójny klik przy animacji ładowania pomija ją.",
   "Tip 2: W menumasz szybki dostęp do opcji.",
@@ -264,22 +242,25 @@ let tips = [
   "Tip 5: Przy polu wyszukiwania znajduje się przycisk do zmiany motywu."
 ];
 
-let tipIndex = 0;
+fabBtn?.addEventListener("click", () => {
+  menuOpen = !menuOpen;
+  fabBtn.classList.toggle("active", menuOpen);
+  fabLinks.classList.toggle("show", menuOpen);
 
-// toggle menu
-fabBtn.addEventListener("click", () => {
-  fabBtn.classList.toggle("active");
-  fabLinks.classList.toggle("show");
+  // jeśli menu zostało zamknięte -> zamykamy też panel tip
+  if (!menuOpen) {
+    tipPanel.style.display = "none";
+    tipIndex = 0;
+  }
 });
 
-// pokaz tip panel po kliknięciu ?
-tipBtn.addEventListener("click", () => {
+tipBtn?.addEventListener("click", (e) => {
+  e.stopPropagation(); // nie zamyka panelu przy kliknięciu przycisku
   tipPanel.style.display = "flex";
   tipText.textContent = tips[tipIndex];
 });
 
-// klik w panel przechodzi do następnego tipu
-tipPanel.addEventListener("click", () => {
+tipPanel?.addEventListener("click", () => {
   tipIndex++;
   if (tipIndex >= tips.length) {
     tipPanel.style.display = "none";
@@ -289,7 +270,7 @@ tipPanel.addEventListener("click", () => {
   }
 });
 
-// klik poza panel zamyka panel
+// klik poza panel -> zamknij panel
 document.addEventListener("click", (e) => {
   if (!tipPanel.contains(e.target) && e.target !== tipBtn) {
     tipPanel.style.display = "none";
@@ -297,13 +278,6 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// X w fab menu zamyka menu i panel pomocy
-fabBtn.addEventListener("click", () => {
-  if (fabBtn.classList.contains("active") === false) {
-    tipPanel.style.display = "none";
-    tipIndex = 0;
-  }
-});
 
 // =======================
 // ANIMACJE
