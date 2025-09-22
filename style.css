@@ -374,30 +374,28 @@ body.dark-mode .config-line {
        Pole Pomocy
   ===================== -->
 #tipBox {
-  display: none;
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 100vw;       /* pełna szerokość */
-  height: 50vh;       /* dolna połowa ekranu */
+  width: 100vw;
+  height: 50vh; /* dolna połowa ekranu */
   z-index: 9998;
 
-  background: linear-gradient(to top, #ffffff 0%, #f7f7f7 100%); /* gradient całego panelu */
-  box-shadow: 0 -10px 40px rgba(0,0,0,0.25); /* cień u góry panelu */
+  background: linear-gradient(to top, #ffffff 0%, #f7f7f7 100%); /* gradient panelu */
+  box-shadow: 0 -10px 40px rgba(128,128,128,0.5); /* cień u góry, zmieni się przy incognito */
 
   display: flex;
-  flex-direction: column;
-  justify-content: center; /* wyśrodkowanie w pionie */
-  align-items: center;     /* wyśrodkowanie w poziomie */
+  justify-content: center; /* pion */
+  align-items: center;     /* poziom */
   text-align: center;
 
-  font-size: 1.8rem;  /* większa czcionka */
-  font-weight: 300;   /* smuklejsza czcionka */
+  font-size: 1.8rem;  /* większa i smukła czcionka */
+  font-weight: 300;
   line-height: 1.4;
   color: #222;
 
-  margin: 0;
   padding: 0 20px;
+  cursor: pointer; /* klikalny, przechodzi do następnego tipa */
 }
 
 
