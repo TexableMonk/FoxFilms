@@ -290,6 +290,44 @@ faqButtons.forEach(btn => {
   }
 });
 
+
+const fabBtn = document.getElementById("fabBtn");
+const fabLinks = document.getElementById("fabLinks");
+const tipPanel = document.getElementById("tipPanel");
+const tipBtn = document.getElementById("tipBtn");
+
+// Obsługa kliknięcia w "?"
+tipBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // nie zamyka menu przy kliknięciu ?
+  tipPanel.style.display = "flex"; // pokaż panel
+});
+
+// Kliknięcie w X w FAB menu
+fabBtn.addEventListener("click", (e) => {
+  const isActive = fabBtn.classList.contains("active");
+  
+  if (isActive) {
+    // jeśli aktywne → zamknij menu i panel tip
+    fabBtn.classList.remove("active");
+    fabLinks.classList.remove("show");
+    tipPanel.style.display = "none";
+  } else {
+    // jeśli nieaktywne → otwórz menu
+    fabBtn.classList.add("active");
+    fabLinks.classList.add("show");
+  }
+});
+
+// Kliknięcie poza menu i panel
+document.addEventListener("click", (e) => {
+  if (!fabLinks.contains(e.target) && !fabBtn.contains(e.target) && !tipPanel.contains(e.target)) {
+    fabBtn.classList.remove("active");
+    fabLinks.classList.remove("show");
+    tipPanel.style.display = "none";
+  }
+});
+
+
 // =======================
 // ANIMACJE
 // =======================
