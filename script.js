@@ -271,12 +271,6 @@ function hideTipPanel() {
   tipIndex = 0;
 }
 
-// klik poza panel
-document.addEventListener("click", e => {
-  if (tipPanel && tipPanel.style.display === "flex" && !e.target.closest("#tipPanel") && !e.target.closest(".fab-links button:contains('?')")) {
-    hideTipPanel();
-  }
-});
 
 // powiązanie z FAQ menu
 const faqButtons = document.querySelectorAll(".fab-links button");
