@@ -4,9 +4,8 @@
 
 :root {
   --primary: #1a73e8;
-  --szary: #2e2e2e;
-  --czarny: #1a1a1a;
-  --biały: white;
+  --gray: #2e2e2e;
+  --black: #1a1a1a;
 }
 
 
@@ -17,11 +16,11 @@
 ===================== */
 
 body.dark-mode {
-  background-color: var(--czarny);
+  background-color: var(--black);
 }
 
 body.dark-mode .results {
-  background-color: var(--szary);
+  background-color: var(--gray);
   color: white;  /* zamiast black */
   border: 1px solid #333;
 }
@@ -85,7 +84,7 @@ input[type="search"]::-ms-reveal {
   cursor: pointer;
   z-index: 2;
   user-select: none;
-  color: #1a73e8;
+  color: var(--primary);
   transition: color 0.2s ease;
   padding: 0 7px 5px;
   opacity: 95%;
@@ -100,7 +99,7 @@ input[type="search"]::-ms-reveal {
 }
 
 .search-container.dark .toggle-btn {
-  color: #1a73e8;
+  color: var(--primary);
 }
 
 .clear-btn {
@@ -143,7 +142,7 @@ input[type="search"]::-ms-reveal {
   overflow-y: auto;
   border-radius: 0 0 12px 12px;
   z-index: 10;
-  background-color: #2e2e2e; /* ciemne tło */
+  background-color: var(--gray);
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
@@ -172,14 +171,14 @@ input[type="search"]::-ms-reveal {
 }
 
 body:not(.dark-mode) .results {
-  background-color: #2e2e2e;
+  background-color: var(--gray);
   color: white;
   border: 1px solid #ccc;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 body.dark-mode .results {
-  background-color: #2e2e2e;
+  background-color: var(--gray);
   color: black;
   border: 1px solid #333;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -240,7 +239,7 @@ body.dark-mode .result-item.pulse-match {
 .config-line {
   width: 165px;
   height: 3mm;
-  background-color: #2e2e2e;
+  background-color: var(--gray);
   margin: 16px auto 0;
   border-radius: 1mm;
   cursor: pointer;
@@ -248,7 +247,7 @@ body.dark-mode .result-item.pulse-match {
 }
 
 body.dark-mode .config-line {
-  background-color: #2e2e2e;
+  background-color: var(--gray);
 }
 
 /* =====================
@@ -260,7 +259,7 @@ body.dark-mode .config-line {
   left: 15px;
   padding: 8px 14px;
   border-radius: 8px;
-  background-color: #1a73e8;
+  background-color: var(--primary);
   color: white;
   border: none;
   cursor: pointer;
@@ -316,7 +315,7 @@ body.dark-mode .config-line {
   position: fixed;
   bottom: 5px; /* menu pod przyciskiem */
   right: 10px;
-  background: #2e2e2e;
+  background: var(--gray);
   border-radius: 16px;
   padding: 40px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -345,7 +344,7 @@ body.dark-mode .config-line {
   padding: 6px;
   border-radius: 8px;
   transition: background 0.2s;
-  background-color: #2e2e2e;
+  background-color: var(--gray);
 }
 
 .fab-links a:hover {
@@ -379,7 +378,7 @@ body.dark-mode .config-line {
   font-size: 24px;
   font-weight: bold;
   margin-top: 40px;
-  color: #1a1a1a;
+  color: bar(--black);
 }
 
 .FoxFilm-akapit1-text,
@@ -388,14 +387,14 @@ body.dark-mode .config-line {
   font-size: 12px;
   margin: 5px auto;
   max-width: 90%;
-  color: #1a1a1a;
+  color: var(--black);
 }
 
 .FoxFilm-akapit3-text {
   text-align: center;
   font-size: 10px;
   margin-top: 50px;
-  color: #1a1a1a;
+  color: var(--black);
 }
 
 /* =====================
@@ -563,7 +562,7 @@ body.dark-mode .config-line {
 
 /* Treść w środku */
 #cookie-info-box h2 {
-  color: #1a1a1a;
+  color: var(--gray);
   margin-top: 0;
   font-size: 1.8rem;
   font-weight: bold;
@@ -578,7 +577,7 @@ body.dark-mode .config-line {
 
 /* Guzik */
 #accept-cookies-btn {
-  background-color: #1a73e8;
+  background-color: var(--primary);
   color: #fff;
   border: none;
   padding: 14px 28px;
