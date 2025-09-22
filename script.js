@@ -213,55 +213,86 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 // =======================
 
 // =======================
-// PANEL TIPÓW – samodzielny
+// TIP PANEL – FAQ MENU
 // =======================
 
-// Konfiguracja tipów
 const tips = [
-  "Podwójny klik przy animacji ładowania pomija ją.",
-  "W menu masz szybki dostęp do opcji.",
-  "Przy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
-  "Na dole po lewym rogu znajduje się przycisk, który losuje film.",
-  "Przy polu wyszukiwania możesz zmieniać motyw: jasny/ciemny."
+  "Tip 1\nPodwójny klik przy animacji ładowania pomija ją.",
+  "Tip 2\nW menu masz szybki dostęp do opcji.",
+  "Tip 3\nPrzy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
+  "Tip 4\nNa dole po lewym rogu znajduje się przycisk, który losuje film. Miłego oglądania...",
+  "Tip 5\nPrzy polu wyszukiwania znajduje się przycisk do zmiany między motywem białym, a ciemnym."
 ];
 
 let tipIndex = 0;
+let tipPanel;
 
-// Tworzenie panelu
-const tipPanel = document.createElement("div");
-tipPanel.id = "tipPanel";
-tipPanel.style.position = "fixed";
-tipPanel.style.left = "0";
-tipPanel.style.bottom = "0";
-tipPanel.style.width = "100%";
-tipPanel.style.height = "50%"; // od dołu do połowy strony
-tipPanel.style.background = "linear-gradient(to top, #ffffff 0%, #ffffff 80%)";
-tipPanel.style.boxShadow = "0 -10px 30px rgba(0,0,0,0.3)";
-tipPanel.style.display = "flex";
-tipPanel.style.justifyContent = "center";
-tipPanel.style.alignItems = "center";
-tipPanel.style.textAlign = "center";
-tipPanel.style.fontSize = "1.2rem";
-tipPanel.style.fontWeight = "500";
-tipPanel.style.fontFamily = "Arial, sans-serif";
-tipPanel.style.padding = "20px";
-tipPanel.style.zIndex = "9998"; // nad resztą, ale pod loaderem
-tipPanel.style.cursor = "pointer";
-tipPanel.style.userSelect = "none";
-tipPanel.style.color = "#000";
-tipPanel.style.transition = "background 0.3s, box-shadow 0.3s";
+// tworzymy panel, ale ukrywamy
+function createTipPanel() {
+  tipPanel = document.createElement("div");
+  tipPanel.id = "tipPanel";
+  tipPanel.style.position = "fixed";
+  tipPanel.style.left = 0;
+  tipPanel.style.bottom = 0;
+  tipPanel.style.width = "100%";
+  tipPanel.style.height = "50vh"; // połowa strony
+  tipPanel.style.display = "flex";
+  tipPanel.style.alignItems = "center"; // pionowo środek pola
+  tipPanel.style.justifyContent = "center"; // poziomo środek pola
+  tipPanel.style.fontSize = "1.2rem";
+  tipPanel.style.fontWeight = "500";
+  tipPanel.style.textAlign = "center";
+  tipPanel.style.padding = "20px";
+  tipPanel.style.zIndex = "9998"; // pod loaderem
+  tipPanel.style.background = "linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0.9))";
+  tipPanel.style.boxShadow = document.body.classList.contains("dark-mode") ? "0 -4px 15px white" : "0 -4px 15px gray";
+  tipPanel.style.cursor = "pointer";
+  tipPanel.style.whiteSpace = "pre-line"; // zachowanie nowych linii
+  tipPanel.style.display = "none";
+  document.body.appendChild(tipPanel);
 
-// Wyświetlanie pierwszego tipa
-tipPanel.textContent = tips[tipIndex];
+  tipPanel.addEventListener("click", () => {
+    tipIndex++;
+    if (tipIndex >= tips.length) {
+      hideTipPanel();
+      tipIndex = 0;
+    } else {
+      tipPanel.textContent = tips[tipIndex];
+    }
+  });
+}
 
-// Kliknięcie – przejście do następnego tipa
-tipPanel.addEventListener("click", () => {
-  tipIndex = (tipIndex + 1) % tips.length;
+// pokaz panel
+function showTipPanel() {
+  if (!tipPanel) createTipPanel();
   tipPanel.textContent = tips[tipIndex];
+  tipPanel.style.display = "flex";
+}
+
+// ukryj panel
+function hideTipPanel() {
+  if (tipPanel) tipPanel.style.display = "none";
+  tipIndex = 0;
+}
+
+// klik poza panel
+document.addEventListener("click", e => {
+  if (tipPanel && tipPanel.style.display === "flex" && !e.target.closest("#tipPanel") && !e.target.closest(".fab-links button:contains('?')")) {
+    hideTipPanel();
+  }
 });
 
-// Dodanie do body
-document.body.appendChild(tipPanel);
+// powiązanie z FAQ menu
+const faqButtons = document.querySelectorAll(".fab-links button");
+faqButtons.forEach(btn => {
+  if (btn.textContent.trim() === "?") {
+    btn.addEventListener("click", e => {
+      e.stopPropagation(); // żeby klik nie zamykał od razu
+      tipIndex = 0;
+      showTipPanel();
+    });
+  }
+});
 
 // =======================
 // ANIMACJE
