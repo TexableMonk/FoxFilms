@@ -214,17 +214,22 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 
 // Konfiguracja tipów
 const tips = [
-  "Tip 1
-Podwójny klik przy animacji ładowania pomija ją.",
-  "Tip 2
-W menumasz szybki dostęp do opcji.",
-  "Tip 3
+  `Tip 1
+Podwójny klik przy animacji ładowania pomija ją.`,
+
+  `Tip 2
+W menu masz szybki dostęp do opcji.`,
+
+  `Tip 3
 Przy polu wyszukiwania masz linię, która zmienia kategorię 
-(Filmy/Seriale)"
-  "Tip 4
-Na dole po lewym rogu znajduje się przycisk, który losuje film. Miłego oglądania..."
-  "Tip 5
-Przy polu wyszukiwania znajduje się przycisk donzmiany między motywem białam, a ciemnym."
+(Filmy/Seriale).`,
+
+  `Tip 4
+Na dole po lewym rogu znajduje się przycisk, który losuje film. 
+Miłego oglądania...`,
+
+  `Tip 5
+Przy polu wyszukiwania znajduje się przycisk do zmiany między motywem jasnym a ciemnym.`
 ];
 
 let tipIndex = 0;
