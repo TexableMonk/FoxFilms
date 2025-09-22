@@ -244,11 +244,11 @@ function detectIncognito(callback) {
   fs(window.TEMPORARY, 100, () => callback(false), () => callback(true));
 }
 
-// Styl box-shadows wg trybu
+// Ustaw box-shadow dynamicznie (incognito vs normal)
 detectIncognito((isIncognito) => {
   tipBox.style.boxShadow = isIncognito
-    ? "0 4px 20px rgba(255,255,255,0.6)"
-    : "0 4px 20px rgba(0,0,0,0.2)";
+    ? "0 -6px 30px rgba(255,255,255,0.5)"  // jasny cień
+    : "0 -6px 30px rgba(0,0,0,0.25)";      // ciemny cień
 });
 
 // Pokazywanie tipa
@@ -284,9 +284,6 @@ function vibrateElement(el) {
     setTimeout(() => el.classList.remove("shake"), 400);
 }
 
-// =======================
-// LOADER → MAIN CONTENT
-// =======================
 
 // =======================
 // LOADER → MAIN CONTENT
