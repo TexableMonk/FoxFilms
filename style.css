@@ -378,7 +378,7 @@ body.dark-mode .config-line {
   font-size: 24px;
   font-weight: bold;
   margin-top: 40px;
-  color: bar(--black);
+  color: var(--black);
 }
 
 .FoxFilm-akapit1-text,
