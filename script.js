@@ -220,17 +220,26 @@ function vibrateElement(el) {
 // LOADER → MAIN CONTENT
 // =======================
 
+// =======================
+// LOADER → MAIN CONTENT
+// =======================
+
 window.addEventListener("load", () => {
     const loader = document.getElementById("loader");
     const main = document.getElementById("mainContent");
     if (!loader || !main) return;
 
+    // Ten kod uruchomi się DOPIERO PO pełnym załadowaniu strony.
+    // Teraz dodajemy dodatkowe 4 sekundy opóźnienia.
     setTimeout(() => {
+        // 1. Rozpoczynamy animację znikania
         loader.style.opacity = 0;
         loader.style.transition = "opacity 0.5s ease";
+
+        // 2. Po zakończeniu animacji (500ms) ukrywamy loader i pokazujemy treść
         setTimeout(() => {
             loader.style.display = "none";
             main.style.display = "block";
-        }, 500);
-    }, 4000);
+        }, 500); 
+    }, 4000); // <-- Tutaj jest dodatkowe 4-sekundowe opóźnienie
 });
