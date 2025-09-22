@@ -377,38 +377,45 @@ body.dark-mode .config-line {
 #tipPanel {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;           /* trochę węższy niż cała strona */
-  height: 45%;          /* mniej niż połowa strony */
-  background: rgba(255, 255, 255, 0.9); /* półprzezroczysty */
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  box-shadow: 0 -8px 20px rgba(0,0,0,0.3);
-  display: none;        /* początkowo ukryty */
+  left: 0;
+  width: 100%;
+  height: 50%; /* dolna połowa strony */
+  background: linear-gradient(to top, #fff 0%, transparent 100%);
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+  display: none; /* początkowo ukryty */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 20px;
   box-sizing: border-box;
   font-size: 1.3rem;
   font-weight: 400;
   font-family: sans-serif;
   line-height: 1.5;
-  overflow-y: auto;     /* jeśli tekst się rozrośnie */
+  cursor: pointer;
   z-index: 999;
+
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
-/* tekst w panelu zachowuje swoje położenie */
 #tipPanel p {
   margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   font-family: 'Arial', sans-serif;
   font-weight: 400;
   font-size: 1.4rem;
 }
 
-/* Dark mode */
 body.dark-mode #tipPanel {
-  background: rgba(0,0,0,0.85);
-  color: white;
-  box-shadow: 0 -8px 20px rgba(255,255,255,0.3);
+  box-shadow: 0 -10px 30px rgba(255,255,255,0.6);
+  background: linear-gradient(to top, #fff 0%, transparent 100%);
+  color: black;
 }
 
 
