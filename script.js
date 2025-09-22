@@ -224,22 +224,53 @@ function vibrateElement(el) {
 // LOADER → MAIN CONTENT
 // =======================
 
+// LOADER → MAIN CONTENT (replace previous implementation with this)
+let loaderTimeout;
+const loader = document.getElementById("loader");
+const main = document.getElementById("mainContent");
+
+function showMainImmediate() {
+  if (!loader || !main) return;
+  // jeśli już ukryty, nic nie rób
+  if (loader.style.display === "none") return;
+
+  // rozpocznij fade
+  loader.style.transition = "opacity 0.5s ease";
+  loader.style.opacity = 0;
+
+  // po animacji faktycznie ukryj loader i pokaż zawartość
+  setTimeout(() => {
+    loader.style.display = "none";
+    main.style.display = "block";
+  }, 500);
+}
+
 window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
-    const main = document.getElementById("mainContent");
-    if (!loader || !main) return;
+  if (!loader || !main) return;
 
-    // Ten kod uruchomi się DOPIERO PO pełnym załadowaniu strony.
-    // Teraz dodajemy dodatkowe 4 sekundy opóźnienia.
-    setTimeout(() => {
-        // 1. Rozpoczynamy animację znikania
-        loader.style.opacity = 0;
-        loader.style.transition = "opacity 0.5s ease";
+  // standardowy flow: czekasz 4s + fade
+  loaderTimeout = setTimeout(() => {
+    showMainImmediate();
+  }, 4000);
 
-        // 2. Po zakończeniu animacji (500ms) ukrywamy loader i pokazujemy treść
-        setTimeout(() => {
-            loader.style.display = "none";
-            main.style.display = "block";
-        }, 500); 
-    }, 4000); // <-- Tutaj jest dodatkowe 4-sekundowe opóźnienie
+  // dodaj obsługę podwójnego kliknięcia na loader -> natychmiastowy skip
+  loader.addEventListener("dblclick", (e) => {
+    // zapobiegamy domyślnym akcjom, just in case
+    e.preventDefault();
+    // anuluj timer, jeśli jeszcze nie wykonany
+    if (loaderTimeout) {
+      clearTimeout(loaderTimeout);
+      loaderTimeout = null;
+    }
+    // pokaż natychmiast
+    showMainImmediate();
+  });
+
+  // opcjonalnie: też pozwól na escape jako shortcut (niekonieczne)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (loaderTimeout) { clearTimeout(loaderTimeout); loaderTimeout = null; }
+      showMainImmediate();
+    }
+  });
 });
