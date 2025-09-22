@@ -1,11 +1,29 @@
 // =======================
-// KONFIGURACJA
+// ZMIENNE GLOBALNE
 // =======================
-
 const rawConfigLines1 = window.rawConfigLines1;
 const rawConfigLines2 = window.rawConfigLines2;
 
+const input = document.getElementById("input");
+const results = document.getElementById("results");
+const clearBtn = document.getElementById("clearBtn");
+const searchContainer = document.getElementById("searchContainer");
+const toggleBtn = document.getElementById("toggleBtn");
+const configToggle = document.getElementById("configToggle");
+const randomBtn = document.getElementById("randomBtn");
+const fabBtn = document.getElementById("fabBtn");
+const fabLinks = document.getElementById("fabLinks");
+const tipPanel = document.getElementById("tipPanel");
+const tipText = document.getElementById("tipText");
+const tipBtn = document.getElementById("tipBtn");
+const loader = document.getElementById("loader");
+const mainContent = document.getElementById("mainContent");
+
+// =======================
+// KONFIGURACJA
+// =======================
 let usingAlt = false;
+let config = { options: parseLines(rawConfigLines1), maxResults: 7, caseSensitive: false };
 
 function parseLines(lines) {
     return lines.map(line => {
@@ -22,16 +40,9 @@ function shuffleArray(array) {
     return array;
 }
 
-let config = {
-    options: parseLines(rawConfigLines1),
-    maxResults: 7,
-    caseSensitive: false
-};
-
 // =======================
 // BEZPIECZEŃSTWO
 // =======================
-
 if (window.trustedTypes) {
     window.trustedTypes.createPolicy('myPolicy', {
         createHTML: (input) => {
@@ -49,23 +60,8 @@ if (window.trustedTypes) {
 }
 
 // =======================
-// DOM
-// =======================
-
-const input = document.getElementById("input");
-const results = document.getElementById("results");
-const clearBtn = document.getElementById("clearBtn");
-const searchContainer = document.getElementById("searchContainer");
-const toggleBtn = document.getElementById("toggleBtn");
-const configToggle = document.getElementById("configToggle");
-const randomBtn = document.getElementById("randomBtn");
-const fabBtn = document.getElementById("fabBtn");
-const fabLinks = document.getElementById("fabLinks");
-
-// =======================
 // FILTRACJA
 // =======================
-
 function filterOptions(query) {
     if (!query) return [];
     const search = config.caseSensitive ? query : query.toLowerCase();
@@ -75,7 +71,6 @@ function filterOptions(query) {
 }
 
 function renderResults(list) {
-    // usuń wszystkie dzieci bez innerHTML
     while (results.firstChild) results.removeChild(results.firstChild);
 
     if (list.length === 0) {
@@ -90,13 +85,12 @@ function renderResults(list) {
         el.title = url;
 
         const textSpan = document.createElement("span");
-        textSpan.textContent = label; // bez innerHTML
+        textSpan.textContent = label;
         el.appendChild(textSpan);
 
         el.addEventListener("click", () => window.open(url, "_blank"));
 
         results.appendChild(el);
-
         setTimeout(() => el.classList.add("show"), 50);
     });
 
@@ -111,15 +105,12 @@ function updateClearButton() {
 // =======================
 // EVENTY SEARCH
 // =======================
-
 if (input && results && clearBtn) {
     input.addEventListener("input", e => {
         const val = e.target.value.trim();
         updateClearButton();
-
         const matches = val ? filterOptions(val) : [];
-        const shuffled = shuffleArray(matches);
-        renderResults(shuffled);
+        renderResults(shuffleArray(matches));
 
         const exactMatch = matches.find(m => m.label === val);
         const items = results.querySelectorAll(".result-item");
@@ -145,7 +136,6 @@ if (input && results && clearBtn) {
 // =======================
 // CLICK OUTSIDE + RIPPLE
 // =======================
-
 document.addEventListener("click", e => {
     if (!e.target.closest(".search-container")) results.hidden = true;
 
@@ -160,9 +150,8 @@ document.addEventListener("click", e => {
 });
 
 // =======================
-// TOGGLE DARK MODE
+// DARK MODE
 // =======================
-
 toggleBtn?.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
     searchContainer.classList.toggle("dark");
@@ -171,7 +160,6 @@ toggleBtn?.addEventListener("click", () => {
 // =======================
 // PRZEŁĄCZANIE KATEGORII
 // =======================
-
 configToggle?.addEventListener("click", () => {
     usingAlt = !usingAlt;
     config.options = parseLines(usingAlt ? rawConfigLines2 : rawConfigLines1);
@@ -181,7 +169,6 @@ configToggle?.addEventListener("click", () => {
 // =======================
 // RANDOM BUTTON
 // =======================
-
 randomBtn?.addEventListener("click", () => {
     const options = parseLines(rawConfigLines1);
     const randomIndex = Math.floor(Math.random() * options.length);
@@ -191,155 +178,90 @@ randomBtn?.addEventListener("click", () => {
 });
 
 // =======================
-// FAQ MENU
-// =======================
-
-let menuOpen = false;
-fabBtn?.addEventListener("click", () => {
-    menuOpen = !menuOpen;
-    fabBtn.classList.toggle("active", menuOpen);
-    fabLinks.classList.toggle("show", menuOpen);
-    vibrateElement(fabBtn);
-    vibrateElement(fabLinks);
-});
-
-fabLinks?.querySelectorAll("button").forEach(link => {
-    link.addEventListener("click", () => vibrateElement(link));
-});
-
-
-// =======================
-// ZMIENNE GLOBALNE
-// =======================
-const toggleBtn = document.getElementById("toggleBtn");
-const input = document.getElementById("input");
-const clearBtn = document.getElementById("clearBtn");
-const fabBtn = document.getElementById("fabBtn");
-const fabLinks = document.getElementById("fabLinks");
-const tipPanel = document.getElementById("tipPanel");
-const tipText = document.getElementById("tipText");
-const tipBtn = document.getElementById("tipBtn");
-const loader = document.getElementById("loader");
-const mainContent = document.getElementById("mainContent");
-
-// =======================
-// DARK MODE
-// =======================
-toggleBtn?.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-});
-
-// =======================
 // FAQ MENU + TIP PANEL
 // =======================
 let menuOpen = false;
 let tipIndex = 0;
 let tips = [
-  "Tip 1: Podwójny klik przy animacji ładowania pomija ją.",
-  "Tip 2: W menumasz szybki dostęp do opcji.",
-  "Tip 3: Przy polu wyszukiwania masz linię, która zmienia kategorię.",
-  "Tip 4: Na dole po lewym rogu znajduje się przycisk, który losuje film.",
-  "Tip 5: Przy polu wyszukiwania znajduje się przycisk do zmiany motywu."
+    "Tip 1: Podwójny klik przy animacji ładowania pomija ją.",
+    "Tip 2: W menumasz szybki dostęp do opcji.",
+    "Tip 3: Przy polu wyszukiwania masz linię, która zmienia kategorię.",
+    "Tip 4: Na dole po lewym rogu znajduje się przycisk, który losuje film.",
+    "Tip 5: Przy polu wyszukiwania znajduje się przycisk do zmiany motywu."
 ];
 
 fabBtn?.addEventListener("click", () => {
-  menuOpen = !menuOpen;
-  fabBtn.classList.toggle("active", menuOpen);
-  fabLinks.classList.toggle("show", menuOpen);
+    menuOpen = !menuOpen;
+    fabBtn.classList.toggle("active", menuOpen);
+    fabLinks.classList.toggle("show", menuOpen);
 
-  // jeśli menu zostało zamknięte -> zamykamy też panel tip
-  if (!menuOpen) {
-    tipPanel.style.display = "none";
-    tipIndex = 0;
-  }
+    if (!menuOpen) {
+        tipPanel.style.display = "none";
+        tipIndex = 0;
+    }
 });
 
-tipBtn?.addEventListener("click", (e) => {
-  e.stopPropagation(); // nie zamyka panelu przy kliknięciu przycisku
-  tipPanel.style.display = "flex";
-  tipText.textContent = tips[tipIndex];
+tipBtn?.addEventListener("click", e => {
+    e.stopPropagation();
+    tipPanel.style.display = "flex";
+    tipText.textContent = tips[tipIndex];
 });
 
 tipPanel?.addEventListener("click", () => {
-  tipIndex++;
-  if (tipIndex >= tips.length) {
-    tipPanel.style.display = "none";
-    tipIndex = 0;
-  } else {
-    tipText.textContent = tips[tipIndex];
-  }
+    tipIndex++;
+    if (tipIndex >= tips.length) {
+        tipPanel.style.display = "none";
+        tipIndex = 0;
+    } else {
+        tipText.textContent = tips[tipIndex];
+    }
 });
 
-// klik poza panel -> zamknij panel
-document.addEventListener("click", (e) => {
-  if (!tipPanel.contains(e.target) && e.target !== tipBtn) {
-    tipPanel.style.display = "none";
-    tipIndex = 0;
-  }
+document.addEventListener("click", e => {
+    if (!tipPanel.contains(e.target) && e.target !== tipBtn) {
+        tipPanel.style.display = "none";
+        tipIndex = 0;
+    }
 });
-
 
 // =======================
 // ANIMACJE
 // =======================
-
 function vibrateElement(el) {
     el.classList.add("shake");
     setTimeout(() => el.classList.remove("shake"), 400);
 }
 
-
 // =======================
 // LOADER → MAIN CONTENT
 // =======================
-
-// LOADER → MAIN CONTENT (replace previous implementation with this)
 let loaderTimeout;
-const loader = document.getElementById("loader");
-const main = document.getElementById("mainContent");
-
 function showMainImmediate() {
-  if (!loader || !main) return;
-  // jeśli już ukryty, nic nie rób
-  if (loader.style.display === "none") return;
+    if (!loader || !mainContent) return;
+    if (loader.style.display === "none") return;
 
-  // rozpocznij fade
-  loader.style.transition = "opacity 0.5s ease";
-  loader.style.opacity = 0;
+    loader.style.transition = "opacity 0.5s ease";
+    loader.style.opacity = 0;
 
-  // po animacji faktycznie ukryj loader i pokaż zawartość
-  setTimeout(() => {
-    loader.style.display = "none";
-    main.style.display = "block";
-  }, 500);
+    setTimeout(() => {
+        loader.style.display = "none";
+        mainContent.style.display = "block";
+    }, 500);
 }
 
 window.addEventListener("load", () => {
-  if (!loader || !main) return;
+    loaderTimeout = setTimeout(showMainImmediate, 4000);
 
-  // standardowy flow: czekasz 4s + fade
-  loaderTimeout = setTimeout(() => {
-    showMainImmediate();
-  }, 4000);
+    loader.addEventListener("dblclick", e => {
+        e.preventDefault();
+        if (loaderTimeout) { clearTimeout(loaderTimeout); loaderTimeout = null; }
+        showMainImmediate();
+    });
 
-  // dodaj obsługę podwójnego kliknięcia na loader -> natychmiastowy skip
-  loader.addEventListener("dblclick", (e) => {
-    // zapobiegamy domyślnym akcjom, just in case
-    e.preventDefault();
-    // anuluj timer, jeśli jeszcze nie wykonany
-    if (loaderTimeout) {
-      clearTimeout(loaderTimeout);
-      loaderTimeout = null;
-    }
-    // pokaż natychmiast
-    showMainImmediate();
-  });
-
-  // opcjonalnie: też pozwól na escape jako shortcut (niekonieczne)
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (loaderTimeout) { clearTimeout(loaderTimeout); loaderTimeout = null; }
-      showMainImmediate();
-    }
-  });
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape") {
+            if (loaderTimeout) { clearTimeout(loaderTimeout); loaderTimeout = null; }
+            showMainImmediate();
+        }
+    });
 });
