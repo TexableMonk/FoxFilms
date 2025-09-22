@@ -209,7 +209,46 @@ fabLinks?.querySelectorAll("button").forEach(link => {
 
 
 // =======================
-// FAB MENU + PANEL TIP
+// LOADER
+// =======================
+const loader = document.getElementById("loader");
+const mainContent = document.getElementById("mainContent");
+
+function hideLoader() {
+  loader.style.display = "none";
+  mainContent.style.display = "block";
+}
+
+// opcjonalny podwójny klik do pomijania
+loader.addEventListener("dblclick", hideLoader);
+
+// =======================
+// TOGGLE BUTTON
+// =======================
+const toggleBtn = document.getElementById("toggleBtn");
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// =======================
+// SEARCH / CLEAR
+// =======================
+const input = document.getElementById("input");
+const clearBtn = document.getElementById("clearBtn");
+const results = document.getElementById("results");
+
+input.addEventListener("input", () => {
+  clearBtn.style.display = input.value ? "block" : "none";
+});
+
+clearBtn.addEventListener("click", () => {
+  input.value = "";
+  results.hidden = true;
+  clearBtn.style.display = "none";
+});
+
+// =======================
+// FAQ MENU / FAB
 // =======================
 const fabBtn = document.getElementById("fabBtn");
 const fabLinks = document.getElementById("fabLinks");
@@ -217,55 +256,50 @@ const tipPanel = document.getElementById("tipPanel");
 const tipText = document.getElementById("tipText");
 const tipBtn = document.getElementById("tipBtn");
 
-// Konfiguracja tipów
-const tips = [
+let tips = [
   "Tip 1: Podwójny klik przy animacji ładowania pomija ją.",
-  "Tip 2: W menu masz szybki dostęp do opcji.",
-  "Tip 3: Przy polu wyszukiwania masz linię, która zmienia kategorię (Filmy/Seriale).",
-  "Tip 4: Na dole po lewym rogu znajduje się przycisk, który losuje film. Miłego oglądania!",
-  "Tip 5: Przy polu wyszukiwania znajduje się przycisk do zmiany między motywem białym a ciemnym."
+  "Tip 2: W menumasz szybki dostęp do opcji.",
+  "Tip 3: Przy polu wyszukiwania masz linię, która zmienia kategorię.",
+  "Tip 4: Na dole po lewym rogu znajduje się przycisk, który losuje film.",
+  "Tip 5: Przy polu wyszukiwania znajduje się przycisk do zmiany motywu."
 ];
 
 let tipIndex = 0;
 
-// Kliknięcie w "?"
-tipBtn.addEventListener("click", (e) => {
-  e.stopPropagation(); // nie zamyka menu
+// toggle menu
+fabBtn.addEventListener("click", () => {
+  fabBtn.classList.toggle("active");
+  fabLinks.classList.toggle("show");
+});
+
+// pokaz tip panel po kliknięciu ?
+tipBtn.addEventListener("click", () => {
   tipPanel.style.display = "flex";
-  tipIndex = 0;
   tipText.textContent = tips[tipIndex];
 });
 
-// Kliknięcie w panel tip → przejście do następnego tipu
+// klik w panel przechodzi do następnego tipu
 tipPanel.addEventListener("click", () => {
   tipIndex++;
   if (tipIndex >= tips.length) {
-    tipPanel.style.display = "none"; // po ostatnim tipie zamyka
+    tipPanel.style.display = "none";
     tipIndex = 0;
   } else {
     tipText.textContent = tips[tipIndex];
   }
 });
 
-// Kliknięcie w X w FAB menu
-fabBtn.addEventListener("click", (e) => {
-  const isActive = fabBtn.classList.contains("active");
-
-  if (isActive) {
-    fabBtn.classList.remove("active");
-    fabLinks.classList.remove("show");
-    tipPanel.style.display = "none"; // zamyka też panel tip
-  } else {
-    fabBtn.classList.add("active");
-    fabLinks.classList.add("show");
+// klik poza panel zamyka panel
+document.addEventListener("click", (e) => {
+  if (!tipPanel.contains(e.target) && e.target !== tipBtn) {
+    tipPanel.style.display = "none";
+    tipIndex = 0;
   }
 });
 
-// Kliknięcie poza menu i panel → zamyka wszystko
-document.addEventListener("click", (e) => {
-  if (!fabLinks.contains(e.target) && !fabBtn.contains(e.target) && !tipPanel.contains(e.target)) {
-    fabBtn.classList.remove("active");
-    fabLinks.classList.remove("show");
+// X w fab menu zamyka menu i panel pomocy
+fabBtn.addEventListener("click", () => {
+  if (fabBtn.classList.contains("active") === false) {
     tipPanel.style.display = "none";
     tipIndex = 0;
   }
