@@ -397,6 +397,8 @@ body.dark-mode .config-line {
   box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
   display: none; /* początkowo ukryty */
   align-items: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   justify-content: center;
   text-align: center;
   padding: 20px;
